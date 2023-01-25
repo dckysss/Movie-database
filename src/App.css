@@ -1,17 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+
 .App {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
 .App-header {
   background-color: #282c34;
@@ -22,17 +14,85 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  padding: 3rem;
 }
 
 .App-link {
   color: #61dafb;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.Movie-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.Movie-wrapper {
+  width: 500px;
+  background-color: antiquewhite;
+  color: black;
+  border-radius: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.Movie-wrapper::before {
+  content: "";
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  transition: visibility 0s 0.3s ease;
+}
+
+.Movie-wrapper:hover {
+  transform: scale(1.09);
+  box-shadow: 0px 0px 10px 3px #ccc;
+}
+
+.Movie-search {
+  height: 48px;
+  font-size: 24px;
+  margin-bottom: 40px;
+  padding: 1rem 2rem;
+  font-weight: bold;
+  width: 50%;
+  border-radius: 2.4rem;
+  border-style: none;
+  outline: none;
+}
+
+.Movie-title {
+  height: 60px;
+  margin-top: 26px;
+  margin-bottom: 16px;
+  font-family: 'Montserrat', sans-serif;
+  color: #3a3a3a;
+  font-weight: bold;
+}
+
+.Movie-date {
+  font-style: italic;
+  margin-bottom: 16px;
+}
+
+.Movie-rate {
+  color: blue;
+  margin-bottom: 24px;
+  font-weight: bold;
+  font-size: 1.2em;
+  text-decoration: underline;
+}
+
+.Movie-image {
+  animation: fadeIn 1s ease-in-out;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+    opacity: 1;
   }
 }
