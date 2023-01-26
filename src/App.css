@@ -32,10 +32,11 @@
 
 .Movie-wrapper {
   width: 500px;
-  background-color: antiquewhite;
+  background-color: #ead5fef3;
+  box-shadow: 0px 0px 10px 0.5px #c792fd98;
   color: black;
   border-radius: 1rem;
-  transition: transform 0.3s ease;
+  transition: 0.3s ease;
 }
 
 .Movie-wrapper::before {
@@ -43,12 +44,12 @@
   width: 100%;
   height: 100%;
   visibility: hidden;
-  transition: visibility 0s 0.3s ease;
+  transition: visibility 0s 0.4s ease;
 }
 
 .Movie-wrapper:hover {
   transform: scale(1.09);
-  box-shadow: 0px 0px 10px 3px #ccc;
+  box-shadow: 0px 0px 50px 5px #C892FD;
   cursor: pointer;
 }
 
@@ -59,9 +60,24 @@
   padding: 1rem 2rem;
   font-weight: bold;
   width: 50%;
+  background: #69419ebd;
+  color: white;
+  font-family: 'Inconsolata', monospace;
   border-radius: 2.4rem;
   border-style: none;
   outline: none;
+  transition: 0.5s ease;
+}
+
+.Movie-search:focus{
+  box-shadow: 0 0 20px 4px #6f48a1, 
+  0 15px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.Movie-search::placeholder {
+  color: white;
+  opacity: 0.5;
+  font-weight: bolder;
 }
 
 .Movie-title {
