@@ -4,17 +4,16 @@
   text-align: center;
 }
 
-
 .App-header {
-  background-color: #282c34;
+  background: linear-gradient(0deg, rgba(33,36,43,1) 0%, rgba(40,44,52,1) 93%, rgba(43,47,56,1) 97%, rgba(70,76,91,1) 100%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
-  padding: 3rem;
+  color: #faf2fff6;
+  padding: 2rem 0 4rem 0;
 }
 
 .App-link {
@@ -32,7 +31,7 @@
 
 .Movie-wrapper {
   width: 500px;
-  background-color: #ead5fef3;
+  background: linear-gradient(22deg, #e7ceffdf 0%, #e9beffe3 64%, #f2d4ffdf 100%);
   box-shadow: 0px 0px 10px 0.5px #c792fd98;
   color: black;
   border-radius: 1rem;
@@ -59,9 +58,9 @@
   margin-bottom: 40px;
   padding: 1rem 2rem;
   font-weight: bold;
-  width: 50%;
-  background: #69419ebd;
-  color: white;
+  width: 45%;
+  color: #fbf2ff;
+  background: linear-gradient(53deg, #794eb0e2 0%, #6f48a1cb 82%, #5b368ae6 100%);
   font-family: 'Inconsolata', monospace;
   border-radius: 2.4rem;
   border-style: none;
@@ -114,7 +113,7 @@
   }
 }
 
-@media (max-width: 690px) {
+@media (max-width: 650px) {
   .App-header {
     padding: 2rem 0;
   }
