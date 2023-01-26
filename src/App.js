@@ -5,10 +5,12 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 
 const App = () => {
   const [popularMovies, setPopularMovies] = useState([])
+  const [defaultMovies, setDefaultMovies] = useState(popularMovies)
 
   useEffect(() => {
     getMovieList().then((result) => {
       setPopularMovies(result)
+      setDefaultMovies(result)
     })
   }, []) 
 
@@ -35,6 +37,8 @@ const App = () => {
     if (q.length > 2) {
       const query = await searchMovie(q)
       setPopularMovies(query.results)
+    } else {
+      setPopularMovies(defaultMovies)
     }
   }
 

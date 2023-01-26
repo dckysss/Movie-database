@@ -31,7 +31,7 @@
 
 .Movie-wrapper {
   width: 500px;
-  background: linear-gradient(22deg, #e7ceffdf 0%, #e9beffe3 64%, #f2d4ffdf 100%);
+  background: linear-gradient(305deg, #e7ceffdf 0%, #e9beffe3 64%, #f2d4ffdf 100%);
   box-shadow: 0px 0px 10px 0.5px #c792fd98;
   color: black;
   border-radius: 1rem;
@@ -83,6 +83,7 @@
   height: 60px;
   margin-top: 26px;
   margin-bottom: 16px;
+  padding: 0 3px;
   font-family: 'Montserrat', sans-serif;
   color: #3a3a3a;
   font-weight: bold;
