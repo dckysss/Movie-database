@@ -97,7 +97,11 @@
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 690px) {
+  .App-header {
+    padding: 2rem 0;
+  }
+
   .Movie-wrapper {
     width: 80%;
   }
@@ -108,6 +112,12 @@
 
   .Movie-title {
     padding: 2px 12px;
+    font-size: 20px;
+  }
+
+  .Movie-search {
+    padding: 5px 20px;
+    font-size: 18px;
   }
 
 }
