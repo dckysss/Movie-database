@@ -1,7 +1,7 @@
 import "./App.css"
 import { getMovieList, searchMovie} from "./api"
 import { useEffect, useState } from "react"
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { LazyLoadImage } from 'react-lazy-load-image-component'
 
 const App = () => {
   const [popularMovies, setPopularMovies] = useState([])
@@ -33,6 +33,23 @@ const App = () => {
     })
   }
 
+  const HeroImage = () => {
+    if (popularMovies.length) {
+        const heroMovie = popularMovies[0];
+        return (
+          <div 
+            style={{ backgroundImage: `url(${process.env.REACT_APP_ORIGINALIMGURL}/${heroMovie.backdrop_path})`}} 
+            className="Hero-image-wrapper">
+            <div className="Hero-image-info">
+              <h2 className="Hero-image-title">{heroMovie.title}</h2>
+              <p className="Hero-image-description">{heroMovie.overview}</p>
+            </div>
+          </div>
+      )
+    }
+    return null;
+  }
+
   const search = async (q) => {
     if (q.length > 2) {
       const query = await searchMovie(q)
@@ -45,6 +62,7 @@ const App = () => {
   return (
     <div className = "App">
       <header className="App-header">
+        <HeroImage />
         <h1>Movie Database</h1>
         <input 
           placeholder="Search..." 
