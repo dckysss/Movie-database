@@ -96,3 +96,18 @@
     opacity: 1;
   }
 }
+
+@media (max-width: 720px) {
+  .Movie-wrapper {
+    width: 80%;
+  }
+
+  .Movie-image {
+    width: 100%;
+  }
+
+  .Movie-title {
+    padding: 2px 12px;
+  }
+
+}
