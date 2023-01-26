@@ -12,11 +12,13 @@ const App = () => {
     })
   }, []) 
 
+  // onClick={() =>
+    // window.open(`https://www.youtube.com/watch?v=Nfgh5MBd_b0`)}
+
   const PopularMovieList = () => {
     return popularMovies.map((movie, i) => {
       return (
-        <div className="Movie-wrapper" key={i} onClick={() =>
-          window.open(`https://www.youtube.com/watch?v=Nfgh5MBd_b0`)}>
+        <div className="Movie-wrapper" key={i}>
           <div className="Movie-title">{movie.title}</div>
           <LazyLoadImage 
             className="Movie-image" 
