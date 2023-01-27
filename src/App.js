@@ -35,8 +35,20 @@ const App = () => {
   }
 
   const HeroImage = () => {
+    const [currentMovieIndex, setCurrentMovieIndex] = useState(r);
+      useEffect(() => {
+        const interval = setInterval(() => {
+            if (currentMovieIndex === popularMovies.length - 1) {
+                setCurrentMovieIndex(0);
+            } else {
+                setCurrentMovieIndex(currentMovieIndex + 1);
+            }
+        }, 10000);
+        return () => clearInterval(interval);
+      }, [currentMovieIndex]);
+
     if (popularMovies.length) {
-        const heroMovie = popularMovies[r];
+        const heroMovie = popularMovies[currentMovieIndex];
         return (
           <div 
             style={{ backgroundImage: `url(${process.env.REACT_APP_ORIGINALIMGURL}/${heroMovie.backdrop_path})`}} 
