@@ -6,6 +6,7 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 const App = () => {
   const [popularMovies, setPopularMovies] = useState([])
   const [defaultMovies, setDefaultMovies] = useState(popularMovies)
+  const r = Math.floor(Math.random() * 14)
 
   useEffect(() => {
     getMovieList().then((result) => {
@@ -35,7 +36,7 @@ const App = () => {
 
   const HeroImage = () => {
     if (popularMovies.length) {
-        const heroMovie = popularMovies[0];
+        const heroMovie = popularMovies[r];
         return (
           <div 
             style={{ backgroundImage: `url(${process.env.REACT_APP_ORIGINALIMGURL}/${heroMovie.backdrop_path})`}} 

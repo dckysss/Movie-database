@@ -159,13 +159,18 @@
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 720px) {
   .App-header {
     padding-bottom: 2rem;
   }
 
+  .App-header h1 {
+    font-size: 1.8rem;
+  }
+
   .Movie-wrapper {
-    width: 80%;
+    width: 40%;
+    font-size: large;
   }
 
   .Movie-image {
@@ -174,22 +179,31 @@
 
   .Movie-title {
     padding: 2px 12px;
-    font-size: 20px;
+    margin-bottom: 0;
+    margin-top: 10px;
+  }
+
+  .Movie-date{
+    margin-bottom: 2px;
+  }
+
+  .Movie-rate {
+    margin-bottom: 15px;
   }
 
   .Movie-search {
-    padding: 5px 20px;
-    font-size: 18px;
+    padding: 0 15px;
+    font-size: 16px;
     width: 70%;
   }
 
   .Hero-image-wrapper {
-    height: 195px;
+    height: 300px;
   }
 
   .Hero-image-info {
     padding: 0 6px 0 6px;
-    max-width: 80rem;
+    max-width: 90%;
     margin: 0 auto;
     position: absolute;
     bottom: 20px;
@@ -203,5 +217,68 @@
 
   .Hero-image-description {
     font-size: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .App-header {
+    padding-bottom: 2rem;
+  }
+
+  .App-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .Movie-wrapper {
+    width: 80%;
+    font-size: 18px;
+  }
+
+  .Movie-image {
+    width: 100%;
+  }
+
+  .Movie-title {
+    padding: 14px 12px 0 12px;
+    margin-bottom: 0;
+    margin-top: 8px;
+    
+  }
+
+  .Movie-date{
+    margin-bottom: 2px;
+  }
+
+  .Movie-rate {
+    margin-bottom: 15px;
+  }
+
+  .Movie-search {
+    padding: 0 15px;
+    font-size: 14px;
+    width: 75%;
+    height: 2.8rem;
+  }
+
+  .Hero-image-wrapper {
+    height: 195px;
+  }
+
+  .Hero-image-info {
+    padding: 0 6px 0 6px;
+    max-width: 100%;
+    margin: 0 auto;
+    position: absolute;
+    bottom: 20px;
+    text-align: left;
+    background-color: rgba(52, 45, 58, 0.5);
+  }
+
+  .Hero-image-title {
+    font-size: 16px;
+  }
+
+  .Hero-image-description {
+    font-size: 6px;
   }
 }
