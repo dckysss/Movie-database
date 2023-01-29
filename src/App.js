@@ -78,9 +78,9 @@ const App = () => {
         <HeroImage />
         <h1>Movie Database</h1>
         <input 
-          placeholder="Search..." 
+          placeholder="Search..."
           className="Movie-search"
-          onChange={({ target }) => search(target.value)} 
+          onChange={({ target }) => search(target.value)}
         />
         <div className="Movie-container">
           <PopularMovieList />
