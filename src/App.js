@@ -6,13 +6,11 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 const App = () => {
   const [popularMovies, setPopularMovies] = useState([])
   const [defaultMovies, setDefaultMovies] = useState(popularMovies)
-  const [currentMovieIndex, setCurrentMovieIndex] = useState(0);
 
   useEffect(() => {
     getMovieList().then((result) => {
       setPopularMovies(result)
       setDefaultMovies(result)
-      setCurrentMovieIndex(Math.floor(Math.random() * result.length));
     })
   }, []) 
 
@@ -36,19 +34,21 @@ const App = () => {
   }
 
   const HeroImage = () => {
-    useEffect(() => {
-      const interval = setInterval(() => {
-          if (currentMovieIndex === defaultMovies.length - 1) {
-              setCurrentMovieIndex(0);
-          } else {
-              setCurrentMovieIndex(currentMovieIndex + 1);
-          }
-      }, 10000);
-      return () => clearInterval(interval);
-    }, []);
-    
-    if (defaultMovies.length) {
-      const heroMovie = defaultMovies[currentMovieIndex];
+    const r = Math.floor(Math.random() * popularMovies.length)
+    const [currentMovieIndex, setCurrentMovieIndex] = useState(r);
+      useEffect(() => {
+        const interval = setInterval(() => {
+            if (currentMovieIndex === popularMovies.length - 1) {
+                setCurrentMovieIndex(0);
+            } else {
+                setCurrentMovieIndex(currentMovieIndex + 1);
+            }
+        }, 10000);
+        return () => clearInterval(interval);
+      }, [currentMovieIndex]);
+
+    if (popularMovies.length) {
+        const heroMovie = popularMovies[currentMovieIndex];
         return (
           <div 
             style={{ backgroundImage: `url(${process.env.REACT_APP_ORIGINALIMGURL}/${heroMovie.backdrop_path})`}} 
