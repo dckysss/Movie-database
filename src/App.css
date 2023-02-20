@@ -2,17 +2,22 @@
 
 .App {
   text-align: center;
+  background: linear-gradient(0deg, rgb(26, 28, 34) 0%, #282c34 93%, rgba(43,47,56,1) 100%);
+  color: #faf2fff6;
+}
+
+.App.dark {
+  background: #faf2fff6;
+  color: #282c34;
 }
 
 .App-header {
-  background: linear-gradient(0deg, rgb(26, 28, 34) 0%, #282c34 93%, rgba(43,47,56,1) 100%);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: #faf2fff6;
   padding-bottom: 4rem;
 }
 
@@ -77,6 +82,12 @@
   color: white;
   opacity: 0.5;
   font-weight: bolder;
+}
+
+.bgBtn {
+  position: absolute;
+  top: 625px;
+  right: 20px;
 }
 
 .Movie-title {
