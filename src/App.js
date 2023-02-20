@@ -6,7 +6,6 @@ import { LazyLoadImage } from 'react-lazy-load-image-component'
 const App = () => {
   const [popularMovies, setPopularMovies] = useState([])
   const [defaultMovies, setDefaultMovies] = useState(popularMovies)
-  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     getMovieList().then((result) => {
@@ -73,10 +72,8 @@ const App = () => {
     }
   }
 
-  const toggleDark = () => setIsDark(!isDark);
-
   return (
-    <div className = {`App ${isDark ? "dark" : "light"}`}>
+    <div className="App">
       <header className="App-header">
         <HeroImage />
         <h1>Movie Database</h1>
@@ -85,12 +82,6 @@ const App = () => {
           className="Movie-search"
           onChange={({ target }) => search(target.value)}
         />
-        <button
-          className="bgBtn"
-          onClick={toggleDark}
-        >
-          Change Mode
-        </button>
         <div className="Movie-container">
           <PopularMovieList />
         </div>

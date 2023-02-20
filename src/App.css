@@ -6,11 +6,6 @@
   color: #faf2fff6;
 }
 
-.App.dark {
-  background: #faf2fff6;
-  color: #282c34;
-}
-
 .App-header {
   min-height: 100vh;
   display: flex;
