@@ -55,7 +55,7 @@
 .Movie-search {
   height: 48px;
   font-size: 24px;
-  margin-bottom: 40px;
+  margin-bottom: 3.4rem;
   padding: 1rem 2rem;
   font-weight: bold;
   width: 45%;
@@ -141,6 +141,8 @@
   bottom: 40px;
   text-align: left;
   background-color: rgba(52, 45, 58, 0.5);
+  backdrop-filter: blur(1.8px);
+  -webkit-backdrop-filter: blur(1.8px);
   filter: brightness(1.1);
 }
 
