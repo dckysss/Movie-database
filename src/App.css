@@ -4,6 +4,7 @@
   text-align: center;
   background: linear-gradient(0deg, rgb(26, 28, 34) 0%, #282c34 93%, rgba(43,47,56,1) 100%);
   color: #faf2fff6;
+  scroll-behavior: smooth;
 }
 
 .App-header {
@@ -16,8 +17,29 @@
   padding-bottom: 4rem;
 }
 
-.App-link {
-  color: #61dafb;
+::-moz-selection {
+  background: #784eb0c9;
+}
+
+::selection {
+  background: #784eb0c9;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #282c34;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #bfbdc5dc;
+  border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #828186;
 }
 
 .Movie-container {
@@ -31,7 +53,7 @@
 
 .Movie-wrapper {
   width: 500px;
-  background: linear-gradient(305deg, #e7ceffdf 0%, #e9beffe3 64%, #f2d4ffdf 100%);
+  background: linear-gradient(305deg, #e7ceffd0 0%, #e9beffcc 64%, #f3d8ffc9 100%);
   box-shadow: 0px 0px 10px 0.5px #c792fd98;
   color: black;
   border-radius: 1rem;
@@ -141,8 +163,6 @@
   bottom: 40px;
   text-align: left;
   background-color: rgba(52, 45, 58, 0.5);
-  backdrop-filter: blur(1.8px);
-  -webkit-backdrop-filter: blur(1.8px);
   filter: brightness(1.1);
 }
 
