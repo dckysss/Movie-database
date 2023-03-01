@@ -27,8 +27,3 @@ export const getTrendingList = async() => {
     const trending = await axios.get(`${baseUrl}/trending/all/week?page=1&api_key=${apiKey}`)
     return trending.data.results
 }
-
-export const searchAll = async (q) => {
-    const search = await axios.get(`${baseUrl}/search/multi?query=${q}&page=1&api_key=${apiKey}`)
-    return search.data
-}

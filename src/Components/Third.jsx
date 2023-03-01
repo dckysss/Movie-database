@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import "../App.css"
-import { getTrendingList, searchAll } from "../api"
+import { getTrendingList} from "../api"
 import { useEffect, useState } from "react"
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import placeholderImage from '../Image_not_available.png';
@@ -8,7 +8,6 @@ import placeholderImage from '../Image_not_available.png';
 const Third = () => {
   const navigate = useNavigate()
   const [trendings, setTrendings] = useState([])
-  const [defaultTrending, setDefaultTrending] = useState(trendings)
 
   useEffect(() => {
     getTrendingList().then((result) => {
@@ -93,26 +92,12 @@ const Third = () => {
     return null;
   }
 
-  const search = async (q) => {
-    if (q.length > 2) {
-      const query = await searchAll(q)
-      setTrendings(query.results)
-    } else {
-      setTrendings(defaultTrending)
-    }
-  }
-
   return (
     <div className="App">
       <header className="App-header">
         <NavBar />
         <HeroImage />
         <h1>Movie Database</h1>
-        <input 
-          placeholder="Search..."
-          className="Movie-search"
-          onChange={({ target }) => search(target.value)}
-        />
         <div className="Movie-container">
           <TrendingList />
         </div>

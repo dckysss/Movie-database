@@ -109,7 +109,7 @@ const First = () => {
         <HeroImage />
         <h1>Movie Database</h1>
         <input 
-          placeholder="Search..."
+          placeholder="Search movies..."
           className="Movie-search"
           onChange={({ target }) => search(target.value)}
         />
