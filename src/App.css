@@ -17,6 +17,32 @@
   padding-bottom: 4rem;
 }
 
+.navbar {
+  width: 100%;
+  background: #232935a6;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  backdrop-filter: blur(15px);
+}
+
+.navbar-menu {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin: 14px 0;
+  font-size: 24px;
+  padding: 0;
+}
+
+.navbar-menu a {
+  text-decoration: none;
+  color: #fbf2ff;
+  cursor: pointer;
+}
+
 .Movie-container {
   width: 100%;
   display: flex;
@@ -119,7 +145,7 @@
 
 .Hero-image-wrapper {
   width: 100%;
-  height: 600px;
+  height: 650px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -143,7 +169,6 @@
 
 .Hero-image-title {
   font-size: 30px;
-
 }
 
 .Hero-image-description {
@@ -152,8 +177,12 @@
 }
 
 @media (max-width: 1365px) {
+  .navbar-menu {
+    font-size: 20px;
+  }
+
   .Hero-image-wrapper {
-    height: 400px;
+    height: 430px;
   }
 
   .Hero-image-info {
@@ -169,13 +198,17 @@
   }
 }
 
-@media (max-width: 720px) {
+@media (max-width: 768px) {
   .App-header {
     padding-bottom: 2rem;
   }
 
   .App-header h1 {
     font-size: 1.8rem;
+  }
+
+  .navbar-menu {
+    display: none;
   }
 
   .Movie-wrapper {
@@ -267,7 +300,7 @@
   }
 
   .Hero-image-wrapper {
-    height: 195px;
+    height: 160px;
   }
 
   .Hero-image-info {

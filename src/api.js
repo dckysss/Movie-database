@@ -12,3 +12,18 @@ export const searchMovie = async (q) => {
     const search = await axios.get(`${baseUrl}/search/movie?query=${q}&page=1&api_key=${apiKey}`)
     return search.data
 }
+
+export const getTVList = async() => {
+    const tv = await axios.get(`${baseUrl}/tv/top_rated?page=1&api_key=${apiKey}`)
+    return tv.data.results
+}
+
+export const getTrendingList = async() => {
+    const trending = await axios.get(`${baseUrl}/trending/all/week?page=1&api_key=${apiKey}`)
+    return trending.data.results
+}
+
+export const searchTV = async (q) => {
+    const search = await axios.get(`${baseUrl}/search/tv?query=${q}&page=1&api_key=${apiKey}`)
+    return search.data
+}
