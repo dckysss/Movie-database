@@ -12,7 +12,6 @@ const Third = () => {
   useEffect(() => {
     getTrendingList().then((result) => {
       setTrendings(result)
-      setDefaultTrending(result)
     })
   }, []) 
 
