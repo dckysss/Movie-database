@@ -3,6 +3,7 @@ import "../App.css"
 import { searchTV, getTVList,} from "../api"
 import { useEffect, useState } from "react"
 import { LazyLoadImage } from 'react-lazy-load-image-component'
+import placeholderImage from '../Image_not_available.png';
 
 const Second = () => {
   const navigate = useNavigate()  
@@ -39,6 +40,10 @@ const Second = () => {
           <LazyLoadImage 
             className="Movie-image" 
             src={`${process.env.REACT_APP_BASEIMGURL}/${tv.poster_path}`}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = placeholderImage
+            }}
           />
           <div className="Movie-date">release: {tv.first_air_date}</div>
           <div className="Movie-rate">{tv.vote_average}</div>

@@ -3,6 +3,7 @@ import "../App.css"
 import { getMovieList, searchMovie} from "../api"
 import { useEffect, useState } from "react"
 import { LazyLoadImage } from 'react-lazy-load-image-component'
+import placeholderImage from '../Image_not_available.png';
 
 const First = () => {
   const navigate = useNavigate()
@@ -39,6 +40,10 @@ const First = () => {
           <LazyLoadImage 
             className="Movie-image" 
             src={`${process.env.REACT_APP_BASEIMGURL}/${movie.poster_path}`}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = placeholderImage
+            }}
           />
           <div className="Movie-date">release: {movie.release_date}</div>
           <div className="Movie-rate">{movie.vote_average}</div>

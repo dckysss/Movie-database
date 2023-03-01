@@ -1,25 +1,19 @@
 import { useNavigate } from "react-router-dom"
 import "../App.css"
-import { 
-  getMovieList, 
-  searchMovie, 
-  getTrendingList} from "../api"
+import { getTrendingList, searchAll } from "../api"
 import { useEffect, useState } from "react"
 import { LazyLoadImage } from 'react-lazy-load-image-component'
+import placeholderImage from '../Image_not_available.png';
 
 const Third = () => {
   const navigate = useNavigate()
-  const [popularMovies, setPopularMovies] = useState([])
-  const [defaultMovies, setDefaultMovies] = useState(popularMovies)
   const [trendings, setTrendings] = useState([])
+  const [defaultTrending, setDefaultTrending] = useState(trendings)
 
   useEffect(() => {
-    getMovieList().then((result) => {
-      setPopularMovies(result)
-      setDefaultMovies(result)
-    })
     getTrendingList().then((result) => {
       setTrendings(result)
+      setDefaultTrending(result)
     })
   }, []) 
 
@@ -38,11 +32,15 @@ const Third = () => {
     )
   }
 
+  const filteredTrendings = trendings.filter((trending) => {
+    return trending.media_type === "movie" || trending.media_type === "tv";
+  });
+
   const TrendingList = () => {
-    return trendings.map((trending, i) => {
+    return filteredTrendings.map((trending, i) => {
       const resultObj = {
           title: trending.title,  
-          name: trending.name  
+          name: trending.name 
         };  
       const resultProp = trending.media_type === 'movie' ? resultObj.title : resultObj.name;  
       const releaseDateProp = trending.media_type === 'movie' ? trending.release_date : trending.first_air_date;    
@@ -52,6 +50,10 @@ const Third = () => {
           <LazyLoadImage 
             className="Movie-image" 
             src={`${process.env.REACT_APP_BASEIMGURL}/${trending.poster_path}`}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = placeholderImage
+            }}
           />
           <div className="Movie-date">release: {releaseDateProp}</div>
           <div className="Movie-rate">{trending.vote_average}</div>
@@ -61,11 +63,11 @@ const Third = () => {
   }
 
   const HeroImage = () => {
-    const r = Math.floor(Math.random() * trendings.length)
+    const r = Math.floor(Math.random() * filteredTrendings.length)
     const [currentTrendingIndex, setCurrentTrendingIndex] = useState(r);
       useEffect(() => {
         const interval = setInterval(() => {
-            if (currentTrendingIndex === trendings.length - 1) {
+            if (currentTrendingIndex === filteredTrendings.length - 1) {
                 setCurrentTrendingIndex(0);
             } else {
                 setCurrentTrendingIndex(currentTrendingIndex + 1);
@@ -75,7 +77,7 @@ const Third = () => {
       }, [currentTrendingIndex]);
 
     if (trendings.length) {
-        const heroTrending = trendings[currentTrendingIndex];
+        const heroTrending = filteredTrendings[currentTrendingIndex];
         const title = heroTrending.title || heroTrending.name;
         return (
           <div 
@@ -93,10 +95,10 @@ const Third = () => {
 
   const search = async (q) => {
     if (q.length > 2) {
-      const query = await searchMovie(q)
-      setPopularMovies(query.results)
+      const query = await searchAll(q)
+      setTrendings(query.results)
     } else {
-      setPopularMovies(defaultMovies)
+      setTrendings(defaultTrending)
     }
   }
 

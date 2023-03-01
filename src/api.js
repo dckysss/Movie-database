@@ -18,12 +18,17 @@ export const getTVList = async() => {
     return tv.data.results
 }
 
+export const searchTV = async (q) => {
+    const search = await axios.get(`${baseUrl}/search/tv?query=${q}&page=1&api_key=${apiKey}`)
+    return search.data
+}
+
 export const getTrendingList = async() => {
     const trending = await axios.get(`${baseUrl}/trending/all/week?page=1&api_key=${apiKey}`)
     return trending.data.results
 }
 
-export const searchTV = async (q) => {
-    const search = await axios.get(`${baseUrl}/search/tv?query=${q}&page=1&api_key=${apiKey}`)
+export const searchAll = async (q) => {
+    const search = await axios.get(`${baseUrl}/search/multi?query=${q}&page=1&api_key=${apiKey}`)
     return search.data
 }
