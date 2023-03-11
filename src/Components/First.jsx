@@ -27,7 +27,7 @@ const First = () => {
 
     const updateHamburgerSize = () => {
       if (window.innerWidth <= 480) {
-        setHamburgerSize(16);
+        setHamburgerSize(18);
       } else {
         setHamburgerSize(24);
       }
