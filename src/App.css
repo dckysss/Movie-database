@@ -207,10 +207,6 @@
     font-size: 1.8rem;
   }
 
-  .navbar-menu {
-    display: none;
-  }
-
   .Movie-wrapper {
     width: 40%;
     font-size: large;
@@ -268,13 +264,13 @@
     font-size: 1.8rem;
   }
 
+  .navbar-menu {
+    display: none;
+  }
+
   .Movie-wrapper {
     width: 80%;
     font-size: 18px;
-  }
-
-  .Movie-image {
-    width: 100%;
   }
 
   .Movie-title {
@@ -300,7 +296,7 @@
   }
 
   .Hero-image-wrapper {
-    height: 160px;
+    height: 200px;
   }
 
   .Hero-image-info {
@@ -314,5 +310,11 @@
 
   .Hero-image-description {
     font-size: 7px;
+  }
+}
+
+@media (max-width: 350px) {
+  .Hero-image-wrapper {
+    height: 155px;
   }
 }
