@@ -4,6 +4,7 @@ import { searchTV, getTVList,} from "../api"
 import { useEffect, useState } from "react"
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import placeholderImage from '../Image_not_available.png';
+import { Sling as Hamburger } from 'hamburger-react'
 
 const Second = () => {
   const navigate = useNavigate()  
@@ -17,20 +18,46 @@ const Second = () => {
     })
   }, []) 
 
-  // onClick={() =>
-    // window.open(`https://www.youtube.com/watch?v=Nfgh5MBd_b0`)}
-
   const NavBar = () => {
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [hamburgerSize, setHamburgerSize] = useState(24);
+
+    const updateHamburgerSize = () => {
+      if (window.innerWidth <= 480) {
+        setHamburgerSize(18);
+      } else {
+        setHamburgerSize(24);
+      }
+    };
+
+    useEffect(() => {
+      updateHamburgerSize();
+      window.addEventListener('resize', updateHamburgerSize);
+      return () => window.removeEventListener('resize', updateHamburgerSize);
+    }, []);
+
     return (
       <nav className="navbar">
-        <ul className="navbar-menu">
+      <h1 className="logo">Movie Database</h1>
+
+        <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
             <li><a href="/" onClick={() => navigate('/')}>Movies</a></li>
             <li><a href="/tv" onClick={() => navigate('/tv')}>TV</a></li>
             <li><a href="/trending" onClick={() => navigate('/trending')}>Trending</a></li>
         </ul>
+
+        <div className="hamburger">
+          <Hamburger
+            rounded
+            size={hamburgerSize}
+            duration={0.8} 
+            toggled={menuOpen}
+            toggle={setMenuOpen}
+          />
+        </div>
       </nav>
     )
-  }
+    }
 
   const PopularTVList = () => {
     return popularTV.map((tv, i) => {
@@ -95,17 +122,17 @@ const Second = () => {
     <div className="App">
       <header className="App-header">
         <NavBar />
-        <HeroImage />
-        <h1>Movie Database</h1>
+      </header>
+      <HeroImage />
+        
         <input 
-          placeholder="Search TV shows..."
+          placeholder="Search movies..."
           className="Movie-search"
           onChange={({ target }) => search(target.value)}
         />
         <div className="Movie-container">
           <PopularTVList />
         </div>
-      </header>
     </div>
   )
 }

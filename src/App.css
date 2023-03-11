@@ -1,13 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tilt+Warp&display=swap');
 
 .App {
   text-align: center;
   background: linear-gradient(0deg, rgb(26, 28, 34) 0%, #282c34 93%, rgba(43,47,56,1) 100%);
   color: #faf2fff6;
   scroll-behavior: smooth;
-}
-
-.App-header {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -17,14 +15,24 @@
   padding-bottom: 4rem;
 }
 
-.navbar {
-  width: 100%;
+.App-header {
   background: #232935a6;
-  position: absolute;
+  width: 100%;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 2;
   backdrop-filter: blur(15px);
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px
+}
+
+.navbar h1 {
+  font-family: 'Tilt Warp', cursive;
 }
 
 .navbar-menu {
@@ -34,13 +42,24 @@
   gap: 50px;
   margin: 14px 0;
   font-size: 24px;
-  padding: 0;
 }
 
 .navbar-menu a {
   text-decoration: none;
   color: #fbf2ff;
   cursor: pointer;
+}
+
+.navbar-menu.open {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #232935;
+  padding: 100px 0;
+  position: absolute;
+  top: 48px;
+  left: 0;
+  right: 0;
 }
 
 .Movie-container {
@@ -50,6 +69,15 @@
   justify-content: center;
   align-items: center;
   gap: 20px;
+}
+
+.logo {
+  margin: 0;
+}
+
+.hamburger {
+  display: none;
+  float: right;
 }
 
 .Movie-wrapper {
@@ -145,7 +173,8 @@
 
 .Hero-image-wrapper {
   width: 100%;
-  height: 650px;
+  height: 680px;
+  margin-bottom: 5rem;
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100%;
@@ -173,7 +202,6 @@
 
 .Hero-image-description {
   font-size: 20px;
-
 }
 
 @media (max-width: 1365px) {
@@ -199,12 +227,24 @@
 }
 
 @media (max-width: 768px) {
-  .App-header {
-    padding-bottom: 2rem;
+
+  .navbar h1 {
+    font-size: 1.5rem;
+    padding-top: 8px;
   }
 
-  .App-header h1 {
-    font-size: 1.8rem;
+  .navbar {
+    padding: 0 5px 0 14px;
+  }
+
+  .navbar-menu {
+    margin: 0;
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+    
   }
 
   .Movie-wrapper {
@@ -238,6 +278,7 @@
 
   .Hero-image-wrapper {
     height: 300px;
+    margin-bottom: 4rem;
   }
 
   .Hero-image-info {
@@ -256,12 +297,13 @@
 }
 
 @media (max-width: 480px) {
-  .App-header {
-    padding-bottom: 2rem;
+  .navbar {
+    padding: 0 0 0 8px;
   }
 
-  .App-header h1 {
-    font-size: 1.8rem;
+  .navbar h1 {
+    font-size: 1.2rem;
+    padding-top: 12px;
   }
 
   .navbar-menu {
@@ -277,7 +319,6 @@
     padding: 14px 12px 0 12px;
     margin-bottom: 0;
     margin-top: 8px;
-    
   }
 
   .Movie-date{
@@ -297,6 +338,7 @@
 
   .Hero-image-wrapper {
     height: 200px;
+    margin-bottom: 3rem;
   }
 
   .Hero-image-info {
@@ -314,6 +356,11 @@
 }
 
 @media (max-width: 350px) {
+  .navbar h1 {
+    font-size: 1rem;
+    padding-top: 12px;
+  }
+
   .Hero-image-wrapper {
     height: 155px;
   }
