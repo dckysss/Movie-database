@@ -18,9 +18,6 @@ const First = () => {
     })
   }, []) 
 
-  // onClick={() =>
-    // window.open(`https://www.youtube.com/watch?v=Nfgh5MBd_b0`)}
-
   const NavBar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [hamburgerSize, setHamburgerSize] = useState(24);
@@ -120,17 +117,6 @@ const First = () => {
       setPopularMovies(defaultMovies)
     }
   }
-
-  // window.addEventListener('scroll', function() {
-  //   var scrollPosition = window.scrollY;
-  //   var heroImageHeight = document.querySelector('.Hero-image-wrapper').offsetHeight;
-  //   var navbar = document.querySelector('.navbar');
-  //   if (scrollPosition >= heroImageHeight) {
-  //     navbar.classList.add('sticky');
-  //   } else {
-  //     navbar.classList.remove('sticky');
-  //   }
-  // });
 
   return (
     <div className="App">

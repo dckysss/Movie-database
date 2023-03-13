@@ -3,7 +3,7 @@
 
 .App {
   text-align: center;
-  background: linear-gradient(0deg, rgb(26, 28, 34) 0%, #282c34 93%, rgba(43,47,56,1) 100%);
+  background: linear-gradient(0deg, rgb(26, 28, 34) 0%, rgb(40, 44, 52) 93%, rgba(43,47,56,1) 100%);
   color: #faf2fff6;
   scroll-behavior: smooth;
   min-height: 100vh;
@@ -69,7 +69,7 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 25px;
 }
 
 .logo {
@@ -82,7 +82,7 @@
 }
 
 .Movie-wrapper {
-  width: 500px;
+  width: 420px;
   background: linear-gradient(305deg, #e7ceffd0 0%, #e9beffcc 64%, #f3d8ffc9 100%);
   box-shadow: 0px 0px 10px 0.5px #c792fd98;
   color: black;
@@ -139,9 +139,9 @@
 
 .Movie-title {
   height: 60px;
-  margin-top: 26px;
+  margin-top: 20px;
   margin-bottom: 16px;
-  padding: 0 3px;
+  padding: 0 8px;
   font-family: 'Montserrat', sans-serif;
   color: #3a3a3a;
   font-weight: bold;
@@ -149,6 +149,7 @@
 
 .Movie-date {
   font-style: italic;
+  font-size: 0.9em;
   margin-bottom: 16px;
 }
 
@@ -156,12 +157,13 @@
   color: blue;
   margin-bottom: 24px;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.1em;
   text-decoration: underline;
 }
 
 .Movie-image {
   animation: fadeIn 1s ease-in-out;
+  width: 420px;
 }
 @keyframes fadeIn {
   0% {
@@ -229,7 +231,6 @@
 
 @media (max-width: 768px) {
   
-
   .navbar h1 {
     font-size: 1.5rem;
     padding-top: 8px;
@@ -246,7 +247,6 @@
 
   .hamburger {
     display: block;
-    
   }
 
   .Movie-wrapper {
