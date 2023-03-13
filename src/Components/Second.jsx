@@ -126,7 +126,7 @@ const Second = () => {
       <HeroImage />
         
         <input 
-          placeholder="Search movies..."
+          placeholder="Search TV shows..."
           className="Movie-search"
           onChange={({ target }) => search(target.value)}
         />

@@ -23,6 +23,7 @@
   left: 0;
   z-index: 2;
   backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
 }
 
 .navbar {
@@ -55,15 +56,15 @@
   flex-direction: column;
   align-items: center;
   background-color: #232935;
-  padding: 100px 0;
-  position: absolute;
+  padding: 10rem 0;
+  position: fixed;
   top: 48px;
   left: 0;
-  right: 0;
+  width: 100%;
 }
 
 .Movie-container {
-  width: 100%;
+  width: 90%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -227,6 +228,7 @@
 }
 
 @media (max-width: 768px) {
+  
 
   .navbar h1 {
     font-size: 1.5rem;
