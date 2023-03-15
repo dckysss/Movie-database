@@ -64,7 +64,7 @@
 }
 
 .Movie-container {
-  width: 90%;
+  width: 85%;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -82,7 +82,7 @@
 }
 
 .Movie-wrapper {
-  width: 420px;
+  width: 410px;
   background: linear-gradient(305deg, #e7ceffd0 0%, #e9beffcc 64%, #f3d8ffc9 100%);
   box-shadow: 0px 0px 10px 0.5px #c792fd98;
   color: black;
@@ -99,7 +99,7 @@
 }
 
 .Movie-wrapper:hover {
-  transform: scale(1.09);
+  transform: scale(1.1);
   box-shadow: 0px 0px 50px 5px #C892FD;
   /* cursor: pointer; */
 }
@@ -163,7 +163,7 @@
 
 .Movie-image {
   animation: fadeIn 1s ease-in-out;
-  width: 420px;
+  width: 410px;
 }
 @keyframes fadeIn {
   0% {
@@ -213,7 +213,7 @@
   }
 
   .Hero-image-wrapper {
-    height: 430px;
+    height: 450px;
   }
 
   .Hero-image-info {
@@ -226,6 +226,19 @@
 
   .Hero-image-description {
     font-size: 14px;
+  }
+  
+  .Movie-search {
+    width: 60%;
+    height: 45px;
+  }
+
+  .Movie-wrapper {
+    width: 320px;
+  }
+
+  .Movie-image {
+    width: 100%;
   }
 }
 
@@ -250,12 +263,8 @@
   }
 
   .Movie-wrapper {
-    width: 40%;
+    width: 45%;
     font-size: large;
-  }
-
-  .Movie-image {
-    width: 100%;
   }
 
   .Movie-title {
@@ -273,7 +282,7 @@
   }
 
   .Movie-search {
-    padding: 0 15px;
+    padding: 4px 20px;
     font-size: 16px;
     width: 70%;
   }
@@ -334,7 +343,7 @@
   .Movie-search {
     padding: 0 15px;
     font-size: 14px;
-    width: 75%;
+    width: 65%;
     height: 2.8rem;
   }
 
