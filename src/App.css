@@ -11,7 +11,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(8px + 2vmin);
   padding-bottom: 4rem;
 }
 
@@ -107,7 +107,7 @@
 .Movie-search {
   height: 48px;
   font-size: 24px;
-  margin-bottom: 3.4rem;
+  margin-bottom: 3.7rem;
   padding: 1rem 2rem;
   font-weight: bold;
   width: 45%;
@@ -138,13 +138,19 @@
 }
 
 .Movie-title {
-  height: 60px;
+  height: 65px;
   margin-top: 20px;
   margin-bottom: 16px;
   padding: 0 8px;
   font-family: 'Montserrat', sans-serif;
   color: #3a3a3a;
   font-weight: bold;
+  overflow: hidden;
+}
+
+.Movie-wrapper:hover .Movie-title {
+  height: auto;
+  min-height: 65px;
 }
 
 .Movie-date {
@@ -176,7 +182,7 @@
 
 .Hero-image-wrapper {
   width: 100%;
-  height: 680px;
+  height: 690px;
   margin-bottom: 5rem;
   background-position: center;
   background-repeat: no-repeat;
