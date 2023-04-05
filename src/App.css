@@ -45,10 +45,13 @@
   font-size: 24px;
 }
 
-.navbar-menu a {
-  text-decoration: none;
+.navbar-menu button {
+  background: none;
+  border: none;
   color: #fbf2ff;
   cursor: pointer;
+  font-size: 24px;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .navbar-menu.open {
@@ -56,11 +59,13 @@
   flex-direction: column;
   align-items: center;
   background-color: #232935;
-  padding: 10rem 0;
   position: fixed;
-  top: 48px;
+  top: 45px;
   left: 0;
-  width: 100%;
+  bottom: 0;
+  right: 0;
+  padding: 0;
+  height: 100vh;
 }
 
 .Movie-container {

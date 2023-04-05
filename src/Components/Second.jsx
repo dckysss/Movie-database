@@ -41,9 +41,9 @@ const Second = () => {
       <h1 className="logo">Movie Database</h1>
 
         <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
-            <li><a href="/" onClick={() => navigate('/')}>Movies</a></li>
-            <li><a href="/tv" onClick={() => navigate('/tv')}>TV</a></li>
-            <li><a href="/trending" onClick={() => navigate('/trending')}>Trending</a></li>
+          <li><button onClick={() => navigate('/')}>Movies</button></li>
+          <li><button onClick={() => navigate('/tv')}>TV</button></li>
+          <li><button onClick={() => navigate('/trending')}>Trending</button></li>
         </ul>
 
         <div className="hamburger">
