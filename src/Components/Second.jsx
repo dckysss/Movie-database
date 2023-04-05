@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import "../App.css"
 import { searchTV, getTVList,} from "../api"
 import { useEffect, useState } from "react"
@@ -7,7 +7,8 @@ import placeholderImage from '../Image_not_available.png';
 import { Sling as Hamburger } from 'hamburger-react'
 
 const Second = () => {
-  const navigate = useNavigate()  
+  const navigate = useNavigate()
+  const location = useLocation()
   const [popularTV, setPopularTV] = useState([])
   const [defaultTV, setDefaultTV] = useState(popularTV)
 
@@ -17,6 +18,10 @@ const Second = () => {
       setDefaultTV(result)
     })
   }, []) 
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location])
 
   const NavBar = () => {
     const [menuOpen, setMenuOpen] = useState(false);

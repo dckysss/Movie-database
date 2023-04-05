@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import "../App.css"
 import { getTrendingList} from "../api"
 import { useEffect, useState } from "react"
@@ -8,13 +8,18 @@ import { Sling as Hamburger } from 'hamburger-react'
 
 const Third = () => {
   const navigate = useNavigate()
+  const location = useLocation()
   const [trendings, setTrendings] = useState([])
 
   useEffect(() => {
     getTrendingList().then((result) => {
       setTrendings(result)
     })
-  }, []) 
+  }, [])
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location])
 
   const NavBar = () => {
     const [menuOpen, setMenuOpen] = useState(false);

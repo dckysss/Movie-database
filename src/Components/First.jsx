@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
 import "../App.css"
 import { getMovieList, searchMovie} from "../api"
 import { useEffect, useState } from "react"
@@ -9,6 +9,7 @@ import { Sling as Hamburger } from 'hamburger-react'
 
 const First = () => {
   const navigate = useNavigate()
+  const location = useLocation()
   const [popularMovies, setPopularMovies] = useState([])
   const [defaultMovies, setDefaultMovies] = useState(popularMovies)
   // const { transcript, resetTranscript } = useSpeechRecognition();
@@ -19,6 +20,10 @@ const First = () => {
       setDefaultMovies(result)
     })
   }, []) 
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location])
 
   const NavBar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
