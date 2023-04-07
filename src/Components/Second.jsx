@@ -35,6 +35,10 @@ const Second = () => {
       }
     };
 
+    const refresh = () => {
+      window.location.reload();
+    };
+
     useEffect(() => {
       updateHamburgerSize();
       window.addEventListener('resize', updateHamburgerSize);
@@ -43,11 +47,11 @@ const Second = () => {
 
     return (
       <nav className="navbar">
-      <h1 className="logo">Movie Database</h1>
+      <button onClick={() => navigate('/')} className="logo">Movie Database</button>
 
         <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
           <li><button onClick={() => navigate('/')}>Movies</button></li>
-          <li><button onClick={() => navigate('/tv')}>TV</button></li>
+          <li><button onClick={refresh}>TV</button></li>
           <li><button onClick={() => navigate('/trending')}>Trending</button></li>
         </ul>
 

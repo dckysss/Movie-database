@@ -32,10 +32,6 @@
   padding: 0 20px
 }
 
-.navbar h1 {
-  font-family: 'Tilt Warp', cursive;
-}
-
 .navbar-menu {
   list-style: none;
   display: flex;
@@ -79,6 +75,12 @@
 
 .logo {
   margin: 0;
+  background: none;
+  border: none;
+  font-family: 'Tilt Warp', cursive;
+  font-size: calc(6px + 4vmin);
+  color: #fbf2ff;
+  cursor: pointer;
 }
 
 .hamburger {
@@ -254,13 +256,12 @@
 
 @media (max-width: 768px) {
   
-  .navbar h1 {
-    font-size: 1.5rem;
-    padding-top: 8px;
+  .logo {
+    padding: 0;
   }
 
   .navbar {
-    padding: 0 5px 0 14px;
+    padding: 2px 5px 2px 14px;
   }
 
   .navbar-menu {
@@ -319,7 +320,7 @@
 
 @media (max-width: 480px) {
   .navbar {
-    padding: 0 0 0 8px;
+    padding-left: 8px;
   }
 
   .navbar h1 {
