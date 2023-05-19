@@ -16,20 +16,21 @@
 }
 
 .App-header {
-  background: #232935a6;
   width: 100%;
   position: fixed;
   top: 0;
   left: 0;
   z-index: 2;
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
 }
 
 .navbar {
   display: flex;
   justify-content: space-between;
-  padding: 0 20px
+  padding: 0 20px;
+  background: #232935a6;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  transition: transform .1s ease-in;
 }
 
 .navbar-menu {
@@ -86,6 +87,11 @@
 .hamburger {
   display: none;
   float: right;
+}
+
+.hidden {
+  transform: translateY(-100%);
+  transition: transform 0.3s;
 }
 
 .Movie-wrapper {

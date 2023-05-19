@@ -4,7 +4,7 @@ import { getMovieList, searchMovie} from "../api"
 import { useEffect, useState } from "react"
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import placeholderImage from '../Image_not_available.png';
-import { Sling as Hamburger } from 'hamburger-react'
+import { Sling as Hamburger } from 'hamburger-react';
 // import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition"
 
 const First = () => {
@@ -28,6 +28,8 @@ const First = () => {
   const NavBar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [hamburgerSize, setHamburgerSize] = useState(24);
+    const [prevScrollPos, setPrevScrollPos] = useState(0);
+    const [visible, setVisible] = useState(true);
 
     const updateHamburgerSize = () => {
       if (window.innerWidth <= 480) {
@@ -39,16 +41,29 @@ const First = () => {
 
     const refresh = () => {
         window.location.reload();
-      }
+    }
 
     useEffect(() => {
+      const handleScroll = () => {
+        const currentScrollPos = window.pageYOffset;
+        const visible = prevScrollPos > currentScrollPos;
+      
+        setPrevScrollPos(currentScrollPos);
+        setVisible(visible);
+      };
+
       updateHamburgerSize();
       window.addEventListener('resize', updateHamburgerSize);
-      return () => window.removeEventListener('resize', updateHamburgerSize);
-    }, []);
+      window.addEventListener('scroll', handleScroll);
+
+      return () => {
+        window.removeEventListener('resize', updateHamburgerSize);
+        window.removeEventListener('scroll', handleScroll);
+      }
+    }, [prevScrollPos]);
 
     return (
-      <nav className="navbar">
+      <nav className={`navbar ${visible ? '' : 'hidden'}`}>
       <button onClick={refresh} className="logo">Movie Database</button>
 
         <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
@@ -73,7 +88,7 @@ const First = () => {
   const PopularMovieList = () => {
     return popularMovies.map((movie, i) => {
       return (
-        <div className="Movie-wrapper" key={i}>
+        <div className="Movie-wrapper" key={i} title={movie.title}>
           <div className="Movie-title">{movie.title}</div>
           <LazyLoadImage 
             className="Movie-image" 
