@@ -5,6 +5,8 @@ import { useEffect, useState } from "react"
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import placeholderImage from '../Image_not_available.png';
 import { Sling as Hamburger } from 'hamburger-react'
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const Third = () => {
   const navigate = useNavigate()
@@ -24,6 +26,8 @@ const Third = () => {
   const NavBar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [hamburgerSize, setHamburgerSize] = useState(24);
+    const [prevScrollPos, setPrevScrollPos] = useState(0);
+    const [visible, setVisible] = useState(true);
 
     const updateHamburgerSize = () => {
       if (window.innerWidth <= 480) {
@@ -38,13 +42,26 @@ const Third = () => {
     };
 
     useEffect(() => {
+      const handleScroll = () => {
+        const currentScrollPos = window.pageYOffset;
+        const visible = prevScrollPos > currentScrollPos;
+      
+        setPrevScrollPos(currentScrollPos);
+        setVisible(visible);
+      };
+
       updateHamburgerSize();
       window.addEventListener('resize', updateHamburgerSize);
-      return () => window.removeEventListener('resize', updateHamburgerSize);
-    }, []);
+      window.addEventListener('scroll', handleScroll);
+
+      return () => {
+        window.removeEventListener('resize', updateHamburgerSize);
+        window.removeEventListener('scroll', handleScroll);
+      }
+    }, [prevScrollPos]);
 
     return (
-      <nav className="navbar">
+      <nav className={`navbar ${visible ? '' : 'hidden'}`}>
       <button onClick={() => navigate('/')} className="logo">Movie Database</button>
 
         <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
@@ -133,7 +150,7 @@ const Third = () => {
         <NavBar />
       </header>
       <HeroImage />
-      <div className="Movie-container">
+      <div className="Movie-container" data-aos="fade-up">
         <TrendingList />
       </div>
     </div>
