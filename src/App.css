@@ -72,6 +72,7 @@
   justify-content: center;
   align-items: center;
   gap: 22px;
+  margin-top: 1rem;
 }
 
 .logo {
@@ -95,7 +96,7 @@
 }
 
 .Movie-wrapper {
-  width: 410px;
+  width: 25.625rem;
   background: linear-gradient(305deg, #e7ceffd0 0%, #e9beffcc 64%, #f3d8ffc9 100%);
   box-shadow: 0px 0px 10px 0.5px #c792fd98;
   color: black;
@@ -181,7 +182,9 @@
 
 .Movie-image {
   animation: fadeIn 1s ease-in-out;
-  width: 410px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 @keyframes fadeIn {
   0% {

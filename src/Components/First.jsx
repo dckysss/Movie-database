@@ -5,6 +5,8 @@ import { useEffect, useState } from "react"
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import placeholderImage from '../Image_not_available.png';
 import { Sling as Hamburger } from 'hamburger-react';
+import AOS from "aos";
+import "aos/dist/aos.css";
 // import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition"
 
 const First = () => {
@@ -86,6 +88,10 @@ const First = () => {
   }
 
   const PopularMovieList = () => {
+    useEffect(() => {
+      AOS.init({ duration: 1000 });
+    }, []);
+
     return popularMovies.map((movie, i) => {
       return (
         <div className="Movie-wrapper" key={i} title={movie.title}>
@@ -164,7 +170,7 @@ const First = () => {
           className="Movie-search"
           onChange={({ target }) => search(target.value)}
         />
-        <div className="Movie-container">
+        <div className="Movie-container" data-aos="fade-up">
           <PopularMovieList />
         </div>
     </div>
