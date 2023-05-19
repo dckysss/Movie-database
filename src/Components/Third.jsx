@@ -88,6 +88,10 @@ const Third = () => {
   });
 
   const TrendingList = () => {
+    useEffect(() => {
+      AOS.init({ duration: 1000 });
+    }, []);
+    
     return filteredTrendings.map((trending, i) => {
       const resultObj = {
           title: trending.title,  
