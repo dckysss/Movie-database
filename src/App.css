@@ -142,17 +142,11 @@
   font-weight: bolder;
 }
 
-.bgBtn {
-  position: absolute;
-  top: 625px;
-  right: 20px;
-}
-
 .Movie-title {
-  height: 65px;
-  margin-top: 20px;
-  margin-bottom: 16px;
-  padding: 0 8px;
+  height: 4rem;
+  margin-top: 1.25rem;
+  margin-bottom: 1rem;
+  padding: 0 0.5rem;
   font-family: 'Montserrat', sans-serif;
   color: #3a3a3a;
   font-weight: bold;
@@ -161,13 +155,13 @@
 
 .Movie-wrapper:hover .Movie-title {
   height: auto;
-  min-height: 65px;
+  min-height: 4rem;
 }
 
 .Movie-date {
   font-style: italic;
   font-size: 0.9em;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 .Movie-rate {
@@ -283,13 +277,13 @@
   }
 
   .Movie-title {
-    padding: 2px 12px;
+    padding: 0.125rem 0.75rem;
     margin-bottom: 0;
-    margin-top: 10px;
+    margin-top: 0.625rem;
   }
 
   .Movie-date{
-    margin-bottom: 2px;
+    margin-bottom: 0.4rem;
   }
 
   .Movie-rate {
@@ -303,14 +297,14 @@
   }
 
   .Hero-image-wrapper {
-    height: 300px;
+    height: 18.75rem;
     margin-bottom: 4rem;
   }
 
   .Hero-image-info {
     padding: 0 6px 0 6px;
     max-width: 90%;
-    bottom: 20px;
+    bottom: 1.25rem;
   }
 
   .Hero-image-title {
@@ -318,7 +312,7 @@
   }
 
   .Hero-image-description {
-    font-size: 10px;
+    font-size: 0.625rem;
   }
 }
 
@@ -338,17 +332,12 @@
 
   .Movie-wrapper {
     width: 85%;
-    font-size: 18px;
   }
 
   .Movie-title {
-    padding: 14px 12px 0 12px;
+    padding: 0.875rem 0.75rem 0 0.75rem;
     margin-bottom: 0;
-    margin-top: 8px;
-  }
-
-  .Movie-date{
-    margin-bottom: 2px;
+    margin-top: 0.5rem;
   }
 
   .Movie-rate {
@@ -388,6 +377,6 @@
   }
 
   .Hero-image-wrapper {
-    height: 155px;
+    height: 9.6rem;
   }
 }
