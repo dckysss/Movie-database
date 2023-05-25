@@ -3,7 +3,7 @@
 
 .App {
   text-align: center;
-  background: linear-gradient(0deg, rgb(26, 28, 34) 0%, rgb(40, 44, 52) 93%, rgba(43,47,56,1) 100%);
+  background: linear-gradient(0deg, rgb(26, 28, 34) 0%, rgb(40, 44, 52) 85%, rgb(43, 47, 56) 100%);
   color: #faf2fff6;
   scroll-behavior: smooth;
   min-height: 100vh;
@@ -23,47 +23,6 @@
   z-index: 2;
 }
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  padding: 0 20px;
-  background: #232935a6;
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  transition: transform .1s ease-in;
-}
-
-.navbar-menu {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  gap: 50px;
-  margin: 14px 0;
-}
-
-.navbar-menu button {
-  background: none;
-  border: none;
-  color: #fbf2ff;
-  cursor: pointer;
-  font-size: 1.5rem;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-.navbar-menu.open {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #232935;
-  position: fixed;
-  top: 48px;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  padding: 0;
-  height: 95vh;
-}
-
 .Movie-container {
   width: 85%;
   display: flex;
@@ -72,26 +31,7 @@
   align-items: center;
   gap: 22px;
   margin-top: 1rem;
-}
-
-.logo {
-  margin: 0;
-  background: none;
-  border: none;
-  font-family: 'Tilt Warp', cursive;
-  font-size: calc(6px + 4vmin);
-  color: #fbf2ff;
-  cursor: pointer;
-}
-
-.hamburger {
-  display: none;
-  float: right;
-}
-
-.hidden {
-  transform: translateY(-100%);
-  transition: transform 0.3s;
+  margin-bottom: 3.5rem;
 }
 
 .Movie-wrapper {
@@ -114,6 +54,25 @@
 .Movie-wrapper:hover {
   transform: scale(1.1);
   box-shadow: 0px 0px 50px 5px #C892FD;
+}
+
+.load-more {
+  border: 0.15rem solid #c300ff;
+  padding: 0.7rem 3rem;
+  border-radius: 2rem;
+  background: transparent;
+  font-size: 1.25rem;
+  font-family: 'Inconsolata', monospace;
+  color: #c300ff;
+  box-shadow: 0px 0px 8px rgba(195, 0, 255, 0.6);
+  cursor: pointer;
+  transition: .25s ease;
+}
+
+.load-more:hover {
+  background: #c300ff;
+  color: white;
+  box-shadow: none;
 }
 
 .Movie-search {
@@ -253,23 +212,6 @@
 }
 
 @media (max-width: 768px) {
-  
-  .logo {
-    padding: 0;
-  }
-
-  .navbar {
-    padding: 2px 5px 2px 14px;
-  }
-
-  .navbar-menu {
-    margin: 0;
-    display: none;
-  }
-
-  .hamburger {
-    display: block;
-  }
 
   .Movie-wrapper {
     width: 45%;
@@ -317,19 +259,6 @@
 }
 
 @media (max-width: 480px) {
-  .navbar {
-    padding-left: 8px;
-  }
-
-  .navbar h1 {
-    font-size: 1.2rem;
-    padding-top: 12px;
-  }
-
-  .navbar-menu {
-    display: none;
-  }
-
   .Movie-wrapper {
     width: 85%;
   }

@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom"
 import "../App.css"
+import "../navbar.css"
 import { getMovieList, searchMovie} from "../api"
 import { useEffect, useState } from "react"
 import { LazyLoadImage } from 'react-lazy-load-image-component'
@@ -14,6 +15,7 @@ const First = () => {
   const location = useLocation()
   const [popularMovies, setPopularMovies] = useState([])
   const [defaultMovies, setDefaultMovies] = useState(popularMovies)
+  const [page, setPage] = useState(1);
   // const { transcript, resetTranscript } = useSpeechRecognition();
 
   useEffect(() => {
@@ -85,6 +87,13 @@ const First = () => {
         </div>
       </nav>
     )
+  }
+
+  const loadMore = async () => {
+    const nextPage = page + 1;
+    const newMovies = await getMovieList(nextPage);
+    setPopularMovies((prevMovies) => [...prevMovies, ...newMovies]);
+    setPage(nextPage);
   }
 
   const PopularMovieList = () => {
@@ -172,6 +181,9 @@ const First = () => {
         />
         <div className="Movie-container" data-aos="fade-up">
           <PopularMovieList />
+        </div>
+        <div>
+          <button className="load-more" onClick={loadMore}>Load more</button>
         </div>
     </div>
   )

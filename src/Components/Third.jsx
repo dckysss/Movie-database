@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom"
 import "../App.css"
+import "../navbar.css"
 import { getTrendingList} from "../api"
 import { useEffect, useState } from "react"
 import { LazyLoadImage } from 'react-lazy-load-image-component'

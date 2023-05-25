@@ -1,5 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom"
 import "../App.css"
+import "../navbar.css"
 import { searchTV, getTVList,} from "../api"
 import { useEffect, useState } from "react"
 import { LazyLoadImage } from 'react-lazy-load-image-component'
@@ -13,6 +14,7 @@ const Second = () => {
   const location = useLocation()
   const [popularTV, setPopularTV] = useState([])
   const [defaultTV, setDefaultTV] = useState(popularTV)
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     getTVList().then((result) => {
@@ -83,6 +85,13 @@ const Second = () => {
         </div>
       </nav>
     )
+    }
+
+    const loadMore = async () => {
+      const nextPage = page + 1;
+      const newMovies = await getTVList(nextPage);
+      setPopularTV((prevMovies) => [...prevMovies, ...newMovies]);
+      setPage(nextPage);
     }
 
   const PopularTVList = () => {
@@ -162,6 +171,9 @@ const Second = () => {
         />
         <div className="Movie-container" data-aos="fade-up">
           <PopularTVList />
+        </div>
+        <div>
+          <button className="load-more" onClick={loadMore}>Load more</button>
         </div>
     </div>
   )

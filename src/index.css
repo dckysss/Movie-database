@@ -25,7 +25,7 @@ code {
 }
 
 ::-webkit-scrollbar-track {
-  background: linear-gradient(0deg, #1a1c22 0%, #282c34 93%, #2b2f38 100%);
+  background: #1a1c22;
 }
 
 ::-webkit-scrollbar-thumb {
