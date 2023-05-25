@@ -46,7 +46,7 @@ const Second = () => {
     useEffect(() => {
       const handleScroll = () => {
         const currentScrollPos = window.pageYOffset;
-        const visible = prevScrollPos > currentScrollPos;
+        const visible = prevScrollPos > currentScrollPos || menuOpen;
       
         setPrevScrollPos(currentScrollPos);
         setVisible(visible);
@@ -60,7 +60,7 @@ const Second = () => {
         window.removeEventListener('resize', updateHamburgerSize);
         window.removeEventListener('scroll', handleScroll);
       }
-    }, [prevScrollPos]);
+    }, [prevScrollPos, menuOpen]);
 
     return (
       <nav className={`navbar ${visible ? '' : 'hidden'}`}>
