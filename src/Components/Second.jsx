@@ -18,6 +18,7 @@ const Second = () => {
   const [hasMorePages, setHasMorePages] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
   const [isSearching, setIsSearching] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     getTVList().then((result) => {
@@ -92,12 +93,22 @@ const Second = () => {
 
     const loadMore = async () => {
       const nextPage = page + 1;
-      const newMovies = await getTVList(nextPage);
-      if (newMovies.length > 0) {
-        setPopularTV((prevMovies) => [...prevMovies, ...newMovies])
-        setPage(nextPage)
+      if (isSearching) {
+        const newTV = await searchTV(searchQuery, nextPage);
+        if (newTV.results.length > 0) {
+          setPopularTV((prevTV) => [...prevTV, ...newTV.results]);
+          setPage(nextPage);
+        } else {
+          setHasMorePages(false);
+        }
       } else {
-        setHasMorePages(false)
+        const newTV = await getTVList(nextPage);
+        if (newTV.length > 0) {
+          setPopularTV((prevTV) => [...prevTV, ...newTV]);
+          setPage(nextPage);
+        } else {
+          setHasMorePages(false);
+        }
       }
     }
 
@@ -169,6 +180,7 @@ const Second = () => {
       setPage(1)
       setIsSearching(false)
     }
+    setSearchQuery(q);
   }
 
   return (
@@ -187,7 +199,7 @@ const Second = () => {
           <PopularTVList />
         </div>
         <div>
-          {hasMorePages && page < totalPages && (
+          {isSearching && hasMorePages && page < totalPages && (
             <button className="load-more" onClick={loadMore}>
               Load more
             </button>
