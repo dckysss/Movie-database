@@ -18,6 +18,7 @@ const First = () => {
   const [hasMorePages, setHasMorePages] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
   const [isSearching, setIsSearching] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     getMovieList().then((result) => {
@@ -92,12 +93,22 @@ const First = () => {
 
   const loadMore = async () => {
     const nextPage = page + 1;
-    const newMovies = await getMovieList(nextPage);
-    if (newMovies.length > 0) {
-      setPopularMovies((prevMovies) => [...prevMovies, ...newMovies])
-      setPage(nextPage)
+    if (isSearching) {
+      const newMovies = await searchMovie(searchQuery, nextPage);
+      if (newMovies.results.length > 0) {
+        setPopularMovies((prevMovies) => [...prevMovies, ...newMovies.results]);
+        setPage(nextPage);
+      } else {
+        setHasMorePages(false);
+      }
     } else {
-      setHasMorePages(false)
+      const newMovies = await getMovieList(nextPage);
+      if (newMovies.length > 0) {
+        setPopularMovies((prevMovies) => [...prevMovies, ...newMovies]);
+        setPage(nextPage);
+      } else {
+        setHasMorePages(false);
+      }
     }
   }
 
@@ -168,8 +179,8 @@ const First = () => {
       setHasMorePages(true);
       setPage(1)
       setIsSearching(false)
-      console.log(isSearching)
     }
+    setSearchQuery(q);
   }
 
   return (
