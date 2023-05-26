@@ -16,6 +16,7 @@ const First = () => {
   const [defaultMovies, setDefaultMovies] = useState(popularMovies)
   const [page, setPage] = useState(1);
   const [hasMorePages, setHasMorePages] = useState(true);
+  const [totalPages, setTotalPages] = useState(0);
   const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
@@ -154,18 +155,19 @@ const First = () => {
     return null;
   }
 
-  const search = async (q) => {
+  const search = async (q, page) => {
     if (q.length > 2) {
-      const query = await searchMovie(q)
+      const query = await searchMovie(q, page)
       setPopularMovies(query.results)
       setHasMorePages(query.results.length > 0);
       setPage(1)
-      setIsSearching(true);
+      setTotalPages(query.totalPages);
+      setIsSearching(true)
     } else {
       setPopularMovies(defaultMovies)
       setHasMorePages(true);
       setPage(1)
-      setIsSearching(false);
+      setIsSearching(false)
     }
   }
 
@@ -179,13 +181,19 @@ const First = () => {
         <input 
           placeholder="Search movies..."
           className="Movie-search"
-          onChange={({ target }) => search(target.value)}
+          onChange={({ target }) => search(target.value, page)}
         />
         <div className="Movie-container" data-aos="fade-up">
           <PopularMovieList />
         </div>
         <div>
-          {!isSearching && hasMorePages && popularMovies.length > 0 && (
+          {hasMorePages && page < totalPages && (
+            <button className="load-more" onClick={loadMore}>
+              Load more
+            </button>
+          )}
+
+          {!isSearching && hasMorePages && (
             <button className="load-more" onClick={loadMore}>
               Load more
             </button>
