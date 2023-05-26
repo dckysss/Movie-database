@@ -8,7 +8,6 @@ import placeholderImage from '../Image_not_available.png';
 import { Sling as Hamburger } from 'hamburger-react';
 import AOS from "aos";
 import "aos/dist/aos.css";
-// import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition"
 
 const First = () => {
   const navigate = useNavigate()
@@ -16,7 +15,8 @@ const First = () => {
   const [popularMovies, setPopularMovies] = useState([])
   const [defaultMovies, setDefaultMovies] = useState(popularMovies)
   const [page, setPage] = useState(1);
-  // const { transcript, resetTranscript } = useSpeechRecognition();
+  const [hasMorePages, setHasMorePages] = useState(true);
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     getMovieList().then((result) => {
@@ -92,8 +92,12 @@ const First = () => {
   const loadMore = async () => {
     const nextPage = page + 1;
     const newMovies = await getMovieList(nextPage);
-    setPopularMovies((prevMovies) => [...prevMovies, ...newMovies]);
-    setPage(nextPage);
+    if (newMovies.length > 0) {
+      setPopularMovies((prevMovies) => [...prevMovies, ...newMovies])
+      setPage(nextPage)
+    } else {
+      setHasMorePages(false)
+    }
   }
 
   const PopularMovieList = () => {
@@ -151,19 +155,17 @@ const First = () => {
   }
 
   const search = async (q) => {
-    // if (transcript) {
-    //   q = transcript;
-    //   const movieSearch = document.getElementsByClassName("Movie-search");
-    //   movieSearch.value = transcript;
-    // }
-    // <button onClick={SpeechRecognition.startListening}>Start</button>
-    // <button onClick={() => {SpeechRecognition.stopListening(); resetTranscript();}}>Stop</button>
-
     if (q.length > 2) {
       const query = await searchMovie(q)
       setPopularMovies(query.results)
+      setHasMorePages(query.results.length > 0);
+      setPage(1)
+      setIsSearching(true);
     } else {
       setPopularMovies(defaultMovies)
+      setHasMorePages(true);
+      setPage(1)
+      setIsSearching(false);
     }
   }
 
@@ -183,7 +185,11 @@ const First = () => {
           <PopularMovieList />
         </div>
         <div>
-          <button className="load-more" onClick={loadMore}>Load more</button>
+          {!isSearching && hasMorePages && popularMovies.length > 0 && (
+            <button className="load-more" onClick={loadMore}>
+              Load more
+            </button>
+          )}
         </div>
     </div>
   )
