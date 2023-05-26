@@ -168,6 +168,7 @@ const First = () => {
       setHasMorePages(true);
       setPage(1)
       setIsSearching(false)
+      console.log(isSearching)
     }
   }
 
@@ -187,7 +188,7 @@ const First = () => {
           <PopularMovieList />
         </div>
         <div>
-          {hasMorePages && page < totalPages && (
+          {isSearching && hasMorePages && page < totalPages && (
             <button className="load-more" onClick={loadMore}>
               Load more
             </button>
