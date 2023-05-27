@@ -35,3 +35,25 @@ export const getTrendingList = async() => {
     const trending = await axios.get(`${baseUrl}/trending/all/week?page=1&api_key=${apiKey}`)
     return trending.data.results
 }
+
+export const getMovieTrailer = async (movieId) => {
+    try {
+      const response = await axios.get(
+        `${baseUrl}/movie/${movieId}/videos`,
+        {
+          params: {
+            api_key: apiKey,
+          },
+        }
+      );
+      const trailers = response.data.results;
+      if (trailers.length > 0) {
+        const trailerKey = trailers[0].key;
+        window.open(`https://www.youtube.com/watch?v=${trailerKey}`, "_blank");
+      } else {
+        alert("No trailers found for this movie.");
+      }
+    } catch (error) {
+      alert("Error fetching movie trailers:", error);
+    }
+  };

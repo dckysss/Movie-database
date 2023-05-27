@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom"
 import "../App.css"
 import "../navbar.css"
-import { getMovieList, searchMovie} from "../api"
+import { getMovieList, searchMovie, getMovieTrailer} from "../api"
 import { useEffect, useState } from "react"
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import placeholderImage from '../Image_not_available.png';
@@ -119,7 +119,7 @@ const First = () => {
 
     return popularMovies.map((movie, i) => {
       return (
-        <div className="Movie-wrapper" key={i} title={movie.title}>
+        <div className="Movie-wrapper" key={i} title={movie.title} onClick={() => getMovieTrailer(movie.id)}>
           <div className="Movie-title">{movie.title}</div>
           <LazyLoadImage 
             className="Movie-image" 
