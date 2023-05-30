@@ -10,6 +10,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import ScrollTopButton from "./scrollTop/scrollTop";
 import HeroImageMovies from './heroImage/heroImage';
+import SpeechToText from "./speechRecognition/speechRecognition";
 
 const First = () => {
   const navigate = useNavigate()
@@ -48,7 +49,7 @@ const First = () => {
     };
 
     const refresh = () => {
-        window.location.reload();
+      window.location.reload();
     }
 
     useEffect(() => {
@@ -138,8 +139,13 @@ const First = () => {
     })
   }
 
+  useEffect(() => {
+    search(searchQuery, page);
+    // eslint-disable-next-line
+  }, [searchQuery]);
+
   const search = async (q, page) => {
-    if (q.length > 2) {
+    if (q.length > 3) {
       const query = await searchMovie(q, page)
       setPopularMovies(query.results)
       setHasMorePages(query.results.length > 0);
@@ -162,29 +168,34 @@ const First = () => {
       </header>
       <HeroImageMovies />
         
+      <div className="search-container">
         <input 
           placeholder="Search movies..."
           className="Movie-search"
-          onChange={({ target }) => search(target.value, page)}
+          value={searchQuery}
+          onChange={({ target }) => setSearchQuery(target.value, page)}
         />
-        <div className="Movie-container" data-aos="fade-up">
-          <PopularMovieList />
-        </div>
-        <div>
-          {isSearching && hasMorePages && page < totalPages && (
-            <button className="load-more" onClick={loadMore}>
-              Load more
-            </button>
-          )}
+        <SpeechToText setSearchQuery={setSearchQuery} />
+      </div>
+        
+      <div className="Movie-container" data-aos="fade-up">
+        <PopularMovieList />
+      </div>
+      <div>
+        {isSearching && hasMorePages && page < totalPages && (
+          <button className="load-more" onClick={loadMore}>
+            Load more
+          </button>
+        )}
 
-          {!isSearching && hasMorePages && (
-            <button className="load-more" onClick={loadMore}>
-              Load more
-            </button>
-          )}
+        {!isSearching && hasMorePages && (
+          <button className="load-more" onClick={loadMore}>
+            Load more
+          </button>
+        )}
 
-          <ScrollTopButton />
-        </div>
+        <ScrollTopButton />
+      </div>
     </div>
   )
 }

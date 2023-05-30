@@ -10,6 +10,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import ScrollTopButton from "./scrollTop/scrollTop";
 import HeroImageTV from './heroImage/heroImageTV';
+import SpeechToText from "./speechRecognition/speechRecognition";
 
 const Second = () => {
   const navigate = useNavigate();
@@ -138,6 +139,11 @@ const Second = () => {
     })
   }
 
+  useEffect(() => {
+    search(searchQuery, page);
+    // eslint-disable-next-line
+  }, [searchQuery]);
+
   const search = async (q, page) => {
     if (q.length > 2) {
       const query = await searchTV(q, page)
@@ -165,8 +171,12 @@ const Second = () => {
         <input 
           placeholder="Search TV shows..."
           className="Movie-search"
+          value={searchQuery}
           onChange={({ target }) => search(target.value, page)}
         />
+
+        <SpeechToText setSearchQuery={setSearchQuery} />
+
         <div className="Movie-container" data-aos="fade-up">
           <PopularTVList />
         </div>

@@ -1,0 +1,11 @@
+button {
+    background: none;
+    border: none;
+    border-left: 1px #faf2fff6 solid;
+    cursor: pointer;
+}
+
+button img {
+    width: calc(1.2rem + 1vw);
+    margin-left: 0.25rem;
+}
