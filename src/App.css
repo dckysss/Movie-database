@@ -11,7 +11,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(8px + 2vmin);
+  font-size: calc(6px + 2vmin);
   padding-bottom: 4rem;
 }
 
@@ -35,7 +35,7 @@
 }
 
 .Movie-wrapper {
-  width: 25.625rem;
+  width: 25.5rem;
   background: linear-gradient(305deg, #e7ceffd0 0%, #e9beffcc 64%, #f3d8ffc9 100%);
   box-shadow: 0px 0px 10px 0.5px #c792fd98;
   color: black;
@@ -66,7 +66,7 @@
   font-size: 1.25rem;
   font-family: 'Inconsolata', monospace;
   color: #c300ff;
-  box-shadow: 0px 0px 8px rgba(195, 0, 255, 0.6);
+  box-shadow: 0px 0px 8px rgba(195, 0, 255, 0.5);
   cursor: pointer;
   transition: .25s ease;
 }
@@ -182,7 +182,7 @@
   font-size: 1.25rem;
 }
 
-@media (max-width: 1365px) {
+@media (max-width: 1366px) {
 
   .Hero-image-wrapper {
     height: 28rem;
@@ -206,7 +206,7 @@
   }
 
   .Movie-wrapper {
-    width: 20rem;
+    width: 19.5rem;
   }
 
   .Movie-image {

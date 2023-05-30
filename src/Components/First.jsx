@@ -8,6 +8,7 @@ import placeholderImage from '../Image_not_available.png';
 import { Sling as Hamburger } from 'hamburger-react';
 import AOS from "aos";
 import "aos/dist/aos.css";
+import BackToTopButton from "./backToTop/backToTopButton";
 
 const First = () => {
   const navigate = useNavigate()
@@ -210,6 +211,8 @@ const First = () => {
               Load more
             </button>
           )}
+
+          <BackToTopButton />
         </div>
     </div>
   )
