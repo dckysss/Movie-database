@@ -9,6 +9,7 @@ import { Sling as Hamburger } from 'hamburger-react';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import ScrollTopButton from "./scrollTop/scrollTop";
+import HeroImageMovies from './heroImage/heroImage';
 
 const First = () => {
   const navigate = useNavigate()
@@ -137,36 +138,6 @@ const First = () => {
     })
   }
 
-  const HeroImage = () => {
-    const r = Math.floor(Math.random() * popularMovies.length)
-    const [currentMovieIndex, setCurrentMovieIndex] = useState(r);
-      useEffect(() => {
-        const interval = setInterval(() => {
-            if (currentMovieIndex === popularMovies.length - 1) {
-                setCurrentMovieIndex(0);
-            } else {
-                setCurrentMovieIndex(currentMovieIndex + 1);
-            }
-        }, 10000);
-        return () => clearInterval(interval);
-      }, [currentMovieIndex]);
-
-    if (popularMovies.length) {
-        const heroMovie = popularMovies[currentMovieIndex];
-        return (
-          <div 
-            style={{ backgroundImage: `url(${process.env.REACT_APP_ORIGINALIMGURL}/${heroMovie.backdrop_path})`}} 
-            className="Hero-image-wrapper">
-            <div className="Hero-image-info">
-              <h2 className="Hero-image-title">{heroMovie.title}</h2>
-              <p className="Hero-image-description">{heroMovie.overview}</p>
-            </div>
-          </div>
-      )
-    }
-    return null;
-  }
-
   const search = async (q, page) => {
     if (q.length > 2) {
       const query = await searchMovie(q, page)
@@ -189,7 +160,7 @@ const First = () => {
       <header className="App-header">
         <NavBar />
       </header>
-      <HeroImage />
+      <HeroImageMovies />
         
         <input 
           placeholder="Search movies..."

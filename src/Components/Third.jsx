@@ -9,6 +9,7 @@ import { Sling as Hamburger } from 'hamburger-react'
 import AOS from "aos";
 import "aos/dist/aos.css";
 import ScrollTopButton from "./scrollTop/scrollTop";
+import HeroImageTrending from "./heroImage/heroImageTrending"
 
 const Third = () => {
   const navigate = useNavigate()
@@ -119,43 +120,12 @@ const Third = () => {
     })
   }
 
-  const HeroImage = () => {
-    const r = Math.floor(Math.random() * filteredTrendings.length)
-    const [currentTrendingIndex, setCurrentTrendingIndex] = useState(r);
-      useEffect(() => {
-        const interval = setInterval(() => {
-            if (currentTrendingIndex === filteredTrendings.length - 1) {
-                setCurrentTrendingIndex(0);
-            } else {
-                setCurrentTrendingIndex(currentTrendingIndex + 1);
-            }
-        }, 10000);
-        return () => clearInterval(interval);
-      }, [currentTrendingIndex]);
-
-    if (trendings.length) {
-        const heroTrending = filteredTrendings[currentTrendingIndex];
-        const title = heroTrending.title || heroTrending.name;
-        return (
-          <div 
-            style={{ backgroundImage: `url(${process.env.REACT_APP_ORIGINALIMGURL}/${heroTrending.backdrop_path})`}} 
-            className="Hero-image-wrapper">
-            <div className="Hero-image-info">
-              <h2 className="Hero-image-title">{title}</h2>
-              <p className="Hero-image-description">{heroTrending.overview}</p>
-            </div>
-          </div>
-      )
-    }
-    return null;
-  }
-
   return (
     <div className="App">
       <header className="App-header">
         <NavBar />
       </header>
-      <HeroImage />
+      <HeroImageTrending />
       <div className="Movie-container" data-aos="fade-up">
         <TrendingList />
       </div>

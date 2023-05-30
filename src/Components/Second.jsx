@@ -9,6 +9,7 @@ import { Sling as Hamburger } from 'hamburger-react'
 import AOS from "aos";
 import "aos/dist/aos.css";
 import ScrollTopButton from "./scrollTop/scrollTop";
+import HeroImageTV from './heroImage/heroImageTV';
 
 const Second = () => {
   const navigate = useNavigate();
@@ -137,36 +138,6 @@ const Second = () => {
     })
   }
 
-  const HeroImage = () => {
-    const r = Math.floor(Math.random() * popularTV.length)
-    const [currentTVIndex, setCurrentTVIndex] = useState(r);
-      useEffect(() => {
-        const interval = setInterval(() => {
-            if (currentTVIndex === popularTV.length - 1) {
-                setCurrentTVIndex(0);
-            } else {
-                setCurrentTVIndex(currentTVIndex + 1);
-            }
-        }, 10000);
-        return () => clearInterval(interval);
-      }, [currentTVIndex]);
-
-    if (popularTV.length) {
-        const heroTV = popularTV[currentTVIndex];
-        return (
-          <div 
-            style={{ backgroundImage: `url(${process.env.REACT_APP_ORIGINALIMGURL}/${heroTV.backdrop_path})`}} 
-            className="Hero-image-wrapper">
-            <div className="Hero-image-info">
-              <h2 className="Hero-image-title">{heroTV.name}</h2>
-              <p className="Hero-image-description">{heroTV.overview}</p>
-            </div>
-          </div>
-      )
-    }
-    return null;
-  }
-
   const search = async (q, page) => {
     if (q.length > 2) {
       const query = await searchTV(q, page)
@@ -189,7 +160,7 @@ const Second = () => {
       <header className="App-header">
         <NavBar />
       </header>
-      <HeroImage />
+      <HeroImageTV />
         
         <input 
           placeholder="Search TV shows..."
