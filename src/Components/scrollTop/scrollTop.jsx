@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './backToTopButton.css';
+import './scrollTop.css';
 
-const BackToTopButton = () => {
+const ScrollTopButton = () => {
     const [isVisible, setIsVisible] = useState(false);
   
     useEffect(() => {
@@ -28,4 +28,4 @@ const BackToTopButton = () => {
     );
   };
 
-  export default BackToTopButton;
+  export default ScrollTopButton;

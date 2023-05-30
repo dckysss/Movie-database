@@ -8,7 +8,7 @@ import placeholderImage from '../Image_not_available.png';
 import { Sling as Hamburger } from 'hamburger-react'
 import AOS from "aos";
 import "aos/dist/aos.css";
-import BackToTopButton from "./backToTop/backToTopButton";
+import ScrollTopButton from "./scrollTop/scrollTop";
 
 const Third = () => {
   const navigate = useNavigate()
@@ -159,7 +159,7 @@ const Third = () => {
       <div className="Movie-container" data-aos="fade-up">
         <TrendingList />
       </div>
-      <BackToTopButton />
+      <ScrollTopButton />
     </div>
   )
 }
