@@ -168,14 +168,15 @@ const Second = () => {
       </header>
       <HeroImageTV />
         
+      <div className="search-container">
         <input 
-          placeholder="Search TV shows..."
+          placeholder="Search movies..."
           className="Movie-search"
           value={searchQuery}
-          onChange={({ target }) => search(target.value, page)}
+          onChange={({ target }) => setSearchQuery(target.value, page)}
         />
-
         <SpeechToText setSearchQuery={setSearchQuery} />
+      </div>
 
         <div className="Movie-container" data-aos="fade-up">
           <PopularTVList />
