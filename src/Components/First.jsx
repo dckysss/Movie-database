@@ -150,7 +150,11 @@ const First = () => {
     setIsListening(isListening);
   };
 
-  const search = debounce(async (q, page) => {
+  const debouncedSearch = debounce((q) => {
+    setSearchQuery(q);
+  }, 300);
+
+  const search = async (q, page) => {
     if (q.length > 2) {
       const query = await searchMovie(q, page)
       setPopularMovies(query.results)
@@ -164,8 +168,7 @@ const First = () => {
       setPage(1)
       setIsSearching(false)
     }
-    // setSearchQuery(q);
-  }, 300);
+  };
 
   return (
     <div className="App">
@@ -180,7 +183,7 @@ const First = () => {
           <input 
           placeholder="Search movies..."
           className="Movie-search"
-          onChange={({ target }) => search(target.value, page)}
+          onChange={({ target }) => debouncedSearch(target.value, page)}
         />
         )}
         {isListening && (

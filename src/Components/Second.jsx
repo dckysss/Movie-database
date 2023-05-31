@@ -11,6 +11,7 @@ import "aos/dist/aos.css";
 import ScrollTopButton from "./scrollTop/scrollTop";
 import HeroImageTV from './heroImage/heroImageTV';
 import SpeechToText from "./speechRecognition/speechRecognition";
+import { debounce } from "lodash";
 
 const Second = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const Second = () => {
   const [totalPages, setTotalPages] = useState(0);
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isListening, setIsListening] = useState(false);
 
   useEffect(() => {
     getTVList().then((result) => {
@@ -144,6 +146,14 @@ const Second = () => {
     // eslint-disable-next-line
   }, [searchQuery]);
 
+  const handleListeningChange = (isListening) => {
+    setIsListening(isListening);
+  };
+
+  const debouncedSearch = debounce((q) => {
+    setSearchQuery(q);
+  }, 300);
+
   const search = async (q, page) => {
     if (q.length > 2) {
       const query = await searchTV(q, page)
@@ -158,8 +168,7 @@ const Second = () => {
       setPage(1)
       setIsSearching(false)
     }
-    setSearchQuery(q);
-  }
+  };
 
   return (
     <div className="App">
@@ -169,13 +178,22 @@ const Second = () => {
       <HeroImageTV />
         
       <div className="search-container">
-        <input 
+        {!isListening && (
+          <input 
+          placeholder="Search movies..."
+          className="Movie-search"
+          onChange={({ target }) => debouncedSearch(target.value, page)}
+        />
+        )}
+        {isListening && (
+          <input 
           placeholder="Search movies..."
           className="Movie-search"
           value={searchQuery}
           onChange={({ target }) => setSearchQuery(target.value, page)}
         />
-        <SpeechToText setSearchQuery={setSearchQuery} />
+        )}
+        <SpeechToText setSearchQuery={setSearchQuery} onListeningChange={handleListeningChange} />
       </div>
 
         <div className="Movie-container" data-aos="fade-up">
