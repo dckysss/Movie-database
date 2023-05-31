@@ -3,7 +3,7 @@ import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognitio
 import './speechRecognition.css'
 import microphone from "../../Assets/microphone.svg"
 
-const SpeechToText = ({ setSearchQuery }) => {
+const SpeechToText = ({ setSearchQuery, onListeningChange }) => {
 
     const { transcript, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
     const timeoutRef = useRef(null);
@@ -20,15 +20,18 @@ const SpeechToText = ({ setSearchQuery }) => {
       if(isListening) {
         SpeechRecognition.stopListening();
         setIsListening(false);
+        onListeningChange(false);
       } else {
         resetTranscript();
         SpeechRecognition.startListening({ continuous: true, language: 'en-ID' });
         
         clearTimeout(timeoutRef.current);
         setIsListening(true);
+        onListeningChange(true);
         timeoutRef.current = setTimeout(() => {
           SpeechRecognition.stopListening();
           setIsListening(false);
+          onListeningChange(false);
         }, 6000);
       }
     };
