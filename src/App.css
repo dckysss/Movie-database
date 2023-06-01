@@ -83,7 +83,7 @@
   max-width: 85%;
   max-height: 75%;
   text-align: left;
-  overflow: auto;
+  overflow: hidden;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
