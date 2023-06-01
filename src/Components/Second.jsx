@@ -255,6 +255,7 @@ const Second = () => {
 
   const handleListeningChange = (isListening) => {
     setIsListening(isListening);
+    setPage(1)
   };
 
   const debouncedSearch = debounce((q) => {
