@@ -71,6 +71,7 @@ const Third = () => {
           <li><button onClick={() => navigate('/')}>Movies</button></li>
           <li><button onClick={() => navigate('/tv')}>TV</button></li>
           <li><button onClick={refresh}>Trending</button></li>
+          <li><button onClick={() => navigate('/login')}>Login</button></li>
         </ul>
 
         <div className="hamburger">

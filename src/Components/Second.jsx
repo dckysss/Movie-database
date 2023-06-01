@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import "../App.css";
 import "../navbar.css";
-import { searchTV, getTVList,} from "../api";
+import { searchTV, getTVList, getTVTrailer, getTVDetails, getTVCredits} from "../api";
 import { useEffect, useState } from "react";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import placeholderImage from '../Image_not_available.png';
@@ -24,6 +24,9 @@ const Second = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isListening, setIsListening] = useState(false);
+  const [selectedTV, setSelectedTV] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [TVCredits, setTVCredits] = useState([]);
 
   useEffect(() => {
     getTVList().then((result) => {
@@ -81,6 +84,7 @@ const Second = () => {
           <li><button onClick={() => navigate('/')}>Movies</button></li>
           <li><button onClick={refresh}>TV</button></li>
           <li><button onClick={() => navigate('/trending')}>Trending</button></li>
+          <li><button onClick={() => navigate('/login')}>Login</button></li>
         </ul>
 
         <div className="hamburger">
@@ -117,14 +121,96 @@ const Second = () => {
       }
     }
 
+    const TVPopup = () => {
+      if (!isPopupOpen || !selectedTV) {
+        return null;
+      }
+  
+      const handleWatchTrailer = async () => {
+        try {
+          const trailerUrl = await getTVTrailer(selectedTV.id);
+          if (trailerUrl) {
+            window.open(trailerUrl);
+          }
+        } catch (error) {
+          console.error("Error fetching tv show trailer:", error);
+        }
+      };
+  
+      return (
+        <div className="movie-popup">
+          <div className="movie-popup-content">
+            <LazyLoadImage
+              className="movie-popup-image"
+              src={`${process.env.REACT_APP_BASEIMGURL}/${selectedTV.poster_path}`}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = placeholderImage;
+              }}
+            />
+            <div className="movie-popup-details">
+              <div className="movie-popup-title">{selectedTV.name}</div>
+              <div className="movie-popup-genres">
+                {selectedTV.genres && selectedTV.genres.slice(0, 5).map((genre, i) => (
+                    <span className="movie-popup-genre-items" key={i}>{genre.name}</span>
+                  ))
+                }
+              </div>
+              <p>{selectedTV.overview}</p>
+              <div>
+                <h2>Casts</h2>
+                <div className="cast-container">
+                  {TVCredits && TVCredits.slice(0, 6).map((cast, i) => (
+                    <div key={i} className="cast-item">
+                      {cast.profile_path ? (
+                        <img
+                          src={`${process.env.REACT_APP_BASEIMGURL}/${cast.profile_path}`}
+                          alt={cast.name}
+                          className="cast-photo"
+                        />
+                      ) : (
+                        <div className="no-photo">No Photo</div>
+                      )}
+                      <div className="cast-name">{cast.name}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="trailer-btn-container">
+                <button className="trailer-btn" onClick={handleWatchTrailer}>Watch trailer</button>
+              </div>
+            </div>
+            <button className="close" onClick={() => setIsPopupOpen(false)}>&#10005;</button>
+          </div>
+        </div>
+      );
+    };
+
   const PopularTVList = () => {
     useEffect(() => {
       AOS.init({ duration: 1000 });
     }, []);
 
+    const handleClick = async (tv) => {
+      try {
+        const tvDetails = await getTVDetails(tv.id);
+        const credits = await getTVCredits(tv.id);
+        setTVCredits(credits.cast);
+    
+        setSelectedTV({
+          ...tvDetails,
+          genres: tvDetails.genres || [],
+        });
+    
+        setIsPopupOpen(true);
+      } catch (error) {
+        console.error("Error fetching tv details:", error);
+      }
+    };
+
     return popularTV.map((tv, i) => {
       return (
-        <div className="Movie-wrapper" key={i}>
+        <div className="Movie-wrapper" key={i} onClick={() => handleClick(tv)}>
           <div className="Movie-title">{tv.name}</div>
           <LazyLoadImage 
             className="Movie-image" 
@@ -175,6 +261,7 @@ const Second = () => {
       <header className="App-header">
         <NavBar />
       </header>
+      <TVPopup />
       <HeroImageTV />
         
       <div className="search-container">

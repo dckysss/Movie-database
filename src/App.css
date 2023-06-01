@@ -95,7 +95,7 @@
 .movie-popup-title {
   font-weight: 700;
   font-size: calc(0.9rem + 1.8vw);
-  width: 90%;
+  width: 85%;
 }
 
 .movie-popup-details {
@@ -149,6 +149,7 @@
 .trailer-btn-container {
   text-align: right;
   margin-top: 4vw;
+  padding-bottom: 2vw;
 }
 
 .trailer-btn {
