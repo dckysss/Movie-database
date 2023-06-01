@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "../App.css";
 import "../navbar.css";
 import { searchTV, getTVList, getTVTrailer, getTVDetails, getTVCredits} from "../api";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import placeholderImage from '../Image_not_available.png';
 import { Sling as Hamburger } from 'hamburger-react'
@@ -27,6 +27,7 @@ const Second = () => {
   const [selectedTV, setSelectedTV] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [TVCredits, setTVCredits] = useState([]);
+  const popupContentRef = useRef(null);
 
   useEffect(() => {
     getTVList().then((result) => {
@@ -100,28 +101,42 @@ const Second = () => {
     )
     }
 
-    const loadMore = async () => {
-      const nextPage = page + 1;
-      if (isSearching) {
-        const newTV = await searchTV(searchQuery, nextPage);
-        if (newTV.results.length > 0) {
-          setPopularTV((prevTV) => [...prevTV, ...newTV.results]);
-          setPage(nextPage);
-        } else {
-          setHasMorePages(false);
-        }
+  const loadMore = async () => {
+    const nextPage = page + 1;
+    if (isSearching) {
+      const newTV = await searchTV(searchQuery, nextPage);
+      if (newTV.results.length > 0) {
+        setPopularTV((prevTV) => [...prevTV, ...newTV.results]);
+        setPage(nextPage);
       } else {
-        const newTV = await getTVList(nextPage);
-        if (newTV.length > 0) {
-          setPopularTV((prevTV) => [...prevTV, ...newTV]);
-          setPage(nextPage);
-        } else {
-          setHasMorePages(false);
-        }
+        setHasMorePages(false);
+      }
+    } else {
+      const newTV = await getTVList(nextPage);
+      if (newTV.length > 0) {
+        setPopularTV((prevTV) => [...prevTV, ...newTV]);
+        setPage(nextPage);
+      } else {
+        setHasMorePages(false);
       }
     }
+  }
 
-    const TVPopup = () => {
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (popupContentRef.current && !popupContentRef.current.contains(event.target)) {
+        setIsPopupOpen(false);
+      }
+    };
+
+    window.addEventListener('click', handleOutsideClick);
+
+    return () => {
+      window.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
+
+  const TVPopup = () => {
       if (!isPopupOpen || !selectedTV) {
         return null;
       }
@@ -140,6 +155,7 @@ const Second = () => {
       return (
         <div className="movie-popup">
           <div 
+            ref={popupContentRef}
             style={{backgroundImage: `url(${process.env.REACT_APP_ORIGINALIMGURL}/${selectedTV.backdrop_path})`}}
             className="movie-popup-content"
           >
@@ -189,7 +205,7 @@ const Second = () => {
           </div>
         </div>
       );
-    };
+  };
 
   const PopularTVList = () => {
     useEffect(() => {

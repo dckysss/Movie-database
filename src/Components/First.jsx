@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom"
 import "../App.css"
 import "../navbar.css"
 import { getMovieList, searchMovie, getMovieTrailer, getMovieDetails, getMovieCredits} from "../api"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import placeholderImage from '../Image_not_available.png';
 import { Sling as Hamburger } from 'hamburger-react';
@@ -27,6 +27,7 @@ const First = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [movieCredits, setMovieCredits] = useState([]);
+  const popupContentRef = useRef(null);
 
   useEffect(() => {
     getMovieList().then((result) => {
@@ -121,6 +122,20 @@ const First = () => {
     }
   }
 
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (popupContentRef.current && !popupContentRef.current.contains(event.target)) {
+        setIsPopupOpen(false);
+      }
+    };
+
+    window.addEventListener('click', handleOutsideClick);
+
+    return () => {
+      window.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
+
   const MoviePopup = () => {
     if (!isPopupOpen || !selectedMovie) {
       return null;
@@ -140,6 +155,7 @@ const First = () => {
     return (
       <div className="movie-popup">
         <div 
+          ref={popupContentRef}
           style={{backgroundImage: `url(${process.env.REACT_APP_ORIGINALIMGURL}/${selectedMovie.backdrop_path})`}} 
           className="movie-popup-content"
         >
