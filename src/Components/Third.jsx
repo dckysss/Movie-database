@@ -104,7 +104,7 @@ const Third = () => {
       const resultProp = trending.media_type === 'movie' ? resultObj.title : resultObj.name;  
       const releaseDateProp = trending.media_type === 'movie' ? trending.release_date : trending.first_air_date;    
       return (
-        <div className="Movie-wrapper" key={i}>
+        <div style={{cursor: "default"}} className="Movie-wrapper" key={i}>
           <div className="Movie-title">{resultProp}</div>
           <LazyLoadImage 
             className="Movie-image" 

@@ -139,7 +139,12 @@ const Second = () => {
   
       return (
         <div className="movie-popup">
-          <div className="movie-popup-content">
+          <div 
+            style={{backgroundImage: `url(${process.env.REACT_APP_ORIGINALIMGURL}/${selectedTV.backdrop_path})`}}
+            className="movie-popup-content"
+          >
+          <div className="background-overlay">
+          </div>
             <LazyLoadImage
               className="movie-popup-image"
               src={`${process.env.REACT_APP_BASEIMGURL}/${selectedTV.poster_path}`}

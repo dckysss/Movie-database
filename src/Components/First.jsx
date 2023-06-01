@@ -139,10 +139,16 @@ const First = () => {
 
     return (
       <div className="movie-popup">
-        <div className="movie-popup-content">
-          <LazyLoadImage
+        <div 
+          style={{backgroundImage: `url(${process.env.REACT_APP_ORIGINALIMGURL}/${selectedMovie.backdrop_path})`}} 
+          className="movie-popup-content"
+        >
+        <div className="background-overlay">
+        </div>
+          <img
             className="movie-popup-image"
             src={`${process.env.REACT_APP_BASEIMGURL}/${selectedMovie.poster_path}`}
+            alt={selectedMovie.title}
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = placeholderImage;
