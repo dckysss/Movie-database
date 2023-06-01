@@ -36,6 +36,16 @@ export const getTrendingList = async() => {
     return trending.data.results
 }
 
+export const getMovieDetails = async (movieId) => {
+  const response = await axios.get(`${baseUrl}/movie/${movieId}?api_key=${apiKey}`);
+  return response.data;
+};
+
+export const getMovieCredits = async (movieId) => {
+  const response = await axios.get(`${baseUrl}/movie/${movieId}/credits?api_key=${apiKey}`);
+  return response.data;
+};
+
 export const getMovieTrailer = async (movieId) => {
     try {
       const response = await axios.get(
@@ -47,8 +57,9 @@ export const getMovieTrailer = async (movieId) => {
         }
       );
       const trailers = response.data.results;
-      if (trailers.length > 0) {
-        const trailerKey = trailers[0].key;
+      const officialTrailer = trailers.find(trailer => trailer.type === 'Trailer' && trailer.site === 'YouTube');
+      if (officialTrailer) {
+        const trailerKey = officialTrailer.key;
         window.open(`https://www.youtube.com/watch?v=${trailerKey}`, "_blank");
       } else {
         alert("No trailers found for this movie.");

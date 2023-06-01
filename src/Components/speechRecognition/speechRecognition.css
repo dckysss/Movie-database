@@ -1,11 +1,11 @@
-button {
+.speech-btn {
     background: none;
     border: none;
     cursor: pointer;
     margin-left: 0.25rem;
 }
 
-button img {
+.speech-btn img {
     width: calc(1rem + 1vw);
     border-radius: 50%;
     padding: 0.2rem;

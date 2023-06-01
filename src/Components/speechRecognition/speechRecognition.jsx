@@ -42,7 +42,7 @@ const SpeechToText = ({ setSearchQuery, onListeningChange }) => {
 
     return(
       <div className="speech-container"> 
-        <button onClick={startListening}>
+        <button onClick={startListening} className='speech-btn'>
           <img 
             src={microphone} 
             alt='speech' 

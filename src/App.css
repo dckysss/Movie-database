@@ -58,6 +58,114 @@
   box-shadow: 0px 0px 50px 5px #C892FD;
 }
 
+.movie-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(15, 15, 15, 0.4);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn .3s ease;
+}
+
+.movie-popup-content {
+  position: absolute;
+  display: flex;
+  background-color: #3a3a3a;
+  color: white;
+  padding: 3vw;
+  border-radius: 1vw;
+  gap: 2vw;
+  max-width: 85%;
+  max-height: 42rem;
+  text-align: left;
+  overflow: auto;
+}
+
+.movie-popup-image {
+  width: 27.5%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.movie-popup-title {
+  font-weight: 700;
+  font-size: calc(0.9rem + 1.8vw);
+  width: 90%;
+}
+
+.movie-popup-details {
+  font-size: calc(0.5rem + 0.5vw);
+}
+
+.movie-popup-genres {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+.movie-popup-genre-items {
+  background: transparent;
+  border: 0.15vw solid white;
+  border-radius: 2rem;
+  padding: calc(0.1rem + 0.2vw) calc(0.5rem + 1vw);
+}
+
+.cast-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.cast-item {
+  word-wrap: break-word;
+  width: calc(3rem + 5vw);
+}
+
+.cast-photo {
+  width: 100%;
+}
+
+.cast-name {
+  font-size: calc(0.3rem + 0.7vw);
+}
+
+.close {
+  position: absolute;
+  top: 0.375vw;
+  right: 0.625vw;
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.trailer-btn-container {
+  text-align: right;
+  margin-top: 4vw;
+}
+
+.trailer-btn {
+  background-color: rgb(120, 78, 176);
+  color: white;
+  font-weight: 600;
+  font-size: calc(0.4rem + 1vw);
+  padding: calc(0.3rem + 0.5vw) calc(0.5rem + 0.7vw);
+  border-radius: calc(0.2rem + 0.3vw);
+  transition: .3s ease;
+}
+
+.trailer-btn:hover {
+  background-color: white;
+  color: rgb(120, 78, 176);
+}
+
 .load-more {
   border: 0.15rem solid #c300ff;
   padding: 0.7rem 3rem;
@@ -203,6 +311,11 @@
   .Movie-search {
     font-size: 1.1rem;
   }
+
+  .movie-popup-content {
+    max-width: 90%;
+    max-height: 95%;
+  }
 }
 
 @media (max-width: 480px) {
@@ -227,12 +340,5 @@
 
   .Movie-search {
     font-size: 0.875rem;
-  }
-}
-
-@media (max-width: 350px) {
-  .navbar h1 {
-    font-size: 1rem;
-    padding-top: 12px;
   }
 }

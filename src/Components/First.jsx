@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom"
 import "../App.css"
 import "../navbar.css"
-import { getMovieList, searchMovie, getMovieTrailer} from "../api"
+import { getMovieList, searchMovie, getMovieTrailer, getMovieDetails, getMovieCredits} from "../api"
 import { useEffect, useState } from "react"
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import placeholderImage from '../Image_not_available.png';
@@ -24,6 +24,9 @@ const First = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isListening, setIsListening] = useState(false);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [movieCredits, setMovieCredits] = useState([]);
 
   useEffect(() => {
     getMovieList().then((result) => {
@@ -81,6 +84,7 @@ const First = () => {
             <li><button onClick={refresh}>Movies</button></li>
             <li><button onClick={() => navigate('/tv')}>TV</button></li>
             <li><button onClick={() => navigate('/trending')}>Trending</button></li>
+            <li><button onClick={() => navigate('/login')}>Login</button></li>
         </ul>
 
         <div className="hamburger">
@@ -117,14 +121,96 @@ const First = () => {
     }
   }
 
+  const MoviePopup = () => {
+    if (!isPopupOpen || !selectedMovie) {
+      return null;
+    }
+
+    const handleWatchTrailer = async () => {
+      try {
+        const trailerUrl = await getMovieTrailer(selectedMovie.id);
+        if (trailerUrl) {
+          window.open(trailerUrl);
+        }
+      } catch (error) {
+        console.error("Error fetching movie trailer:", error);
+      }
+    };
+
+    return (
+      <div className="movie-popup">
+        <div className="movie-popup-content">
+          <LazyLoadImage
+            className="movie-popup-image"
+            src={`${process.env.REACT_APP_BASEIMGURL}/${selectedMovie.poster_path}`}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = placeholderImage;
+            }}
+          />
+          <div className="movie-popup-details">
+            <div className="movie-popup-title">{selectedMovie.title}</div>
+            <div className="movie-popup-genres">
+              {selectedMovie.genres && selectedMovie.genres.slice(0, 5).map((genre, i) => (
+                  <span className="movie-popup-genre-items" key={i}>{genre.name}</span>
+                ))
+              }
+            </div>
+            <p>{selectedMovie.overview}</p>
+            <div>
+              <h2>Casts</h2>
+              <div className="cast-container">
+                {movieCredits && movieCredits.slice(0, 6).map((cast, i) => (
+                  <div key={i} className="cast-item">
+                    {cast.profile_path ? (
+                      <img
+                        src={`${process.env.REACT_APP_BASEIMGURL}/${cast.profile_path}`}
+                        alt={cast.name}
+                        className="cast-photo"
+                      />
+                    ) : (
+                      <div className="no-photo">No Photo</div>
+                    )}
+                    <div className="cast-name">{cast.name}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="trailer-btn-container">
+              <button className="trailer-btn" onClick={handleWatchTrailer}>Watch trailer</button>
+            </div>
+          </div>
+          <button className="close" onClick={() => setIsPopupOpen(false)}>&#10005;</button>
+        </div>
+      </div>
+    );
+  };
+
   const PopularMovieList = () => {
     useEffect(() => {
       AOS.init({ duration: 1000 });
     }, []);
 
     return popularMovies.map((movie, i) => {
+      const handleClick = async (movie) => {
+        try {
+          const movieDetails = await getMovieDetails(movie.id);
+          const credits = await getMovieCredits(movie.id);
+          setMovieCredits(credits.cast);
+      
+          setSelectedMovie({
+            ...movieDetails,
+            genres: movieDetails.genres || [],
+          });
+      
+          setIsPopupOpen(true);
+        } catch (error) {
+          console.error("Error fetching movie details:", error);
+        }
+      };
+
       return (
-        <div className="Movie-wrapper" key={i} title={movie.title} onClick={() => getMovieTrailer(movie.id)}>
+        <div className="Movie-wrapper" key={i} title={movie.title} onClick={() => handleClick(movie)}>
           <div className="Movie-title">{movie.title}</div>
           <LazyLoadImage 
             className="Movie-image" 
@@ -176,6 +262,7 @@ const First = () => {
         <NavBar />
       </header>
       <HeroImageMovies />
+      <MoviePopup />
         
       <div className="search-container">
 
@@ -200,8 +287,9 @@ const First = () => {
       <div className="Movie-container" data-aos="fade-up">
         <PopularMovieList />
       </div>
+      
       <div>
-        {isSearching && hasMorePages && page < totalPages && (
+      {isSearching && hasMorePages && page < totalPages && (
           <button className="load-more" onClick={loadMore}>
             Load more
           </button>
