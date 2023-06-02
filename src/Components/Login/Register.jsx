@@ -11,6 +11,14 @@ export const Register = (props) => {
     const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
     const [conPass, setConPass] = useState("");
+    const [nameError, setNameError] = useState("");
+    const [emailError, setEmailError] = useState("");
+    const [passError, setPassError] = useState("");
+    const [conPassError, setConPassError] = useState("");
+    const [nameValidation, setNameValidation] = useState(false);
+    const [emailValidation, setEmailValidation] = useState(false);
+    const [passValidation, setPassValidation] = useState(false);
+    const [conPassValidation, setConPassValidation] = useState(false);
     const navigate = useNavigate()
 
     const NavBar = () => {
@@ -74,83 +82,63 @@ export const Register = (props) => {
         )
     }
 
+    const validateEmail = (email) => {
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailPattern.test(email);
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
-        const nameInput = document.getElementById("name");
-        const emailInput = document.getElementById("email");
-        const passwordInput = document.getElementById("password");
-        const confirmPWInput = document.getElementById("confirmPW")
         
-        var nameValue = name.trim();
         var emailValue = email.trim();
 
-        var nameValidation = false;
-        var emailValidation = false;
-        var pwValidation = false;
-        var cpwValidation = false;
+        setNameError(!name ? "Username cannot be empty" : "");
+        setNameValidation(!!name);
 
-        if (nameValue === "") {
-            addErrorTo(nameInput, "Name cannot be empty");
-        } else {
-            success(nameInput);
-            nameValidation = true;
+        setEmailError(emailValue === "" ? "Email cannot be empty" : !validateEmail(emailValue) ? "Looks like not an email, example@email.com" : "");
+        setEmailValidation(validateEmail(emailValue));
+
+        setPassError(!pass ? "Password cannot be empty" : pass.length < 5 ? "Password too weak" : "");
+        setPassValidation(!!pass && pass.length >= 5);
+
+        setConPassError(!conPass ? "Confirm password cannot be empty" : conPass !== pass ? "Password not match" : "");
+        setConPassValidation(!!conPass && conPass === pass);
+
+        if (nameValidation && emailValidation && passValidation && conPassValidation) {
+            alert("Account registered successfully!");
+            props.onFormSwitch("login");
         }
-
-        function validateEmail(email) {
-            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return emailPattern.test(email);
-        }
-        
-
-        if (emailValue === "") {
-            addErrorTo(emailInput, "Email cannot be empty");
-        } else if (!validateEmail(emailValue)) {
-            addErrorTo(emailInput, "Looks like not an email, example@email.com");
-        } else {
-            success(emailInput);
-            emailValidation = true;
-        };
-
-        if (pass === "") {
-            addErrorTo(passwordInput, "Password cannot be empty");
-        } else if (pass.length < 5) {
-            addErrorTo(passwordInput, "Password too weak");
-        } else {
-            success(passwordInput);
-            pwValidation = true;
-        };
-
-        if (conPass === "") {
-            addErrorTo(confirmPWInput, "Confirm password cannot be empty");
-        } else if (conPass !== pass) {
-            addErrorTo(confirmPWInput, "Password not match");
-        } else {
-            success(confirmPWInput);
-            cpwValidation = true;
-        };
-
-        if (nameValidation === true && emailValidation === true && pwValidation === true && cpwValidation === true) {
-            alert("account registered successfully!");
-            props.onFormSwitch('login')
-        };
-
-        function addErrorTo(req, message) {
-            const formControl = req.parentElement;
-            const span = formControl.querySelector("span");
-            req.classList.add("error");
-            span.innerText = message;
-            span.classList.add("error-text");
-            req.classList.remove("success");
-        };
-
-        function success(req) {
-            req.classList.remove("error");
-            req.classList.add("success");
-            const span = req.parentElement.querySelector("span");
-            span.innerText = "";
-            span.classList.remove("error-text");
-        };
     }
+
+    useEffect(() => {
+        if (name) {
+            setNameError("");
+            setNameValidation(true);
+        } else {
+            setNameValidation(false);
+        }
+
+        if (validateEmail(email.trim())) {
+            setEmailError("");
+            setEmailValidation(true);
+        } else {
+            setEmailValidation(false);
+        };
+
+        if (pass && pass.length >= 5) {
+            setPassError("");
+            setPassValidation(true);
+        } else {
+            setPassValidation(false);
+        };
+
+        if (conPass && conPass === pass) {
+            setConPassError("");
+            setConPassValidation(true);
+        } else {
+            setConPassValidation(false);
+        };
+    }, [name, pass, email, conPass]);
 
     return (
         <div style={{backgroundImage: `url(${Background})`}} className="App">
@@ -161,20 +149,49 @@ export const Register = (props) => {
             <h1>Register</h1>
                 <form className="login-form" onSubmit={handleSubmit}>
                     <div className="input-container">
-                        <input className="input" value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Username" id="name" name="name" />
-                        <span></span>
+                        <input 
+                            className={`input ${!name && nameError ? 'error' : ''} ${name.trim() && !nameError ? 'success' : ''}`}  
+                            value={name} 
+                            onChange={(e) => { const value = e.target.value.replace(/\s/g, ''); setName(value); }} 
+                            type="text" 
+                            placeholder="Username" id="name" name="name" 
+                        />
+                        <span className="error-text">{nameError}</span>
                     </div>
                     <div className="input-container">
-                        <input className="input" value={email} onChange={(e) => setEmail(e.target.value)} type="text" placeholder="Email" id="email" name="email" />
-                        <span></span>
+                        <input 
+                            className={`input ${!email && emailError ? 'error' : ''} ${email && emailValidation ? 'success' : ''} ${emailError ? 'error' : ''}`} 
+                            value={email} onChange={(e) => { const value = e.target.value.replace(/\s/g, ''); setEmail(value) }} 
+                            type="text" 
+                            placeholder="Email" 
+                            id="email" 
+                            name="email" 
+                        />
+                        <span className="error-text">{emailError}</span>
                     </div>
                     <div className="input-container">
-                        <input className="input" value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="Password" id="password" name="password" />
-                        <span></span>
+                        <input 
+                            className={`input ${!pass && passError ? 'error' : ''} ${pass && passValidation ? 'success' : ''} ${passError ? 'error' : ''}`} 
+                            value={pass} 
+                            onChange={(e) => setPass(e.target.value)} 
+                            type="password" 
+                            placeholder="Password" 
+                            id="password" 
+                            name="password" 
+                        />
+                        <span className="error-text">{passError}</span>
                     </div>
                     <div className="input-container">
-                        <input className="input" value={conPass} onChange={(e) => setConPass(e.target.value)} type="password" placeholder="Confirm Password" id="confirmPW" name="confirmPW" />
-                        <span></span>
+                        <input 
+                        className={`input ${!conPass && conPassError ? 'error' : ''} ${conPass && conPassValidation ? 'success' : ''} ${conPassError ? 'error' : ''}`} 
+                            value={conPass} 
+                            onChange={(e) => setConPass(e.target.value)} 
+                            type="password" 
+                            placeholder="Confirm Password" 
+                            id="confirmPW" 
+                            name="confirmPW" 
+                        />
+                        <span className="error-text">{conPassError}</span>
                     </div>
                     <button type="submit" className="login">Sign Up</button>
                 </form>

@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+button {
+  outline: none;
+}
+
 ::-moz-selection {
   background: #784eb0c9;
 }

@@ -9,6 +9,10 @@ import Background from '../../Assets/bg.jpg';
 export const Login = (props) => {
     const [name, setName] = useState("");
     const [pass, setPass] = useState("");
+    const [nameError, setNameError] = useState("");
+    const [passError, setPassError] = useState("");
+    const [nameValidation, setNameValidation] = useState(false);
+    const [passValidation, setPassValidation] = useState(false);
     const navigate = useNavigate()
 
     const NavBar = () => {
@@ -26,26 +30,26 @@ export const Login = (props) => {
         };
 
         const refresh = () => {
-        window.location.reload();
+            window.location.reload();
         }
 
         useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollPos = window.pageYOffset;
-            const visible = prevScrollPos > currentScrollPos || menuOpen;
-        
-            setPrevScrollPos(currentScrollPos);
-            setVisible(visible);
-        };
+            const handleScroll = () => {
+                const currentScrollPos = window.pageYOffset;
+                const visible = prevScrollPos > currentScrollPos || menuOpen;
+            
+                setPrevScrollPos(currentScrollPos);
+                setVisible(visible);
+            };
 
-        updateHamburgerSize();
-        window.addEventListener('resize', updateHamburgerSize);
-        window.addEventListener('scroll', handleScroll);
+            updateHamburgerSize();
+            window.addEventListener('resize', updateHamburgerSize);
+            window.addEventListener('scroll', handleScroll);
 
-        return () => {
-            window.removeEventListener('resize', updateHamburgerSize);
-            window.removeEventListener('scroll', handleScroll);
-        }
+            return () => {
+                window.removeEventListener('resize', updateHamburgerSize);
+                window.removeEventListener('scroll', handleScroll);
+            }
         }, [prevScrollPos, menuOpen]);
 
         return (
@@ -74,51 +78,40 @@ export const Login = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        const nameInput = document.getElementById("name");
-        const passwordInput = document.getElementById("password");
-        
-        var nameValue = nameInput.value.trim();
-        var passwordValue = passwordInput.value.trim();
 
-        var nameValidation = false;
-        var pwValidation = false;
-
-        if (nameValue === "") {
-            addErrorTo(nameInput, "Name cannot be empty");
+        if (!name) {
+            setNameError("Please type your username");
+            setNameValidation(false);
         } else {
-            success(nameInput);
-            nameValidation = true;
-        }
+            setNameError("");
+            setNameValidation(true);
+        };
 
-        if (passwordValue === "") {
-            addErrorTo(passwordInput, "Password cannot be empty");
+        if (!pass) {
+            setPassError("Please type your password")
+            setPassValidation(false);
         } else {
-            success(passwordInput);
-            pwValidation = true;
-        };
-
-        if (nameValidation === true && pwValidation === true) {
-            alert("login successful!")
-            navigate('/');
-        };
-
-        function addErrorTo(req, message) {
-            const formControl = req.parentElement;
-            const span = formControl.querySelector("span");
-            req.classList.add("error");
-            span.innerText = message;
-            span.classList.add("error-text");
-            req.classList.remove("success");
-        };
-
-        function success(req) {
-            req.classList.remove("error");
-            req.classList.add("success");
-            const span = req.parentElement.querySelector("span");
-            span.innerText = "";
-            span.classList.remove("error-text");
+            setPassError("")
+            setPassValidation(true);
         };
     }
+
+    useEffect(() => {
+        if (nameValidation && passValidation) {
+          alert("Login successful!");
+          navigate('/');
+        }
+    }, [nameValidation, passValidation, navigate]);
+
+    useEffect(() => {
+        if (name) {
+          setNameError("");
+        }
+    
+        if (pass) {
+          setPassError("");
+        }
+    }, [name, pass]);
 
     return (
         <div style={{backgroundImage: `url(${Background})`}} className="App">
@@ -129,12 +122,27 @@ export const Login = (props) => {
             <h1>Login Here</h1>
                 <form className="login-form" onSubmit={handleSubmit}>
                     <div className="input-container">
-                        <input className="input" value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Username" id="name" name="name" />
-                        <span></span>
+                        <input 
+                            className={`input ${!name && nameError ? 'error' : ''} ${name && !nameError ? 'success' : ''}`} 
+                            value={name} 
+                            onChange={(e) => {const value = e.target.value.replace(/\s/g, ''); setName(value);}} 
+                            type="text" 
+                            placeholder="Username" 
+                            id="name" 
+                            name="name" 
+                        />
+                        <span className="error-text">{nameError}</span>
                     </div>
                     <div className="input-container">
-                        <input className="input" value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="Password" id="password" name="password" />
-                        <span></span>
+                        <input 
+                            className={`input ${!pass && passError ? 'error' : ''} ${pass && !passError ? 'success' : ''}`} 
+                            value={pass} onChange={(e) => setPass(e.target.value)} 
+                            type="password" 
+                            placeholder="Password" 
+                            id="password" 
+                            name="password" 
+                        />
+                        <span className="error-text">{passError}</span>
                     </div>
                     <button type="submit" className="login">Sign In</button>
                 </form>
