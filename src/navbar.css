@@ -2,9 +2,9 @@
   display: flex;
   justify-content: space-between;
   padding: 0 2rem;
-  background: #232935a6;
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
+  background: #2329357c;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   transition: transform .1s ease-in;
 }
   
@@ -21,7 +21,7 @@
   border: none;
   color: #fbf2ff;
   cursor: pointer;
-  font-size: 1.35rem;
+  font-size: 1.4rem;
   font-family: 'Segoe UI', sans-serif;
 }
   

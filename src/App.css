@@ -345,12 +345,13 @@
 }
 
 @media (max-width: 480px) {
+
   .Movie-wrapper {
-    width: 85%;
+    width: 80%;
   }
 
   .Movie-title {
-    padding: 0.875rem 0.75rem 0 0.75rem;
+    padding: 0.7rem 0.75rem 0 0.75rem;
     margin-bottom: 0;
     margin-top: 0.5rem;
   }
@@ -366,5 +367,11 @@
 
   .Movie-search {
     font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 350px) {
+  .App-header {
+    position: sticky;
   }
 }

@@ -61,7 +61,10 @@ const First = () => {
     useEffect(() => {
       const handleScroll = () => {
         const currentScrollPos = window.pageYOffset;
-        const visible = prevScrollPos > currentScrollPos || menuOpen;
+        const visible = 
+          prevScrollPos > currentScrollPos || 
+          menuOpen || 
+          (window.innerWidth <= 350 && currentScrollPos < 45);
       
         setPrevScrollPos(currentScrollPos);
         setVisible(visible);
@@ -79,7 +82,7 @@ const First = () => {
 
     return (
       <nav className={`navbar ${visible ? '' : 'hidden'}`}>
-      <button onClick={refresh} className="logo">Movie Database</button>
+      <button onClick={refresh} className="logo">Movie Search</button>
 
         <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
             <li><button onClick={refresh}>Movies</button></li>

@@ -65,7 +65,7 @@ const Third = () => {
 
     return (
       <nav className={`navbar ${visible ? '' : 'hidden'}`}>
-      <button onClick={() => navigate('/')} className="logo">Movie Database</button>
+      <button onClick={() => navigate('/')} className="logo">Movie Search</button>
 
         <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
           <li><button onClick={() => navigate('/')}>Movies</button></li>
@@ -127,6 +127,7 @@ const Third = () => {
         <NavBar />
       </header>
       <HeroImageTrending />
+      <h1>On Trending</h1>
       <div className="Movie-container" data-aos="fade-up">
         <TrendingList />
       </div>
