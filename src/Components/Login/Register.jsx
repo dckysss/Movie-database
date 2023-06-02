@@ -6,9 +6,11 @@ import '../../App.css';
 import '../../navbar.css';
 import Background from '../../Assets/bg.jpg';
 
-export const Login = (props) => {
+export const Register = (props) => {
     const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
     const [pass, setPass] = useState("");
+    const [conPass, setConPass] = useState("");
     const navigate = useNavigate()
 
     const NavBar = () => {
@@ -75,13 +77,17 @@ export const Login = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault()
         const nameInput = document.getElementById("name");
+        const emailInput = document.getElementById("email");
         const passwordInput = document.getElementById("password");
+        const confirmPWInput = document.getElementById("confirmPW")
         
-        var nameValue = nameInput.value.trim();
-        var passwordValue = passwordInput.value.trim();
+        var nameValue = name.trim();
+        var emailValue = email.trim();
 
         var nameValidation = false;
+        var emailValidation = false;
         var pwValidation = false;
+        var cpwValidation = false;
 
         if (nameValue === "") {
             addErrorTo(nameInput, "Name cannot be empty");
@@ -90,16 +96,42 @@ export const Login = (props) => {
             nameValidation = true;
         }
 
-        if (passwordValue === "") {
+        function validateEmail(email) {
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailPattern.test(email);
+        }
+        
+
+        if (emailValue === "") {
+            addErrorTo(emailInput, "Email cannot be empty");
+        } else if (!validateEmail(emailValue)) {
+            addErrorTo(emailInput, "Looks like not an email, example@email.com");
+        } else {
+            success(emailInput);
+            emailValidation = true;
+        };
+
+        if (pass === "") {
             addErrorTo(passwordInput, "Password cannot be empty");
+        } else if (pass.length < 5) {
+            addErrorTo(passwordInput, "Password too weak");
         } else {
             success(passwordInput);
             pwValidation = true;
         };
 
-        if (nameValidation === true && pwValidation === true) {
-            alert("login successful!")
-            navigate('/');
+        if (conPass === "") {
+            addErrorTo(confirmPWInput, "Confirm password cannot be empty");
+        } else if (conPass !== pass) {
+            addErrorTo(confirmPWInput, "Password not match");
+        } else {
+            success(confirmPWInput);
+            cpwValidation = true;
+        };
+
+        if (nameValidation === true && emailValidation === true && pwValidation === true && cpwValidation === true) {
+            alert("account registered successfully!");
+            props.onFormSwitch('login')
         };
 
         function addErrorTo(req, message) {
@@ -126,22 +158,30 @@ export const Login = (props) => {
           <NavBar />
         </header>
             <div className="form-container">
-            <h1>Login Here</h1>
+            <h1>Register</h1>
                 <form className="login-form" onSubmit={handleSubmit}>
                     <div className="input-container">
                         <input className="input" value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder="Username" id="name" name="name" />
                         <span></span>
                     </div>
                     <div className="input-container">
+                        <input className="input" value={email} onChange={(e) => setEmail(e.target.value)} type="text" placeholder="Email" id="email" name="email" />
+                        <span></span>
+                    </div>
+                    <div className="input-container">
                         <input className="input" value={pass} onChange={(e) => setPass(e.target.value)} type="password" placeholder="Password" id="password" name="password" />
                         <span></span>
                     </div>
-                    <button type="submit" className="login">Sign In</button>
+                    <div className="input-container">
+                        <input className="input" value={conPass} onChange={(e) => setConPass(e.target.value)} type="password" placeholder="Confirm Password" id="confirmPW" name="confirmPW" />
+                        <span></span>
+                    </div>
+                    <button type="submit" className="login">Sign Up</button>
                 </form>
-                <button className="link-btn" onClick={() => props.onFormSwitch('register')}>Don't have an account? Register</button>
+                <button className="link-btn" onClick={() => props.onFormSwitch('login')}>Already have an account? Sign in</button>
             </div>
         </div>
     )
 }
 
-export default Login;
+export default Register;

@@ -5,7 +5,7 @@
 }
 
 .form-container {
-    background-color: rgba(242, 217, 255, 0.2);
+    background-color: rgba(246, 228, 255, 0.253);
     backdrop-filter: blur(8px);
     border-radius: 1rem;
     padding: 2rem;
@@ -26,6 +26,27 @@ label {
     padding: 0.5rem 0;
 }
 
+.input-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 1.2rem;
+}
+
+.error-text {
+    color: red;
+    font-size: 1rem;
+    text-align: right;
+}
+
+.input.error {
+    border: 1px solid red;
+}
+
+.input.success {
+    border: 1px solid green;
+}
+
 .input {
     outline: none;
     border: none;
@@ -34,7 +55,7 @@ label {
     color: #faf2ff;
     background-color: rgba(51, 51, 51, 0.92);
     padding: 1rem 0.8rem;
-    margin-bottom: 1.4rem;
+    margin-bottom: 0.2rem;
     transition: .3s ease;
 }
 

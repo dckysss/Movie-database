@@ -153,11 +153,11 @@ const Second = () => {
       };
   
       return (
-        <div className="movie-popup">
+        <div className="movie-popup-overlay">
           <div 
             ref={popupContentRef}
             style={{backgroundImage: `url(${process.env.REACT_APP_ORIGINALIMGURL}/${selectedTV.backdrop_path})`}}
-            className="movie-popup-content"
+            className="movie-popup"
           >
           <div className="background-overlay">
           </div>
