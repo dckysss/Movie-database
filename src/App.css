@@ -4,6 +4,8 @@
 .App {
   text-align: center;
   background: linear-gradient(0deg, rgb(26, 28, 34) 0%, rgb(40, 44, 52) 85%, rgb(43, 47, 56) 100%);
+  background-size: cover;
+  background-position: center;
   color: #faf2fff6;
   scroll-behavior: smooth;
   min-height: 100vh;
@@ -367,11 +369,5 @@
 
   .Movie-search {
     font-size: 0.875rem;
-  }
-}
-
-@media (max-width: 350px) {
-  .App-header {
-    position: sticky;
   }
 }

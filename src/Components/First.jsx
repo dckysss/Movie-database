@@ -61,10 +61,7 @@ const First = () => {
     useEffect(() => {
       const handleScroll = () => {
         const currentScrollPos = window.pageYOffset;
-        const visible = 
-          prevScrollPos > currentScrollPos || 
-          menuOpen || 
-          (window.innerWidth <= 350 && currentScrollPos < 45);
+        const visible = prevScrollPos > currentScrollPos || menuOpen;
       
         setPrevScrollPos(currentScrollPos);
         setVisible(visible);
