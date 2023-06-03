@@ -82,6 +82,8 @@ export const Register = (props) => {
         )
     }
 
+    document.title = "Movie Search | Register";
+
     const validateEmail = (email) => {
         var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailPattern.test(email);

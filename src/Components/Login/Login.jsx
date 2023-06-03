@@ -76,6 +76,8 @@ export const Login = (props) => {
         )
     }
 
+    document.title = "Movie Search | Login";
+
     const handleSubmit = (e) => {
         e.preventDefault()
 
