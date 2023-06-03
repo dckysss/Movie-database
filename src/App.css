@@ -71,7 +71,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fadeIn .3s ease;
 }
 
 .movie-popup {
@@ -85,6 +84,7 @@
   width: 85%;
   max-height: 75%;
   text-align: left;
+  animation: fadeIn .5s ease;
   overflow: hidden;
   background-size: cover;
   background-repeat: no-repeat;
@@ -106,6 +106,7 @@
 .movie-popup-image {
   width: 28.5%;
   height: 100%;
+  animation: fadeIn .5s ease-in;
   border-radius: inherit;
   z-index: 1;
 }
@@ -155,6 +156,7 @@
 
 .cast-photo {
   width: 100%;
+  animation: fadeIn .4s ease-in;
 }
 
 .cast-name {
