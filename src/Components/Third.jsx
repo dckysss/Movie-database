@@ -9,7 +9,8 @@ import { Sling as Hamburger } from 'hamburger-react'
 import AOS from "aos";
 import "aos/dist/aos.css";
 import ScrollTopButton from "./scrollTop/scrollTop";
-import HeroImageTrending from "./heroImage/heroImageTrending"
+import HeroImageTrending from "./heroImage/heroImageTrending";
+import PlaceholderSkeleton from "./Placeholder/Skeleton";
 
 const Third = () => {
   const navigate = useNavigate()
@@ -109,6 +110,7 @@ const Third = () => {
           <LazyLoadImage 
             className="Movie-image" 
             src={`${process.env.REACT_APP_BASEIMGURL}/${trending.poster_path}`}
+            placeholder={<PlaceholderSkeleton />}
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = placeholderImage

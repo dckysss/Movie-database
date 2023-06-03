@@ -11,6 +11,7 @@ import "aos/dist/aos.css";
 import ScrollTopButton from "./scrollTop/scrollTop";
 import HeroImageMovies from './heroImage/heroImage';
 import SpeechToText from "./speechRecognition/speechRecognition";
+import PlaceholderSkeleton from "./Placeholder/Skeleton";
 import { debounce } from "lodash"
 
 const First = () => {
@@ -237,6 +238,7 @@ const First = () => {
           <LazyLoadImage 
             className="Movie-image" 
             src={`${process.env.REACT_APP_BASEIMGURL}/${movie.poster_path}`}
+            placeholder={<PlaceholderSkeleton />}
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = placeholderImage

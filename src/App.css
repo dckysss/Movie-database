@@ -82,7 +82,7 @@
   padding: 3vw 2vw 3vw 3vw;
   border-radius: 1vw;
   gap: 2vw;
-  max-width: 85%;
+  width: 85%;
   max-height: 75%;
   text-align: left;
   overflow: hidden;

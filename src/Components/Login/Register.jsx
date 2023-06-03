@@ -60,7 +60,7 @@ export const Register = (props) => {
 
         return (
         <nav className={`navbar ${visible ? '' : 'hidden'}`}>
-        <button onClick={() => navigate('/')} className="logo">Movie Database</button>
+        <button onClick={() => navigate('/')} className="logo">Movie Search</button>
 
             <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
                 <li><button onClick={() => navigate('/')}>Movies</button></li>
