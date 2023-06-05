@@ -43,7 +43,7 @@ const HeroImageTV = () => {
         className="Hero-image-wrapper"
       >
         <div className="Hero-image-info">
-          <h2 className="Hero-image-title">{heroTrending.title}</h2>
+          <h2 className="Hero-image-title">{heroTrending.title || heroTrending.name}</h2>
           <p className="Hero-image-description">{heroTrending.overview}</p>
         </div>
       </div>
