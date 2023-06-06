@@ -62,25 +62,27 @@
 
 .icon-btn-container {
   display: flex;
-  gap: 0.5vw;
+  gap: calc(0.3rem + 0.2vw);
 }
 
 .icon-btn {
   background: none;
-  border: 0.15vw solid white;
   border-radius: 50%;
-  padding: 0.4vw;
-  transition: .2s ease-in;
+  padding: 0;
 }
 
-.icon-btn:hover {
+.icon-btn:hover .icon-img {
   background-color: rgb(120, 78, 176);
   border-color: rgb(120, 78, 176);
   box-shadow: 0 0 5px rgba(110, 72, 161, 0.9);
+  transition: .2s ease-in;
 }
 
 .icon-img {
-  width: calc(0.5rem + 1.4vw);
+  padding: calc(0.1rem + 0.3vw);
+  border: 0.15vw solid white;
+  border-radius: 50%;
+  width: calc(0.8rem + 1.2vw);
 }
 
 .movie-popup-overlay {
