@@ -69,7 +69,7 @@
   background: none;
   border: 0.15vw solid white;
   border-radius: 50%;
-  padding: calc(0.1rem + 0.3vw);
+  padding: 0.4vw;
   transition: .2s ease-in;
 }
 
@@ -80,7 +80,7 @@
 }
 
 .icon-img {
-  width: calc(0.7rem + 1.2vw);
+  width: calc(0.5rem + 1.4vw);
 }
 
 .movie-popup-overlay {
