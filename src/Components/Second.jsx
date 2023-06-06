@@ -164,13 +164,15 @@ const Second = () => {
           >
           <div className="background-overlay">
           </div>
-            <LazyLoadImage
+            <img
               className="movie-popup-image"
               src={`${process.env.REACT_APP_BASEIMGURL}/${selectedTV.poster_path}`}
+              alt={selectedTV.name}
               onError={(e) => {
                 e.target.onerror = null;
                 e.target.src = placeholderImage;
               }}
+              draggable="false"
             />
             <div className="movie-popup-details">
               <div className="movie-popup-title">{selectedTV.name}</div>
@@ -191,6 +193,7 @@ const Second = () => {
                           src={`${process.env.REACT_APP_BASEIMGURL}/${cast.profile_path}`}
                           alt={cast.name}
                           className="cast-photo"
+                          draggable="false"
                         />
                       ) : (
                         <div className="no-photo">No Photo</div>

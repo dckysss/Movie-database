@@ -172,6 +172,7 @@ const First = () => {
               e.target.onerror = null;
               e.target.src = placeholderImage;
             }}
+            draggable="false"
           />
           <div className="movie-popup-details">
             <div className="movie-popup-title">{selectedMovie.title}</div>
@@ -192,6 +193,7 @@ const First = () => {
                         src={`${process.env.REACT_APP_BASEIMGURL}/${cast.profile_path}`}
                         alt={cast.name}
                         className="cast-photo"
+                        draggable="false"
                       />
                     ) : (
                       <div className="no-photo">No Photo</div>
