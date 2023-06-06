@@ -13,6 +13,8 @@ import HeroImageTV from './heroImage/heroImageTV';
 import SpeechToText from "./speechRecognition/speechRecognition";
 import PlaceholderSkeleton from "./Placeholder/Skeleton";
 import { debounce } from "lodash";
+import Bookmark from '../Assets/bookmark.svg';
+import Rating from '../Assets/star.svg';
 
 const Second = () => {
   const navigate = useNavigate();
@@ -198,7 +200,23 @@ const Second = () => {
                   ))}
                 </div>
               </div>
-              <div className="trailer-btn-container">
+              <div className="detail-btn-container">
+                <div className="icon-btn-container">
+                  <button className="icon-btn" onClick={() => navigate('/login')}>
+                    <img 
+                      src={Bookmark} 
+                      alt='watchlist' 
+                      className="icon-img"
+                    />
+                  </button>
+                  <button className="icon-btn" onClick={() => navigate('/login')}>
+                    <img 
+                      src={Rating} 
+                      alt='rating' 
+                      className="icon-img"
+                    />
+                  </button>
+                </div>
                 <button className="trailer-btn" onClick={handleWatchTrailer}>Watch trailer</button>
               </div>
             </div>

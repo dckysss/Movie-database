@@ -1,9 +1,9 @@
-import { useNavigate, useLocation } from "react-router-dom"
-import "../App.css"
-import "../navbar.css"
-import { getMovieList, searchMovie, getMovieTrailer, getMovieDetails, getMovieCredits} from "../api"
-import { useEffect, useState, useRef } from "react"
-import { LazyLoadImage } from 'react-lazy-load-image-component'
+import { useNavigate, useLocation } from "react-router-dom";
+import "../App.css";
+import "../navbar.css";
+import { getMovieList, searchMovie, getMovieTrailer, getMovieDetails, getMovieCredits} from "../api";
+import { useEffect, useState, useRef } from "react";
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 import placeholderImage from '../Image_not_available.png';
 import { Sling as Hamburger } from 'hamburger-react';
 import AOS from "aos";
@@ -12,7 +12,9 @@ import ScrollTopButton from "./scrollTop/scrollTop";
 import HeroImageMovies from './heroImage/heroImage';
 import SpeechToText from "./speechRecognition/speechRecognition";
 import PlaceholderSkeleton from "./Placeholder/Skeleton";
-import { debounce } from "lodash"
+import { debounce } from "lodash";
+import Bookmark from '../Assets/bookmark.svg';
+import Rating from '../Assets/star.svg';
 
 const First = () => {
   const navigate = useNavigate()
@@ -199,7 +201,23 @@ const First = () => {
                 ))}
               </div>
             </div>
-            <div className="trailer-btn-container">
+            <div className="detail-btn-container">
+              <div className="icon-btn-container">
+                <button className="icon-btn" onClick={() => navigate('/login')}>
+                  <img 
+                    src={Bookmark} 
+                    alt='watchlist' 
+                    className="icon-img"
+                  />
+                </button>
+                <button className="icon-btn" onClick={() => navigate('/login')}>
+                  <img 
+                    src={Rating} 
+                    alt='rating' 
+                    className="icon-img"
+                  />
+                </button>
+              </div>
               <button className="trailer-btn" onClick={handleWatchTrailer}>Watch trailer</button>
             </div>
           </div>
@@ -249,7 +267,7 @@ const First = () => {
         </div>
       )
     })
-  }
+  };
 
   useEffect(() => {
     search(searchQuery, page);

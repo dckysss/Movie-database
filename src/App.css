@@ -60,6 +60,29 @@
   box-shadow: 0px 0px 50px 5px #C892FD;
 }
 
+.icon-btn-container {
+  display: flex;
+  gap: 0.5vw;
+}
+
+.icon-btn {
+  background: none;
+  border: 0.15vw solid white;
+  border-radius: 50%;
+  padding: calc(0.2rem + 0.2vw);
+  transition: .2s ease-in;
+}
+
+.icon-btn:hover {
+  background-color: rgb(120, 78, 176);
+  border-color: rgb(120, 78, 176);
+  box-shadow: 0 0 5px rgba(110, 72, 161, 0.9);
+}
+
+.icon-img {
+  width: calc(1rem + 1vw);
+}
+
 .movie-popup-overlay {
   position: fixed;
   top: 0;
@@ -174,9 +197,11 @@
   cursor: pointer;
 }
 
-.trailer-btn-container {
-  text-align: right;
+.detail-btn-container {
+  display: flex;
+  justify-content: space-between;
   margin: 4vw 0 2vw 0;
+  align-items: center;
 }
 
 .trailer-btn {
