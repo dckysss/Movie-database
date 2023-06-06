@@ -312,14 +312,14 @@ const Second = () => {
       <div className="search-container">
         {!isListening && (
           <input 
-          placeholder="Search movies..."
+          placeholder="Search TV shows..."
           className="Movie-search"
           onChange={({ target }) => debouncedSearch(target.value, page)}
         />
         )}
         {isListening && (
           <input 
-          placeholder="Search movies..."
+          placeholder="Search TV shows..."
           className="Movie-search"
           value={searchQuery}
           onChange={({ target }) => setSearchQuery(target.value, page)}
