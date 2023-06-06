@@ -210,6 +210,7 @@ const Second = () => {
                       src={Bookmark} 
                       alt='watchlist' 
                       className="icon-img"
+                      title="Add to watchlist"
                     />
                   </button>
                   <button className="icon-btn" onClick={() => navigate('/login')}>
@@ -217,6 +218,7 @@ const Second = () => {
                       src={Rating} 
                       alt='rating' 
                       className="icon-img"
+                      title="Rate"
                     />
                   </button>
                 </div>
