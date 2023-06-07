@@ -125,7 +125,7 @@ export const Login = (props) => {
                 <form className="login-form" onSubmit={handleSubmit}>
                     <div className="input-container">
                         <input 
-                            className={`input ${!name && nameError ? 'error' : ''} ${name && !nameError ? 'success' : ''}`} 
+                            className={`input ${!name && nameError ? 'error' : ''} ${name && !nameError ? 'success' : ''} ${nameError ? 'error' : ''}`} 
                             value={name} 
                             onChange={(e) => {const value = e.target.value.replace(/\s/g, ''); setName(value);}} 
                             type="text" 
@@ -137,7 +137,7 @@ export const Login = (props) => {
                     </div>
                     <div className="input-container">
                         <input 
-                            className={`input ${!pass && passError ? 'error' : ''} ${pass && !passError ? 'success' : ''}`} 
+                            className={`input ${!pass && passError ? 'error' : ''} ${pass && !passError ? 'success' : ''} ${passError ? 'error' : ''}`} 
                             value={pass} onChange={(e) => setPass(e.target.value)} 
                             type="password" 
                             placeholder="Password" 

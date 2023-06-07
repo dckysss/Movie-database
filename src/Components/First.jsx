@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import "../App.css";
 import "../navbar.css";
-import { getMovieList, searchMovie, getMovieTrailer, getMovieDetails, getMovieCredits} from "../api";
+import { getMovieList, searchMovie, getMovieTrailer, getMovieDetails, getMovieCredits } from "../api";
 import { useEffect, useState, useRef } from "react";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import placeholderImage from '../Image_not_available.png';
@@ -31,6 +31,7 @@ const First = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [movieCredits, setMovieCredits] = useState([]);
   const popupContentRef = useRef(null);
+  const [isNoResults, setIsNoResults] = useState(false);
 
   useEffect(() => {
     getMovieList().then((result) => {
@@ -236,6 +237,10 @@ const First = () => {
       AOS.init({ duration: 1000 });
     }, []);
 
+    if (isNoResults) {
+      return <div>No results found</div>;
+    }
+
     return popularMovies.map((movie, i) => {
       const handleClick = async (movie) => {
         try {
@@ -274,13 +279,12 @@ const First = () => {
   };
 
   useEffect(() => {
-    search(searchQuery, page);
+    search(searchQuery, 1);
     // eslint-disable-next-line
   }, [searchQuery]);
 
   const handleListeningChange = (isListening) => {
     setIsListening(isListening);
-    setPage(1)
   };
 
   const debouncedSearch = debounce((q) => {
@@ -289,17 +293,19 @@ const First = () => {
 
   const search = async (q, page) => {
     if (q.length > 2) {
-      const query = await searchMovie(q, page)
-      setPopularMovies(query.results)
+      const query = await searchMovie(q, page);
+      setPopularMovies(query.results);
       setHasMorePages(query.results.length > 0);
-      setPage(1)
+      setPage(1);
       setTotalPages(query.totalPages);
-      setIsSearching(true)
+      setIsSearching(true);
+      setIsNoResults(query.results.length === 0);
     } else {
       setPopularMovies(defaultMovies)
       setHasMorePages(true);
-      setPage(1)
-      setIsSearching(false)
+      setPage(1);
+      setIsSearching(false);
+      setIsNoResults(false);
     }
   };
 
