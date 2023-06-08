@@ -253,6 +253,10 @@ const Second = () => {
       }
     };
 
+    if (isNoResults) {
+      return <div>No results found</div>;
+    }
+
     return popularTV.map((tv, i) => {
       return (
         <div className="Movie-wrapper" key={i} onClick={() => handleClick(tv)}>
