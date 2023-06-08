@@ -5,6 +5,7 @@ import './Login.css';
 import '../../App.css';
 import '../../navbar.css';
 import Background from '../../Assets/bg.jpg';
+import Swal from 'sweetalert2';
 
 export const Register = (props) => {
     const [name, setName] = useState("");
@@ -107,8 +108,19 @@ export const Register = (props) => {
         setConPassValidation(!!conPass && conPass === pass);
 
         if (nameValidation && emailValidation && passValidation && conPassValidation) {
-            alert("Account registered successfully!");
-            props.onFormSwitch("login");
+            Swal.fire({
+                icon: 'success',
+                title: 'Account successfully registered!',
+                background: "#2b2f38",
+                color: "#fff",
+                confirmButtonColor: '#784eb0',
+                confirmButtonText: 'Sign In'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    props.onFormSwitch("login");
+                }
+              })
+            
         }
     }
 

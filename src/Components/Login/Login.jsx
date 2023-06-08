@@ -5,6 +5,7 @@ import './Login.css';
 import '../../App.css';
 import '../../navbar.css';
 import Background from '../../Assets/bg.jpg';
+import Swal from 'sweetalert2';
 
 export const Login = (props) => {
     const [name, setName] = useState("");
@@ -100,8 +101,25 @@ export const Login = (props) => {
 
     useEffect(() => {
         if (nameValidation && passValidation) {
-          alert("Login successful!");
-          navigate('/');
+          let timerInterval
+          Swal.fire({
+            icon: 'success',
+            title: 'Login Successful!',
+            timer: 1000,
+            timerProgressBar: true,
+            background: "#2b2f38",
+            color: "#fff",
+            didOpen: () => {
+              Swal.showLoading()
+            },
+            willClose: () => {
+              clearInterval(timerInterval)
+            }
+          }).then((result) => {
+          if (result.dismiss === Swal.DismissReason.timer) {
+            navigate('/');
+          }
+          })
         }
     }, [nameValidation, passValidation, navigate]);
 
