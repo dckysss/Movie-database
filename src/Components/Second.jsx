@@ -31,6 +31,7 @@ const Second = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [TVCredits, setTVCredits] = useState([]);
   const popupContentRef = useRef(null);
+  const [isNoResults, setIsNoResults] = useState(false);
 
   useEffect(() => {
     getTVList().then((result) => {
@@ -293,17 +294,19 @@ const Second = () => {
 
   const search = async (q, page) => {
     if (q.length > 2) {
-      const query = await searchTV(q, page)
-      setPopularTV(query.results)
+      const query = await searchTV(q, page);
+      setPopularTV(query.results);
       setHasMorePages(query.results.length > 0);
-      setPage(1)
+      setPage(1);
       setTotalPages(query.totalPages);
-      setIsSearching(true)
+      setIsSearching(true);
+      setIsNoResults(query.results.length === 0);
     } else {
-      setPopularTV(defaultTV)
+      setPopularTV(defaultTV);
       setHasMorePages(true);
-      setPage(1)
-      setIsSearching(false)
+      setPage(1);
+      setIsSearching(false);
+      setIsNoResults(false);
     }
   };
 
