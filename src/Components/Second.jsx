@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "../App.css";
 import "../navbar.css";
 import { searchTV, getTVList, getTVTrailer, getTVDetails, getTVCredits} from "../api";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import placeholderImage from '../Image_not_available.png';
 import { Sling as Hamburger } from 'hamburger-react'
@@ -139,7 +139,7 @@ const Second = () => {
     };
   }, []);
 
-  const TVPopup = () => {
+  const TVPopup = useCallback(() => {
       if (!isPopupOpen || !selectedTV) {
         return null;
       }
@@ -229,29 +229,30 @@ const Second = () => {
           </div>
         </div>
       );
-  };
+  }, [isPopupOpen, selectedTV, TVCredits, navigate]);
 
-  const PopularTVList = () => {
-    useEffect(() => {
-      AOS.init({ duration: 1000 });
-    }, []);
+  const handleClick = useCallback(async (tv) => {
+    try {
+      const tvDetails = await getTVDetails(tv.id);
+      const credits = await getTVCredits(tv.id);
+      setTVCredits(credits.cast);
+  
+      setSelectedTV({
+        ...tvDetails,
+        genres: tvDetails.genres || [],
+      });
+  
+      setIsPopupOpen(true);
+    } catch (error) {
+      console.error("Error fetching tv details:", error);
+    }
+  }, []);
 
-    const handleClick = async (tv) => {
-      try {
-        const tvDetails = await getTVDetails(tv.id);
-        const credits = await getTVCredits(tv.id);
-        setTVCredits(credits.cast);
-    
-        setSelectedTV({
-          ...tvDetails,
-          genres: tvDetails.genres || [],
-        });
-    
-        setIsPopupOpen(true);
-      } catch (error) {
-        console.error("Error fetching tv details:", error);
-      }
-    };
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
+
+  const PopularTVList = useCallback(() => {
 
     if (isNoResults) {
       return <div>No results found</div>;
@@ -274,7 +275,7 @@ const Second = () => {
         </div>
       )
     })
-  }
+  }, [popularTV, handleClick, isNoResults]);
 
   useEffect(() => {
     search(searchQuery, page);

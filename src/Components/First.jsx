@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "../App.css";
 import "../navbar.css";
 import { getMovieList, searchMovie, getMovieTrailer, getMovieDetails, getMovieCredits } from "../api";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import placeholderImage from '../Image_not_available.png';
 import { Sling as Hamburger } from 'hamburger-react';
@@ -63,7 +63,7 @@ const First = () => {
 
     useEffect(() => {
       const handleScroll = () => {
-        const currentScrollPos = window.pageYOffset;
+        const currentScrollPos = window.scrollY;
         const visible = prevScrollPos > currentScrollPos || menuOpen;
       
         setPrevScrollPos(currentScrollPos);
@@ -139,7 +139,7 @@ const First = () => {
     };
   }, []);
 
-  const MoviePopup = () => {
+  const MoviePopup = useCallback(() => {
     if (!isPopupOpen || !selectedMovie) {
       return null;
     }
@@ -229,34 +229,37 @@ const First = () => {
         </div>
       </div>
     );
-  };
+  }, [isPopupOpen, selectedMovie, movieCredits, navigate]);
 
-  const PopularMovieList = () => {
-    useEffect(() => {
+  const handleClick = useCallback(async (movie) => {
+    try {
+      const movieDetails = await getMovieDetails(movie.id);
+      const credits = await getMovieCredits(movie.id);
+      setMovieCredits(credits.cast);
+  
+      setSelectedMovie({
+        ...movieDetails,
+        genres: movieDetails.genres || [],
+      });
+  
+      setIsPopupOpen(true);
+    } catch (error) {
+      console.error("Error fetching movie details:", error);
+    }
+  }, []);
+
+  useEffect(() => {
       AOS.init({ duration: 1000 });
     }, []);
+
+  const PopularMovieList = useCallback(() => {
+    
 
     if (isNoResults) {
       return <div>No results found</div>;
     }
 
     return popularMovies.map((movie, i) => {
-      const handleClick = async (movie) => {
-        try {
-          const movieDetails = await getMovieDetails(movie.id);
-          const credits = await getMovieCredits(movie.id);
-          setMovieCredits(credits.cast);
-      
-          setSelectedMovie({
-            ...movieDetails,
-            genres: movieDetails.genres || [],
-          });
-      
-          setIsPopupOpen(true);
-        } catch (error) {
-          console.error("Error fetching movie details:", error);
-        }
-      };
 
       return (
         <div className="Movie-wrapper" key={i} title={movie.title} onClick={() => handleClick(movie)}>
@@ -274,7 +277,7 @@ const First = () => {
         </div>
       )
     })
-  };
+  }, [popularMovies, handleClick, isNoResults]);
 
   const handleListeningChange = (isListening) => {
     setIsListening(isListening);
