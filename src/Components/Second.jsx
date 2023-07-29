@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import "../App.css";
 import "../navbar.css";
 import { searchTV, getTVList, getTVTrailer, getTVDetails, getTVCredits} from "../api";
@@ -85,10 +85,10 @@ const Second = () => {
       <button onClick={() => navigate('/')} className="logo">Movie Search</button>
 
         <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
-          <li><button onClick={() => navigate('/')}>Movies</button></li>
-          <li><button onClick={refresh}>TV</button></li>
-          <li><button onClick={() => navigate('/trending')}>Trending</button></li>
-          <li><button onClick={() => navigate('/login')}>Login</button></li>
+          <li><Link to="/">Movies</Link></li>
+          <li><Link to="/tv" onClick={refresh}>TV</Link></li>
+          <li><Link to="/trending">Trending</Link></li>
+          <li><Link to="/login">Login</Link></li>
         </ul>
 
         <div className="hamburger">

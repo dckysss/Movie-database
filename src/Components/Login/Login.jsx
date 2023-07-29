@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"
+import axios from "axios";
+import { useNavigate, Link } from "react-router-dom"
 import { Sling as Hamburger } from 'hamburger-react';
 import './Login.css';
 import '../../App.css';
@@ -58,10 +59,10 @@ export const Login = (props) => {
         <button onClick={() => navigate('/')} className="logo">Movie Search</button>
 
             <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
-                <li><button onClick={() => navigate('/')}>Movies</button></li>
-                <li><button onClick={() => navigate('/tv')}>TV</button></li>
-                <li><button onClick={() => navigate('/trending')}>Trending</button></li>
-                <li><button onClick={refresh}>Login</button></li>
+                <li><Link to="/">Movies</Link></li>
+                <li><Link to="/tv">TV</Link></li>
+                <li><Link to="/trending">Trending</Link></li>
+                <li><Link to="/login" onClick={refresh}>Login</Link></li>
             </ul>
 
             <div className="hamburger">
@@ -79,24 +80,41 @@ export const Login = (props) => {
 
     document.title = "Movie Search | Login";
 
-    const handleSubmit = (e) => {
+    async function handleSubmit (e) {
         e.preventDefault()
 
-        if (!name) {
-            setNameError("Please type your username");
-            setNameValidation(false);
-        } else {
-            setNameError("");
-            setNameValidation(true);
-        };
+        try {
+            await axios.post("http://localhost:8000/login", {
+                name,pass
+            })
+            .then(res => {
+                if (!name) {
+                    setNameError("Please type your username");
+                    setNameValidation(false);
+                } else if (res.data === "notexist") {
+                    setNameError("Username unavailable");
+                    setNameValidation(false);
+                } else {
+                    setNameError("");
+                    setNameValidation(true);
+                }
 
-        if (!pass) {
-            setPassError("Please type your password")
-            setPassValidation(false);
-        } else {
-            setPassError("")
-            setPassValidation(true);
-        };
+                if (!pass) {
+                    setPassError("Please type your password")
+                    setPassValidation(false);
+                } else if (res.data === "invalid") {
+                    setPassError("Wrong password");
+                    setPassValidation(false);
+                } else if(res.data === "success") {
+                    setPassError("")
+                    setPassValidation(true);
+                };
+            })
+        } catch(e) {
+            console.log(e);
+            alert("wrong details");
+        }
+
     }
 
     useEffect(() => {
@@ -140,7 +158,7 @@ export const Login = (props) => {
         </header>
             <div className="form-container">
             <h1>Login Here</h1>
-                <form className="login-form" onSubmit={handleSubmit}>
+                <form className="login-form" onSubmit={handleSubmit} action="POST">
                     <div className="input-container">
                         <input 
                             className={`input ${!name && nameError ? 'error' : ''} ${name && !nameError ? 'success' : ''} ${nameError ? 'error' : ''}`} 

@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import "../App.css";
 import "../navbar.css";
 import { getMovieList, searchMovie, getMovieTrailer, getMovieDetails, getMovieCredits } from "../api";
@@ -85,10 +85,10 @@ const First = () => {
       <button onClick={refresh} className="logo">Movie Search</button>
 
         <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
-            <li><button onClick={refresh}>Movies</button></li>
-            <li><button onClick={() => navigate('/tv')}>TV</button></li>
-            <li><button onClick={() => navigate('/trending')}>Trending</button></li>
-            <li><button onClick={() => navigate('/login')}>Login</button></li>
+          <li><Link to="/" onClick={refresh}>Movies</Link></li>
+          <li><Link to="/tv">TV</Link></li>
+          <li><Link to="/trending">Trending</Link></li>
+          <li><Link to="/login">Login</Link></li>
         </ul>
 
         <div className="hamburger">
@@ -254,7 +254,6 @@ const First = () => {
 
   const PopularMovieList = useCallback(() => {
     
-
     if (isNoResults) {
       return <div>No results found</div>;
     }

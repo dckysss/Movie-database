@@ -13,8 +13,14 @@
   list-style: none;
   display: flex;
   justify-content: center;
-  gap: 2.4rem;
+  gap: 2.6rem;
   margin: 14px 0;
+}
+
+.navbar-menu a {
+  text-decoration: none;
+  color: #fbf2ff;
+  font-size: 1.4rem;
 }
   
 .navbar-menu button {
@@ -22,7 +28,6 @@
   border: none;
   color: #fbf2ff;
   cursor: pointer;
-  font-size: 1.4rem;
   font-family: 'Segoe UI', sans-serif;
 }
   
