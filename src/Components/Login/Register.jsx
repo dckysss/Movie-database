@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { Sling as Hamburger } from 'hamburger-react';
 import './Login.css';
 import '../../App.css';
@@ -43,7 +42,7 @@ export const Register = (props) => {
 
         useEffect(() => {
         const handleScroll = () => {
-            const currentScrollPos = window.scrollY;
+            const currentScrollPos = window.pageYOffset;
             const visible = prevScrollPos > currentScrollPos || menuOpen;
         
             setPrevScrollPos(currentScrollPos);
@@ -65,10 +64,10 @@ export const Register = (props) => {
         <button onClick={() => navigate('/')} className="logo">Movie Search</button>
 
             <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
-                <li><Link to="/">Movies</Link></li>
-                <li><Link to="/tv">TV</Link></li>
-                <li><Link to="/trending">Trending</Link></li>
-                <li><Link to="/login" onClick={refresh}>Login</Link></li>
+                <li><button onClick={() => navigate('/')}>Movies</button></li>
+                <li><button onClick={() => navigate('/tv')}>TV</button></li>
+                <li><button onClick={() => navigate('/trending')}>Trending</button></li>
+                <li><button onClick={refresh}>Login</button></li>
             </ul>
 
             <div className="hamburger">
@@ -91,59 +90,38 @@ export const Register = (props) => {
         return emailPattern.test(email);
     }
 
-    async function handleSubmit (e) {
+    const handleSubmit = (e) => {
         e.preventDefault()
         
         var emailValue = email.trim();
 
-        try {
-            await axios.post("http://localhost:8000/register", {
-                name,
-                email: emailValue,
-                pass,
-            })
-            .then(res => {
-                if (!name) {
-                    setNameError("Username cannot be empty");
-                    setNameValidation(false);
-                } else if (res.data === "exist") {
-                    setNameError("Username already exist");
-                    setNameValidation(false);
-                } else {
-                    setNameError("");
-                    setNameValidation(true);
+        setNameError(!name ? "Username cannot be empty" : "");
+        setNameValidation(!!name);
+
+        setEmailError(emailValue === "" ? "Email cannot be empty" : !validateEmail(emailValue) ? "Looks like not an email, example@email.com" : "");
+        setEmailValidation(validateEmail(emailValue));
+
+        setPassError(!pass ? "Password cannot be empty" : pass.length < 5 ? "Password too weak" : "");
+        setPassValidation(!!pass && pass.length >= 5);
+
+        setConPassError(!conPass ? "Confirm password cannot be empty" : conPass !== pass ? "Password not match" : "");
+        setConPassValidation(!!conPass && conPass === pass);
+
+        if (nameValidation && emailValidation && passValidation && conPassValidation) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Account successfully registered!',
+                background: "#2b2f38",
+                color: "#fff",
+                confirmButtonColor: '#784eb0',
+                confirmButtonText: 'Sign In'
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    props.onFormSwitch("login");
                 }
-
-                setEmailError(emailValue === "" ? "Email cannot be empty" : !validateEmail(email) ? "Looks like not an email, example@email.com" : "");
-                setEmailValidation(validateEmail(emailValue));
-
-                setPassError(!pass ? "Password cannot be empty" : pass.length < 5 ? "Password too weak" : "");
-                setPassValidation(!!pass && pass.length >= 5);
-
-                setConPassError(!conPass ? "Confirm password cannot be empty" : conPass !== pass ? "Password not match" : "");
-                setConPassValidation(!!conPass && conPass === pass);
-            })
-
-            if (nameValidation && emailValidation && passValidation && conPassValidation) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Account successfully registered!',
-                    background: "#2b2f38",
-                    color: "#fff",
-                    confirmButtonColor: '#784eb0',
-                    confirmButtonText: 'Sign In'
-                  }).then((result) => {
-                    if (result.isConfirmed) {
-                        props.onFormSwitch("login");
-                    }
-                  })
-                
-            }
-        } catch(e) {
-            console.log(e);
-            alert("wrong details");
+              })
+            
         }
-
     }
 
     useEffect(() => {
@@ -183,10 +161,10 @@ export const Register = (props) => {
         </header>
             <div className="form-container">
             <h1>Register</h1>
-                <form className="login-form" onSubmit={handleSubmit} action="POST">
+                <form className="login-form" onSubmit={handleSubmit}>
                     <div className="input-container">
                         <input 
-                            className={`input ${!name && nameError ? 'error' : ''} ${name.trim() && !nameError ? 'success' : ''} ${nameError ? 'error' : ''}`}  
+                            className={`input ${!name && nameError ? 'error' : ''} ${name.trim() && !nameError ? 'success' : ''}`}  
                             value={name} 
                             onChange={(e) => { const value = e.target.value.replace(/\s/g, ''); setName(value); }} 
                             type="text" 
