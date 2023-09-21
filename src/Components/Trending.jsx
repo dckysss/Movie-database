@@ -93,7 +93,11 @@ const Trending = () => {
 
   const TrendingList = () => {
     useEffect(() => {
-      AOS.init({ duration: 1000 });
+      AOS.init({ 
+        duration: 1000,
+        easing: "ease",
+        offset: 500,
+      });
     }, []);
     
     return filteredTrendings.map((trending, i) => {

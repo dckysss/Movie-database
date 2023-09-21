@@ -249,8 +249,12 @@ const Movie = () => {
   }, []);
 
   useEffect(() => {
-      AOS.init({ duration: 1000 });
-    }, []);
+    AOS.init({ 
+      duration: 1000,
+      easing: "ease",
+      offset: 500,
+    });
+  }, []);
 
   const PopularMovieList = useCallback(() => {
     
