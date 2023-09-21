@@ -15,7 +15,7 @@ import { debounce } from "lodash";
 import Bookmark from '../Assets/bookmark.svg';
 import Rating from '../Assets/star.svg';
 
-const Second = () => {
+const TV = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [popularTV, setPopularTV] = useState([]);
@@ -358,4 +358,4 @@ const Second = () => {
   )
 }
 
-export default Second;
+export default TV;

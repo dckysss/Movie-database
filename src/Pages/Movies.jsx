@@ -1,8 +1,8 @@
-import First from '../Components/First'
+import Movie from '../Components/Movie'
 
 const Movies = () => {
     document.title = "Movie Search"
-    return <First />
+    return <Movie />
 }
 
 export default Movies

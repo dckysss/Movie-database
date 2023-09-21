@@ -11,7 +11,7 @@ import "aos/dist/aos.css";
 import ScrollTopButton from "./scrollTop/scrollTop";
 import HeroImageTrending from "./heroImage/heroImageTrending";
 
-const Third = () => {
+const Trending = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const [trendings, setTrendings] = useState([])
@@ -136,4 +136,4 @@ const Third = () => {
   )
 }
 
-export default Third;
+export default Trending;

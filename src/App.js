@@ -1,7 +1,7 @@
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import Movies from "./Pages/Movies";
-import Trending from './Pages/Trending';
-import TV from "./Pages/TV"
+import Trendings from './Pages/Trendings';
+import TVs from "./Pages/TVs"
 import LoginPage from './Pages/LoginPage';
 
 const App = () => {
@@ -9,8 +9,8 @@ const App = () => {
     <Router>
       <Routes>
         <Route path='/' element={<Movies />}></Route>
-        <Route path='/tv' element={<TV />}></Route>
-        <Route path='/trending' element={<Trending />}></Route>
+        <Route path='/tv' element={<TVs />}></Route>
+        <Route path='/trending' element={<Trendings />}></Route>
         <Route path='/login' element={<LoginPage/>}></Route>
       </Routes>
     </Router>

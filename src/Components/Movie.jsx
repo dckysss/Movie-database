@@ -15,7 +15,7 @@ import { debounce } from "lodash";
 import Bookmark from '../Assets/bookmark.svg';
 import Rating from '../Assets/star.svg';
 
-const First = () => {
+const Movie = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const [popularMovies, setPopularMovies] = useState([])
@@ -360,4 +360,4 @@ const First = () => {
   )
 }
 
-export default First;
+export default Movie;

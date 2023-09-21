@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 import { Sling as Hamburger } from 'hamburger-react';
 import './Login.css';
 import '../../App.css';
@@ -58,10 +58,10 @@ export const Login = (props) => {
         <button onClick={() => navigate('/')} className="logo">Movie Search</button>
 
             <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
-                <li><button onClick={() => navigate('/')}>Movies</button></li>
-                <li><button onClick={() => navigate('/tv')}>TV</button></li>
-                <li><button onClick={() => navigate('/trending')}>Trending</button></li>
-                <li><button onClick={refresh}>Login</button></li>
+                <li><Link to="/">Movies</Link></li>
+                <li><Link to="/tv">TV</Link></li>
+                <li><Link to="/trending">Trending</Link></li>
+                <li><Link to="/login" onClick={refresh}>Login</Link></li>
             </ul>
 
             <div className="hamburger">
