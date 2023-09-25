@@ -160,7 +160,7 @@ const TV = () => {
       return (
         <div className="movie-popup-overlay">
           {loading ? (
-            <ClipLoader loading={loading} size={100} />
+            <ClipLoader color="white" loading={loading} size={100} />
           ) : (
           <div 
             ref={popupContentRef}
