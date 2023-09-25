@@ -12,9 +12,9 @@ import ScrollTopButton from "./scrollTop/scrollTop";
 import HeroImageTrending from "./heroImage/heroImageTrending";
 
 const Trending = () => {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const [trendings, setTrendings] = useState([])
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [trendings, setTrendings] = useState([]);
 
   useEffect(() => {
     getTrendingList().then((result) => {
@@ -46,7 +46,7 @@ const Trending = () => {
 
     useEffect(() => {
       const handleScroll = () => {
-        const currentScrollPos = window.pageYOffset;
+        const currentScrollPos = window.scrollY;
         const visible = prevScrollPos > currentScrollPos || menuOpen;
       
         setPrevScrollPos(currentScrollPos);

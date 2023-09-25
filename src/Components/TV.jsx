@@ -14,6 +14,7 @@ import SpeechToText from "./speechRecognition/speechRecognition";
 import { debounce } from "lodash";
 import Bookmark from '../Assets/bookmark.svg';
 import Rating from '../Assets/star.svg';
+import { ClipLoader } from "react-spinners";
 
 const TV = () => {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ const TV = () => {
   const [TVCredits, setTVCredits] = useState([]);
   const popupContentRef = useRef(null);
   const [isNoResults, setIsNoResults] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getTVList().then((result) => {
@@ -63,7 +65,7 @@ const TV = () => {
 
     useEffect(() => {
       const handleScroll = () => {
-        const currentScrollPos = window.pageYOffset;
+        const currentScrollPos = window.scrollY;
         const visible = prevScrollPos > currentScrollPos || menuOpen;
       
         setPrevScrollPos(currentScrollPos);
@@ -157,6 +159,9 @@ const TV = () => {
   
       return (
         <div className="movie-popup-overlay">
+          {loading ? (
+            <ClipLoader loading={loading} size={100} />
+          ) : (
           <div 
             ref={popupContentRef}
             style={{backgroundImage: `url(${process.env.REACT_APP_ORIGINALIMGURL}/${selectedTV.backdrop_path})`}}
@@ -227,12 +232,15 @@ const TV = () => {
             </div>
             <button className="close" onClick={() => setIsPopupOpen(false)}>&#10005;</button>
           </div>
+          )}
         </div>
       );
-  }, [isPopupOpen, selectedTV, TVCredits, navigate]);
+  }, [isPopupOpen, selectedTV, TVCredits, loading, navigate]);
 
   const handleClick = useCallback(async (tv) => {
     try {
+      setIsPopupOpen(true);
+      setLoading(true);
       const tvDetails = await getTVDetails(tv.id);
       const credits = await getTVCredits(tv.id);
       setTVCredits(credits.cast);
@@ -241,8 +249,8 @@ const TV = () => {
         ...tvDetails,
         genres: tvDetails.genres || [],
       });
-  
-      setIsPopupOpen(true);
+      
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching tv details:", error);
     }

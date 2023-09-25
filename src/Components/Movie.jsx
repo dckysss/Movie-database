@@ -14,6 +14,7 @@ import SpeechToText from "./speechRecognition/speechRecognition";
 import { debounce } from "lodash";
 import Bookmark from '../Assets/bookmark.svg';
 import Rating from '../Assets/star.svg';
+import { ClipLoader } from "react-spinners";
 
 const Movie = () => {
   const navigate = useNavigate()
@@ -31,6 +32,7 @@ const Movie = () => {
   const [movieCredits, setMovieCredits] = useState([]);
   const popupContentRef = useRef(null);
   const [isNoResults, setIsNoResults] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getMovieList().then((result) => {
@@ -157,82 +159,88 @@ const Movie = () => {
 
     return (
       <div className="movie-popup-overlay">
-        <div 
-          ref={popupContentRef}
-          style={{backgroundImage: `url(${process.env.REACT_APP_ORIGINALIMGURL}/${selectedMovie.backdrop_path})`}} 
-          className="movie-popup"
-        >
-        <div className="background-overlay">
-        </div>
-          <img
-            className="movie-popup-image"
-            src={`${process.env.REACT_APP_BASEIMGURL}/${selectedMovie.poster_path}`}
-            alt={selectedMovie.title}
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = placeholderImage;
-            }}
-            draggable="false"
-          />
-          <div className="movie-popup-details">
-            <div className="movie-popup-title">{selectedMovie.title}</div>
-            <div className="movie-popup-genres">
-              {selectedMovie.genres && selectedMovie.genres.slice(0, 5).map((genre, i) => (
-                  <span className="movie-popup-genre-items" key={i}>{genre.name}</span>
-                ))
-              }
-            </div>
-            <p>{selectedMovie.overview}</p>
-            <div>
-              <h2>Casts</h2>
-              <div className="cast-container">
-                {movieCredits && movieCredits.slice(0, 6).map((cast, i) => (
-                  <div key={i} className="cast-item">
-                    {cast.profile_path ? (
-                      <img
-                        src={`${process.env.REACT_APP_BASEIMGURL}/${cast.profile_path}`}
-                        alt={cast.name}
-                        className="cast-photo"
-                        draggable="false"
-                      />
-                    ) : (
-                      <div className="no-photo">No Photo</div>
-                    )}
-                    <div className="cast-name">{cast.name}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="detail-btn-container">
-              <div className="icon-btn-container">
-                <button className="icon-btn" onClick={() => navigate('/login')}>
-                  <img 
-                    src={Bookmark} 
-                    alt='watchlist' 
-                    className="icon-img"
-                    title="Add to watchlist"
-                  />
-                </button>
-                <button className="icon-btn" onClick={() => navigate('/login')}>
-                  <img 
-                    src={Rating} 
-                    alt='rating' 
-                    className="icon-img"
-                    title="Rate"
-                  />
-                </button>
-              </div>
-              <button className="trailer-btn" onClick={handleWatchTrailer}>Watch trailer</button>
-            </div>
-          </div>
-          <button className="close" onClick={() => setIsPopupOpen(false)}>&#10005;</button>
-        </div>
+        {loading ? 
+          (<ClipLoader loading={loading} size={100} />
+          ) : (
+          <div 
+           ref={popupContentRef}
+           style={{backgroundImage: `url(${process.env.REACT_APP_ORIGINALIMGURL}/${selectedMovie.backdrop_path})`}} 
+           className="movie-popup"
+          >
+         <div className="background-overlay">
+         </div>
+           <img
+             className="movie-popup-image"
+             src={`${process.env.REACT_APP_BASEIMGURL}/${selectedMovie.poster_path}`}
+             alt={selectedMovie.title}
+             onError={(e) => {
+               e.target.onerror = null;
+               e.target.src = placeholderImage;
+             }}
+             draggable="false"
+           />
+           <div className="movie-popup-details">
+             <div className="movie-popup-title">{selectedMovie.title}</div>
+             <div className="movie-popup-genres">
+               {selectedMovie.genres && selectedMovie.genres.slice(0, 5).map((genre, i) => (
+                   <span className="movie-popup-genre-items" key={i}>{genre.name}</span>
+                 ))
+               }
+             </div>
+             <p>{selectedMovie.overview}</p>
+             <div>
+               <h2>Casts</h2>
+               <div className="cast-container">
+                 {movieCredits && movieCredits.slice(0, 6).map((cast, i) => (
+                   <div key={i} className="cast-item">
+                     {cast.profile_path ? (
+                       <img
+                         src={`${process.env.REACT_APP_BASEIMGURL}/${cast.profile_path}`}
+                         alt={cast.name}
+                         className="cast-photo"
+                         draggable="false"
+                       />
+                     ) : (
+                       <div className="no-photo">No Photo</div>
+                     )}
+                     <div className="cast-name">{cast.name}</div>
+                   </div>
+                 ))}
+               </div>
+             </div>
+             <div className="detail-btn-container">
+               <div className="icon-btn-container">
+                 <button className="icon-btn" onClick={() => navigate('/login')}>
+                   <img 
+                     src={Bookmark} 
+                     alt='watchlist' 
+                     className="icon-img"
+                     title="Add to watchlist"
+                   />
+                 </button>
+                 <button className="icon-btn" onClick={() => navigate('/login')}>
+                   <img 
+                     src={Rating} 
+                     alt='rating' 
+                     className="icon-img"
+                     title="Rate"
+                   />
+                 </button>
+               </div>
+               <button className="trailer-btn" onClick={handleWatchTrailer}>Watch trailer</button>
+             </div>
+           </div>
+           <button className="close" onClick={() => setIsPopupOpen(false)}>&#10005;</button>
+         </div>
+        )}
       </div>
     );
-  }, [isPopupOpen, selectedMovie, movieCredits, navigate]);
+  }, [isPopupOpen, selectedMovie, movieCredits, loading, navigate]);
 
   const handleClick = useCallback(async (movie) => {
     try {
+      setIsPopupOpen(true);
+      setLoading(true);
       const movieDetails = await getMovieDetails(movie.id);
       const credits = await getMovieCredits(movie.id);
       setMovieCredits(credits.cast);
@@ -241,8 +249,8 @@ const Movie = () => {
         ...movieDetails,
         genres: movieDetails.genres || [],
       });
-  
-      setIsPopupOpen(true);
+
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching movie details:", error);
     }
