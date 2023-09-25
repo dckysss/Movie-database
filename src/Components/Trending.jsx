@@ -93,10 +93,12 @@ const Trending = () => {
 
   const TrendingList = () => {
     useEffect(() => {
+      const mobileOffset = window.innerWidth <= 768 ? 200 : 500;
+  
       AOS.init({ 
         duration: 1000,
         easing: "ease",
-        offset: 500,
+        offset: mobileOffset,
       });
     }, []);
     
