@@ -96,7 +96,7 @@ const Trending = () => {
       AOS.init({ 
         duration: 1000,
         easing: "ease",
-        offset: 500,
+        offset: 400,
       });
     }, []);
     
