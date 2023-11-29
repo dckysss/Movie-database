@@ -29,57 +29,57 @@ export const Register = (props) => {
         const [visible, setVisible] = useState(true);
 
         const updateHamburgerSize = () => {
-        if (window.innerWidth <= 480) {
-            setHamburgerSize(18);
-        } else {
-            setHamburgerSize(24);
-        }
+            if (window.innerWidth <= 480) {
+                setHamburgerSize(18);
+            } else {
+                setHamburgerSize(24);
+            }
         };
 
         const refresh = () => {
-        window.location.reload();
+            window.location.reload();
         }
 
         useEffect(() => {
-        const handleScroll = () => {
-            const currentScrollPos = window.pageYOffset;
-            const visible = prevScrollPos > currentScrollPos || menuOpen;
-        
-            setPrevScrollPos(currentScrollPos);
-            setVisible(visible);
-        };
+            const handleScroll = () => {
+                const currentScrollPos = window.pageYOffset;
+                const visible = prevScrollPos > currentScrollPos || menuOpen;
 
-        updateHamburgerSize();
-        window.addEventListener('resize', updateHamburgerSize);
-        window.addEventListener('scroll', handleScroll);
+                setPrevScrollPos(currentScrollPos);
+                setVisible(visible);
+            };
 
-        return () => {
-            window.removeEventListener('resize', updateHamburgerSize);
-            window.removeEventListener('scroll', handleScroll);
-        }
+            updateHamburgerSize();
+            window.addEventListener('resize', updateHamburgerSize);
+            window.addEventListener('scroll', handleScroll);
+
+            return () => {
+                window.removeEventListener('resize', updateHamburgerSize);
+                window.removeEventListener('scroll', handleScroll);
+            }
         }, [prevScrollPos, menuOpen]);
 
         return (
-        <nav className={`navbar ${visible ? '' : 'hidden'}`}>
-        <button onClick={() => navigate('/')} className="logo">Movie Search</button>
+            <nav className={`navbar ${visible ? '' : 'hidden'}`}>
+                <button onClick={() => navigate('/')} className="logo">Movie Search</button>
 
-            <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
-                <li><Link to="/">Movies</Link></li>
-                <li><Link to="/tv">TV</Link></li>
-                <li><Link to="/trending">Trending</Link></li>
-                <li><Link to="/login" onClick={refresh}>Login</Link></li>
-            </ul>
+                <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
+                    <li><Link to="/">Movies</Link></li>
+                    <li><Link to="/tv">TV</Link></li>
+                    <li><Link to="/trending">Trending</Link></li>
+                    <li><Link to="/login" onClick={refresh}>Login</Link></li>
+                </ul>
 
-            <div className="hamburger">
-            <Hamburger
-                rounded
-                size={hamburgerSize}
-                duration={0.8} 
-                toggled={menuOpen}
-                toggle={setMenuOpen}
-            />
-            </div>
-        </nav>
+                <div className="hamburger">
+                    <Hamburger
+                        rounded
+                        size={hamburgerSize}
+                        duration={0.8}
+                        toggled={menuOpen}
+                        toggle={setMenuOpen}
+                    />
+                </div>
+            </nav>
         )
     }
 
@@ -92,7 +92,7 @@ export const Register = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        
+
         var emailValue = email.trim();
 
         setNameError(!name ? "Username cannot be empty" : "");
@@ -115,12 +115,12 @@ export const Register = (props) => {
                 color: "#fff",
                 confirmButtonColor: '#784eb0',
                 confirmButtonText: 'Sign In'
-              }).then((result) => {
+            }).then((result) => {
                 if (result.isConfirmed) {
                     props.onFormSwitch("login");
                 }
-              })
-            
+            })
+
         }
     }
 
@@ -155,55 +155,55 @@ export const Register = (props) => {
     }, [name, pass, email, conPass]);
 
     return (
-        <div style={{backgroundImage: `url(${Background})`}} className="App">
-        <header className="App-header">
-          <NavBar />
-        </header>
+        <div style={{ backgroundImage: `url(${Background})` }} className="App">
+            <header className="App-header">
+                <NavBar />
+            </header>
             <div className="form-container">
-            <h1>Register</h1>
+                <h1>Register</h1>
                 <form className="login-form" onSubmit={handleSubmit}>
                     <div className="input-container">
-                        <input 
-                            className={`input ${!name && nameError ? 'error' : ''} ${name.trim() && !nameError ? 'success' : ''}`}  
-                            value={name} 
-                            onChange={(e) => { const value = e.target.value.replace(/\s/g, ''); setName(value); }} 
-                            type="text" 
-                            placeholder="Username" id="name" name="name" 
+                        <input
+                            className={`input ${!name && nameError ? 'error' : ''} ${name.trim() && !nameError ? 'success' : ''}`}
+                            value={name}
+                            onChange={(e) => { const value = e.target.value.replace(/\s/g, ''); setName(value); }}
+                            type="text"
+                            placeholder="Username" id="name" name="name"
                         />
                         <span className="error-text">{nameError}</span>
                     </div>
                     <div className="input-container">
-                        <input 
-                            className={`input ${!email && emailError ? 'error' : ''} ${email && emailValidation ? 'success' : ''} ${emailError ? 'error' : ''}`} 
-                            value={email} onChange={(e) => { const value = e.target.value.replace(/\s/g, ''); setEmail(value) }} 
-                            type="text" 
-                            placeholder="Email" 
-                            id="email" 
-                            name="email" 
+                        <input
+                            className={`input ${!email && emailError ? 'error' : ''} ${email && emailValidation ? 'success' : ''} ${emailError ? 'error' : ''}`}
+                            value={email} onChange={(e) => { const value = e.target.value.replace(/\s/g, ''); setEmail(value) }}
+                            type="text"
+                            placeholder="Email"
+                            id="email"
+                            name="email"
                         />
                         <span className="error-text">{emailError}</span>
                     </div>
                     <div className="input-container">
-                        <input 
-                            className={`input ${!pass && passError ? 'error' : ''} ${pass && passValidation ? 'success' : ''} ${passError ? 'error' : ''}`} 
-                            value={pass} 
-                            onChange={(e) => setPass(e.target.value)} 
-                            type="password" 
-                            placeholder="Password" 
-                            id="password" 
-                            name="password" 
+                        <input
+                            className={`input ${!pass && passError ? 'error' : ''} ${pass && passValidation ? 'success' : ''} ${passError ? 'error' : ''}`}
+                            value={pass}
+                            onChange={(e) => setPass(e.target.value)}
+                            type="password"
+                            placeholder="Password"
+                            id="password"
+                            name="password"
                         />
                         <span className="error-text">{passError}</span>
                     </div>
                     <div className="input-container">
-                        <input 
-                        className={`input ${!conPass && conPassError ? 'error' : ''} ${conPass && conPassValidation ? 'success' : ''} ${conPassError ? 'error' : ''}`} 
-                            value={conPass} 
-                            onChange={(e) => setConPass(e.target.value)} 
-                            type="password" 
-                            placeholder="Confirm Password" 
-                            id="confirmPW" 
-                            name="confirmPW" 
+                        <input
+                            className={`input ${!conPass && conPassError ? 'error' : ''} ${conPass && conPassValidation ? 'success' : ''} ${conPassError ? 'error' : ''}`}
+                            value={conPass}
+                            onChange={(e) => setConPass(e.target.value)}
+                            type="password"
+                            placeholder="Confirm Password"
+                            id="confirmPW"
+                            name="confirmPW"
                         />
                         <span className="error-text">{conPassError}</span>
                     </div>

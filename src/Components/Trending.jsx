@@ -1,7 +1,7 @@
 import { useNavigate, useLocation, Link } from "react-router-dom"
 import "../App.css"
 import "../navbar.css"
-import { getTrendingList} from "../api"
+import { getTrendingList } from "../api"
 import { useEffect, useState } from "react"
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 import placeholderImage from '../Image_not_available.png';
@@ -10,6 +10,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import ScrollTopButton from "./scrollTop/scrollTop";
 import HeroImageTrending from "./heroImage/heroImageTrending";
+import { ClipLoader } from "react-spinners";
 
 const Trending = () => {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ const Trending = () => {
       const handleScroll = () => {
         const currentScrollPos = window.scrollY;
         const visible = prevScrollPos > currentScrollPos || menuOpen;
-      
+
         setPrevScrollPos(currentScrollPos);
         setVisible(visible);
       };
@@ -65,7 +66,7 @@ const Trending = () => {
 
     return (
       <nav className={`navbar ${visible ? '' : 'hidden'}`}>
-      <button onClick={() => navigate('/')} className="logo">Movie Search</button>
+        <button onClick={() => navigate('/')} className="logo">Movie Search</button>
 
         <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
           <li><Link to="/">Movies</Link></li>
@@ -78,7 +79,7 @@ const Trending = () => {
           <Hamburger
             rounded
             size={hamburgerSize}
-            duration={0.8} 
+            duration={0.8}
             toggled={menuOpen}
             toggle={setMenuOpen}
           />
@@ -94,27 +95,30 @@ const Trending = () => {
   const TrendingList = () => {
     useEffect(() => {
       const mobileOffset = window.innerWidth <= 768 ? 200 : 500;
-  
-      AOS.init({ 
+
+      AOS.init({
         duration: 1000,
         easing: "ease",
         offset: mobileOffset,
       });
     }, []);
-    
+
     return filteredTrendings.map((trending, i) => {
       const resultObj = {
-          title: trending.title,  
-          name: trending.name 
-        };  
-      const resultProp = trending.media_type === 'movie' ? resultObj.title : resultObj.name;  
-      const releaseDateProp = trending.media_type === 'movie' ? trending.release_date : trending.first_air_date;    
+        title: trending.title,
+        name: trending.name
+      };
+      const resultProp = trending.media_type === 'movie' ? resultObj.title : resultObj.name;
+      const releaseDateProp = trending.media_type === 'movie' ? trending.release_date : trending.first_air_date;
       return (
-        <div style={{cursor: "default"}} className="Movie-wrapper" key={i}>
+        <div style={{ cursor: "default" }} className="Movie-wrapper" key={i}>
           <div className="Movie-title">{resultProp}</div>
-          <LazyLoadImage 
-            className="Movie-image" 
+          <LazyLoadImage
+            className="Movie-image"
+            loading="lazy"
+            effect="opacity"
             src={`${process.env.REACT_APP_BASEIMGURL}/${trending.poster_path}`}
+            placeholder={<ClipLoader color="white" size={120} />}
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = placeholderImage

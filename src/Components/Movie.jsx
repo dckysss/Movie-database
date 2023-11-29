@@ -39,7 +39,7 @@ const Movie = () => {
       setPopularMovies(result)
       setDefaultMovies(result)
     })
-  }, []) 
+  }, [])
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -67,7 +67,7 @@ const Movie = () => {
       const handleScroll = () => {
         const currentScrollPos = window.scrollY;
         const visible = prevScrollPos > currentScrollPos || menuOpen;
-      
+
         setPrevScrollPos(currentScrollPos);
         setVisible(visible);
       };
@@ -84,7 +84,7 @@ const Movie = () => {
 
     return (
       <nav className={`navbar ${visible ? '' : 'hidden'}`}>
-      <button onClick={refresh} className="logo">Movie Search</button>
+        <button onClick={refresh} className="logo">Movie Search</button>
 
         <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
           <li><Link to="/" onClick={refresh}>Movies</Link></li>
@@ -97,7 +97,7 @@ const Movie = () => {
           <Hamburger
             rounded
             size={hamburgerSize}
-            duration={0.8} 
+            duration={0.8}
             toggled={menuOpen}
             toggle={setMenuOpen}
           />
@@ -141,6 +141,53 @@ const Movie = () => {
     };
   }, []);
 
+  const handleClick = useCallback(async (movie) => {
+    try {
+      setIsPopupOpen(true);
+      setLoading(true);
+      const movieDetails = await getMovieDetails(movie.id);
+      const credits = await getMovieCredits(movie.id);
+      setMovieCredits(credits.cast);
+
+      setSelectedMovie({
+        ...movieDetails,
+        genres: movieDetails.genres || [],
+      });
+
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching movie details:", error);
+    }
+  }, []);
+
+  const PopularMovieList = useCallback(() => {
+
+    if (isNoResults) {
+      return <div>No results found</div>;
+    }
+
+    return popularMovies.map((movie, i) => {
+      return (
+        <div className="Movie-wrapper" key={i} title={movie.title} onClick={() => handleClick(movie)}>
+          <div className="Movie-title">{movie.title}</div>
+          <LazyLoadImage
+            className="Movie-image"
+            loading="lazy"
+            effect="opacity"
+            src={`${process.env.REACT_APP_BASEIMGURL}/${movie.poster_path}`}
+            placeholder={<ClipLoader color="white" size={120} />}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = placeholderImage
+            }}
+          />
+          <div className="Movie-date">release: {movie.release_date}</div>
+          <div className="Movie-rate">{movie.vote_average}</div>
+        </div>
+      )
+    })
+  }, [popularMovies, handleClick, isNoResults]);
+
   const MoviePopup = useCallback(() => {
     if (!isPopupOpen || !selectedMovie) {
       return null;
@@ -159,138 +206,93 @@ const Movie = () => {
 
     return (
       <div className="movie-popup-overlay">
-        {loading ? 
-          (<ClipLoader color="white" loading={loading} size={100} />
-          ) : (
-          <div 
-           ref={popupContentRef}
-           style={{backgroundImage: `url(${process.env.REACT_APP_ORIGINALIMGURL}/${selectedMovie.backdrop_path})`}} 
-           className="movie-popup"
+        {loading ? (
+          <ClipLoader color="white" loading={loading} size={120} />
+        ) : (
+          <div
+            ref={popupContentRef}
+            style={{ backgroundImage: `url(${process.env.REACT_APP_ORIGINALIMGURL}/${selectedMovie.backdrop_path})` }}
+            className="movie-popup"
           >
-         <div className="background-overlay">
-         </div>
-           <img
-             className="movie-popup-image"
-             src={`${process.env.REACT_APP_BASEIMGURL}/${selectedMovie.poster_path}`}
-             alt={selectedMovie.title}
-             onError={(e) => {
-               e.target.onerror = null;
-               e.target.src = placeholderImage;
-             }}
-             draggable="false"
-           />
-           <div className="movie-popup-details">
-             <div className="movie-popup-title">{selectedMovie.title}</div>
-             <div className="movie-popup-genres">
-               {selectedMovie.genres && selectedMovie.genres.slice(0, 5).map((genre, i) => (
-                   <span className="movie-popup-genre-items" key={i}>{genre.name}</span>
-                 ))
-               }
-             </div>
-             <p>{selectedMovie.overview}</p>
-             <div>
-               <h2>Casts</h2>
-               <div className="cast-container">
-                 {movieCredits && movieCredits.slice(0, 6).map((cast, i) => (
-                   <div key={i} className="cast-item">
-                     {cast.profile_path ? (
-                       <img
-                         src={`${process.env.REACT_APP_BASEIMGURL}/${cast.profile_path}`}
-                         alt={cast.name}
-                         className="cast-photo"
-                         draggable="false"
-                       />
-                     ) : (
-                       <div className="no-photo">No Photo</div>
-                     )}
-                     <div className="cast-name">{cast.name}</div>
-                   </div>
-                 ))}
-               </div>
-             </div>
-             <div className="detail-btn-container">
-               <div className="icon-btn-container">
-                 <button className="icon-btn" onClick={() => navigate('/login')}>
-                   <img 
-                     src={Bookmark} 
-                     alt='watchlist' 
-                     className="icon-img"
-                     title="Add to watchlist"
-                   />
-                 </button>
-                 <button className="icon-btn" onClick={() => navigate('/login')}>
-                   <img 
-                     src={Rating} 
-                     alt='rating' 
-                     className="icon-img"
-                     title="Rate"
-                   />
-                 </button>
-               </div>
-               <button className="trailer-btn" onClick={handleWatchTrailer}>Watch trailer</button>
-             </div>
-           </div>
-           <button className="close" onClick={() => setIsPopupOpen(false)}>&#10005;</button>
-         </div>
+            <div className="background-overlay">
+            </div>
+            <img
+              className="movie-popup-image"
+              src={`${process.env.REACT_APP_BASEIMGURL}/${selectedMovie.poster_path}`}
+              alt={selectedMovie.title}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = placeholderImage;
+              }}
+              draggable="false"
+            />
+            <div className="movie-popup-details">
+              <div className="movie-popup-title">{selectedMovie.title}</div>
+              <div className="movie-popup-genres">
+                {selectedMovie.genres && selectedMovie.genres.slice(0, 5).map((genre, i) => (
+                  <span className="movie-popup-genre-items" key={i}>{genre.name}</span>
+                ))
+                }
+              </div>
+              <p>{selectedMovie.overview}</p>
+              <div>
+                <h2>Casts</h2>
+                <div className="cast-container">
+                  {movieCredits && movieCredits.slice(0, 6).map((cast, i) => (
+                    <div key={i} className="cast-item">
+                      {cast.profile_path ? (
+                        <img
+                          src={`${process.env.REACT_APP_BASEIMGURL}/${cast.profile_path}`}
+                          alt={cast.name}
+                          className="cast-photo"
+                          draggable="false"
+                        />
+                      ) : (
+                        <div className="no-photo">No Photo</div>
+                      )}
+                      <div className="cast-name">{cast.name}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="detail-btn-container">
+                <div className="icon-btn-container">
+                  <button className="icon-btn" onClick={() => navigate('/login')}>
+                    <img
+                      src={Bookmark}
+                      alt='watchlist'
+                      className="icon-img"
+                      title="Add to watchlist"
+                    />
+                  </button>
+                  <button className="icon-btn" onClick={() => navigate('/login')}>
+                    <img
+                      src={Rating}
+                      alt='rating'
+                      className="icon-img"
+                      title="Rate"
+                    />
+                  </button>
+                </div>
+                <button className="trailer-btn" onClick={handleWatchTrailer}>Watch trailer</button>
+              </div>
+            </div>
+            <button className="close" onClick={() => setIsPopupOpen(false)}>&#10005;</button>
+          </div>
         )}
       </div>
     );
   }, [isPopupOpen, selectedMovie, movieCredits, loading, navigate]);
 
-  const handleClick = useCallback(async (movie) => {
-    try {
-      setIsPopupOpen(true);
-      setLoading(true);
-      const movieDetails = await getMovieDetails(movie.id);
-      const credits = await getMovieCredits(movie.id);
-      setMovieCredits(credits.cast);
-  
-      setSelectedMovie({
-        ...movieDetails,
-        genres: movieDetails.genres || [],
-      });
-
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching movie details:", error);
-    }
-  }, []);
-
   useEffect(() => {
     const mobileOffset = window.innerWidth <= 768 ? 200 : 500;
 
-    AOS.init({ 
+    AOS.init({
       duration: 1000,
       easing: "ease",
       offset: mobileOffset,
     });
   }, []);
-
-  const PopularMovieList = useCallback(() => {
-    
-    if (isNoResults) {
-      return <div>No results found</div>;
-    }
-
-    return popularMovies.map((movie, i) => {
-
-      return (
-        <div className="Movie-wrapper" key={i} title={movie.title} onClick={() => handleClick(movie)}>
-          <div className="Movie-title">{movie.title}</div>
-          <LazyLoadImage 
-            className="Movie-image" 
-            src={`${process.env.REACT_APP_BASEIMGURL}/${movie.poster_path}`}
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = placeholderImage
-            }}
-          />
-          <div className="Movie-date">release: {movie.release_date}</div>
-          <div className="Movie-rate">{movie.vote_average}</div>
-        </div>
-      )
-    })
-  }, [popularMovies, handleClick, isNoResults]);
 
   const handleListeningChange = (isListening) => {
     setIsListening(isListening);
@@ -330,33 +332,33 @@ const Movie = () => {
       </header>
       <HeroImageMovies />
       <MoviePopup />
-        
+
       <div className="search-container">
 
         {!isListening && (
-          <input 
-          placeholder="Search movies..."
-          className="Movie-search"
-          onChange={({ target }) => debouncedSearch(target.value, page)}
-        />
+          <input
+            placeholder="Search movies..."
+            className="Movie-search"
+            onChange={({ target }) => debouncedSearch(target.value, page)}
+          />
         )}
         {isListening && (
-          <input 
-          placeholder="Search movies..."
-          className="Movie-search"
-          value={searchQuery}
-          onChange={({ target }) => setSearchQuery(target.value, page)}
-        />
+          <input
+            placeholder="Search movies..."
+            className="Movie-search"
+            value={searchQuery}
+            onChange={({ target }) => setSearchQuery(target.value, page)}
+          />
         )}
         <SpeechToText setSearchQuery={setSearchQuery} onListeningChange={handleListeningChange} />
       </div>
-        
+
       <div className="Movie-container" data-aos="fade-up">
         <PopularMovieList />
       </div>
-      
+
       <div>
-      {isSearching && hasMorePages && page < totalPages && (
+        {isSearching && hasMorePages && page < totalPages && (
           <button className="load-more" onClick={loadMore}>
             Load more
           </button>

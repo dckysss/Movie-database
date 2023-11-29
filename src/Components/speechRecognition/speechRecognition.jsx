@@ -5,52 +5,52 @@ import microphone from "../../Assets/microphone.svg"
 
 const SpeechToText = ({ setSearchQuery, onListeningChange }) => {
 
-    const { transcript, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
-    const timeoutRef = useRef(null);
-    const [isListening, setIsListening] = useState(false);
-    
-    useEffect(() => {
-        const updateSearchQuery = () => {
-          setSearchQuery(transcript);  
-        };
-        updateSearchQuery();
-    }, [transcript, setSearchQuery]);
+  const { transcript, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
+  const timeoutRef = useRef(null);
+  const [isListening, setIsListening] = useState(false);
 
-    const startListening = () => {
-      if(isListening) {
+  useEffect(() => {
+    const updateSearchQuery = () => {
+      setSearchQuery(transcript);
+    };
+    updateSearchQuery();
+  }, [transcript, setSearchQuery]);
+
+  const startListening = () => {
+    if (isListening) {
+      SpeechRecognition.stopListening();
+      setIsListening(false);
+      onListeningChange(false);
+    } else {
+      resetTranscript();
+      SpeechRecognition.startListening({ continuous: true, language: 'en-ID' });
+
+      clearTimeout(timeoutRef.current);
+      setIsListening(true);
+      onListeningChange(true);
+      timeoutRef.current = setTimeout(() => {
         SpeechRecognition.stopListening();
         setIsListening(false);
         onListeningChange(false);
-      } else {
-        resetTranscript();
-        SpeechRecognition.startListening({ continuous: true, language: 'en-ID' });
-        
-        clearTimeout(timeoutRef.current);
-        setIsListening(true);
-        onListeningChange(true);
-        timeoutRef.current = setTimeout(() => {
-          SpeechRecognition.stopListening();
-          setIsListening(false);
-          onListeningChange(false);
-        }, 6000);
-      }
-    };
-
-    if(!browserSupportsSpeechRecognition) {
-        return null
+      }, 6000);
     }
+  };
 
-    return(
-      <div className="speech-container"> 
-        <button onClick={startListening} className='speech-btn'>
-          <img 
-            src={microphone} 
-            alt='speech' 
-            className={isListening ? 'listening' : ''}
-          />
-        </button>
-      </div>  
-    )
+  if (!browserSupportsSpeechRecognition) {
+    return null
+  }
+
+  return (
+    <div className="speech-container">
+      <button onClick={startListening} className='speech-btn'>
+        <img
+          src={microphone}
+          alt='speech'
+          className={isListening ? 'listening' : ''}
+        />
+      </button>
+    </div>
+  )
 }
 
 export default SpeechToText;

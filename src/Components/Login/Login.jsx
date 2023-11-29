@@ -23,11 +23,11 @@ export const Login = (props) => {
         const [visible, setVisible] = useState(true);
 
         const updateHamburgerSize = () => {
-        if (window.innerWidth <= 480) {
-            setHamburgerSize(18);
-        } else {
-            setHamburgerSize(24);
-        }
+            if (window.innerWidth <= 480) {
+                setHamburgerSize(18);
+            } else {
+                setHamburgerSize(24);
+            }
         };
 
         const refresh = () => {
@@ -38,7 +38,7 @@ export const Login = (props) => {
             const handleScroll = () => {
                 const currentScrollPos = window.pageYOffset;
                 const visible = prevScrollPos > currentScrollPos || menuOpen;
-            
+
                 setPrevScrollPos(currentScrollPos);
                 setVisible(visible);
             };
@@ -54,26 +54,26 @@ export const Login = (props) => {
         }, [prevScrollPos, menuOpen]);
 
         return (
-        <nav className={`navbar ${visible ? '' : 'hidden'}`}>
-        <button onClick={() => navigate('/')} className="logo">Movie Search</button>
+            <nav className={`navbar ${visible ? '' : 'hidden'}`}>
+                <button onClick={() => navigate('/')} className="logo">Movie Search</button>
 
-            <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
-                <li><Link to="/">Movies</Link></li>
-                <li><Link to="/tv">TV</Link></li>
-                <li><Link to="/trending">Trending</Link></li>
-                <li><Link to="/login" onClick={refresh}>Login</Link></li>
-            </ul>
+                <ul className={`navbar-menu ${menuOpen ? 'open' : ''}`}>
+                    <li><Link to="/">Movies</Link></li>
+                    <li><Link to="/tv">TV</Link></li>
+                    <li><Link to="/trending">Trending</Link></li>
+                    <li><Link to="/login" onClick={refresh}>Login</Link></li>
+                </ul>
 
-            <div className="hamburger">
-            <Hamburger
-                rounded
-                size={hamburgerSize}
-                duration={0.8} 
-                toggled={menuOpen}
-                toggle={setMenuOpen}
-            />
-            </div>
-        </nav>
+                <div className="hamburger">
+                    <Hamburger
+                        rounded
+                        size={hamburgerSize}
+                        duration={0.8}
+                        toggled={menuOpen}
+                        toggle={setMenuOpen}
+                    />
+                </div>
+            </nav>
         )
     }
 
@@ -101,66 +101,66 @@ export const Login = (props) => {
 
     useEffect(() => {
         if (nameValidation && passValidation) {
-          let timerInterval
-          Swal.fire({
-            icon: 'success',
-            title: 'Login Successful!',
-            timer: 1000,
-            timerProgressBar: true,
-            background: "#2b2f38",
-            color: "#fff",
-            didOpen: () => {
-              Swal.showLoading()
-            },
-            willClose: () => {
-              clearInterval(timerInterval)
-            }
-          }).then((result) => {
-          if (result.dismiss === Swal.DismissReason.timer) {
-            navigate('/');
-          }
-          })
+            let timerInterval
+            Swal.fire({
+                icon: 'success',
+                title: 'Login Successful!',
+                timer: 1000,
+                timerProgressBar: true,
+                background: "#2b2f38",
+                color: "#fff",
+                didOpen: () => {
+                    Swal.showLoading()
+                },
+                willClose: () => {
+                    clearInterval(timerInterval)
+                }
+            }).then((result) => {
+                if (result.dismiss === Swal.DismissReason.timer) {
+                    navigate('/');
+                }
+            })
         }
     }, [nameValidation, passValidation, navigate]);
 
     useEffect(() => {
         if (name) {
-          setNameError("");
+            setNameError("");
         }
-    
+
         if (pass) {
-          setPassError("");
+            setPassError("");
         }
     }, [name, pass]);
 
     return (
-        <div style={{backgroundImage: `url(${Background})`}} className="App">
-        <header className="App-header">
-          <NavBar />
-        </header>
+        <div style={{ backgroundImage: `url(${Background})` }} className="App">
+            <header className="App-header">
+                <NavBar />
+            </header>
             <div className="form-container">
-            <h1>Login Here</h1>
+                <h1>Login Here</h1>
                 <form className="login-form" onSubmit={handleSubmit}>
                     <div className="input-container">
-                        <input 
-                            className={`input ${!name && nameError ? 'error' : ''} ${name && !nameError ? 'success' : ''} ${nameError ? 'error' : ''}`} 
-                            value={name} 
-                            onChange={(e) => {const value = e.target.value.replace(/\s/g, ''); setName(value);}} 
-                            type="text" 
-                            placeholder="Username" 
-                            id="name" 
-                            name="name" 
+                        <input
+                            className={`input ${!name && nameError ? 'error' : ''} ${name && !nameError ? 'success' : ''} ${nameError ? 'error' : ''}`}
+                            value={name}
+                            onChange={(e) => { const value = e.target.value.replace(/\s/g, ''); setName(value); }}
+                            type="text"
+                            placeholder="Username"
+                            id="name"
+                            name="name"
                         />
                         <span className="error-text">{nameError}</span>
                     </div>
                     <div className="input-container">
-                        <input 
-                            className={`input ${!pass && passError ? 'error' : ''} ${pass && !passError ? 'success' : ''} ${passError ? 'error' : ''}`} 
-                            value={pass} onChange={(e) => setPass(e.target.value)} 
-                            type="password" 
-                            placeholder="Password" 
-                            id="password" 
-                            name="password" 
+                        <input
+                            className={`input ${!pass && passError ? 'error' : ''} ${pass && !passError ? 'success' : ''} ${passError ? 'error' : ''}`}
+                            value={pass} onChange={(e) => setPass(e.target.value)}
+                            type="password"
+                            placeholder="Password"
+                            id="password"
+                            name="password"
                         />
                         <span className="error-text">{passError}</span>
                     </div>
