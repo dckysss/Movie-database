@@ -172,6 +172,7 @@ const Movie = () => {
           <div className="Movie-title">{movie.title}</div>
           <LazyLoadImage
             className="Movie-image"
+            alt={movie.title}
             loading="lazy"
             effect="opacity"
             src={`${process.env.REACT_APP_BASEIMGURL}/${movie.poster_path}`}

@@ -278,6 +278,7 @@ const TV = () => {
           <div className="Movie-title">{tv.name}</div>
           <LazyLoadImage
             className="Movie-image"
+            alt={tv.title}
             loading="lazy"
             effect="opacity"
             src={`${process.env.REACT_APP_BASEIMGURL}/${tv.poster_path}`}

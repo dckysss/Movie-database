@@ -46,6 +46,8 @@ const SpeechToText = ({ setSearchQuery, onListeningChange }) => {
         <img
           src={microphone}
           alt='speech'
+          width="100%"
+          height="100%"
           className={isListening ? 'listening' : ''}
         />
       </button>

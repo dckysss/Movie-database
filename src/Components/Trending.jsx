@@ -115,6 +115,7 @@ const Trending = () => {
           <div className="Movie-title">{resultProp}</div>
           <LazyLoadImage
             className="Movie-image"
+            alt={trending.title}
             loading="lazy"
             effect="opacity"
             src={`${process.env.REACT_APP_BASEIMGURL}/${trending.poster_path}`}
