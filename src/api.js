@@ -3,12 +3,12 @@ import axios from "axios"
 const apiKey = process.env.REACT_APP_APIKEY
 const baseUrl = process.env.REACT_APP_BASEURL
 
-export const getMovieList = async(page) => {
+export const getMovieList = async(page = 1) => {
     const movie = await axios.get(`${baseUrl}/discover/movie?page=${page}&api_key=${apiKey}`)
     return movie.data.results
 }
 
-export const searchMovie = async (q, page) => {
+export const searchMovie = async (q, page = 1) => {
     const search = await axios.get(`${baseUrl}/search/movie?query=${q}&page=${page}&api_key=${apiKey}`)
     const { results, total_pages } = search.data;
     return {
@@ -50,12 +50,12 @@ export const getMovieTrailer = async (movieId) => {
   }
 };
 
-export const getTVList = async(page) => {
+export const getTVList = async(page = 1) => {
     const tv = await axios.get(`${baseUrl}/discover/tv?page=${page}&api_key=${apiKey}`)
     return tv.data.results
 };
 
-export const searchTV = async (q, page) => {
+export const searchTV = async (q, page = 1) => {
     const search = await axios.get(`${baseUrl}/search/tv?query=${q}&page=${page}&api_key=${apiKey}`)
     const { results, total_pages } = search.data;
     return {
