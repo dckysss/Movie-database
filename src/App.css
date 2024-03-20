@@ -298,11 +298,14 @@
 }
 
 .Movie-rate {
-  color: blue;
+  color: #5a368a;
   margin-bottom: 24px;
   font-weight: bold;
   font-size: 1.1em;
-  text-decoration: underline;
+}
+
+.low-rating {
+  color: red;
 }
 
 .Movie-image {

@@ -167,6 +167,7 @@ const Movie = () => {
     }
 
     return popularMovies.map((movie, i) => {
+      const voteAverageClass = movie.vote_average < 5 ? 'low-rating' : '';
       return (
         <div className="Movie-wrapper" key={i} title={movie.title} onClick={() => handleClick(movie)}>
           <div className="Movie-title">{movie.title}</div>
@@ -183,7 +184,7 @@ const Movie = () => {
             }}
           />
           <div className="Movie-date">release: {movie.release_date}</div>
-          <div className="Movie-rate">{movie.vote_average}</div>
+          <div className={`Movie-rate ${voteAverageClass}`}>{movie.vote_average.toFixed(2)}</div>
         </div>
       )
     })
