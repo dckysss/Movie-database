@@ -104,6 +104,7 @@ const Trending = () => {
     }, []);
 
     return filteredTrendings.map((trending, i) => {
+      const voteAverageClass = trending.vote_average < 5 ? 'low-rating' : '';
       const resultObj = {
         title: trending.title,
         name: trending.name
@@ -126,7 +127,7 @@ const Trending = () => {
             }}
           />
           <div className="Movie-date">release: {releaseDateProp}</div>
-          <div className="Movie-rate">{trending.vote_average}</div>
+          <div className={`Movie-rate ${voteAverageClass}`}>{trending.vote_average.toFixed(2)}</div>
         </div>
       )
     })
