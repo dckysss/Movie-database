@@ -2,12 +2,18 @@ import React, { useEffect, useState, useRef } from 'react'
 import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 import './speechRecognition.css'
 import microphone from "../../Assets/microphone.svg"
+import voiceBeepOn from "./voicebeep.mp3"
+import voiceBeepOff from "./voicebeepoff.mp3"
+
 
 const SpeechToText = ({ setSearchQuery, onListeningChange }) => {
 
   const { transcript, resetTranscript, browserSupportsSpeechRecognition } = useSpeechRecognition();
   const timeoutRef = useRef(null);
   const [isListening, setIsListening] = useState(false);
+
+  let beepOn = new Audio(voiceBeepOn)
+  let beepOff = new Audio(voiceBeepOff)
 
   useEffect(() => {
     const updateSearchQuery = () => {
@@ -17,11 +23,14 @@ const SpeechToText = ({ setSearchQuery, onListeningChange }) => {
   }, [transcript, setSearchQuery]);
 
   const startListening = () => {
+    
     if (isListening) {
+      beepOff.play()
       SpeechRecognition.stopListening();
       setIsListening(false);
       onListeningChange(false);
     } else {
+      beepOn.play()
       resetTranscript();
       SpeechRecognition.startListening({ continuous: true, language: 'en-ID' });
 
