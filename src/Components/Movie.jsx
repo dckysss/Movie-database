@@ -349,7 +349,7 @@ const Movie = () => {
             placeholder="Search movies..."
             className="Movie-search"
             value={searchQuery}
-            onChange={({ target }) => setSearchQuery(target.value, page)}
+            onChange={({ target }) => debouncedSearch(target.value, page)}
           />
         )}
         <SpeechToText setSearchQuery={setSearchQuery} onListeningChange={handleListeningChange} />

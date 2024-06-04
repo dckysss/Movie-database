@@ -39,6 +39,7 @@ const SpeechToText = ({ setSearchQuery, onListeningChange }) => {
       onListeningChange(true);
       timeoutRef.current = setTimeout(() => {
         SpeechRecognition.stopListening();
+        beepOff.play()
         setIsListening(false);
         onListeningChange(false);
       }, 6000);
@@ -46,6 +47,7 @@ const SpeechToText = ({ setSearchQuery, onListeningChange }) => {
   };
 
   if (!browserSupportsSpeechRecognition) {
+    alert("Your browser does not supports speech recognition")
     return null
   }
 
